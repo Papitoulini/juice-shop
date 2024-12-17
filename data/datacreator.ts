@@ -35,6 +35,9 @@ import * as security from '../lib/insecurity'
 const replace = require('replace')
 const entities = new Entities()
 
+const papi = "1";
+
+
 export default async () => {
   const creators = [
     createSecurityQuestions,
