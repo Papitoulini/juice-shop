@@ -41,3 +41,14 @@ module.exports.delAddressById = function delAddressById () {
     }
   }
 }
+
+module.exports.getAddressByIds = function getAddressById () {
+  return async (req: Request, res: Response) => {
+    const address = await AddressModel.findOne({ where: { id: req.params.id, UserId: req.body.UserId } })
+    if (address != null) {
+      res.status(200).json({ status: 'success', data: address })
+    } else {
+      res.status(400).json({ status: 'error', data: 'Malicious activity detected.' })
+    }
+  }
+}
