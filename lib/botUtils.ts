@@ -5,16 +5,12 @@
 import { ProductModel } from '../models/product'
 import { type Product } from '../data/types'
 import fuzz from 'fuzzball'
-import { challenges } from '../data/datacache'
-import * as security from './insecurity'
 import * as challengeUtils from './challengeUtils'
 
 export async function productPrice (query: string, user: string) {
-  const products = await ProductModel.findAll()
-  const queriedProducts = products
+  const _products = await ProductModel.findAll()
+  const queriedProducts = _products
     .filter((product: Product) => fuzz.partial_ratio(query, product.name) > 60)
-    .map((product: Product) => `${product.name} costs ${product.price}¤`)
-  return {
     action: 'response',
     body: queriedProducts.length > 0 ? queriedProducts.join(', ') : 'Sorry I couldn\'t find any products with that name'
   }

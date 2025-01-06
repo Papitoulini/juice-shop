@@ -37,31 +37,15 @@ import registerWebsocketEvents from './lib/startup/registerWebsocketEvents'
 import customizeApplication from './lib/startup/customizeApplication'
 import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-snippet hide-line
 
-import authenticatedUsers from './routes/authenticatedUsers'
-
 const startTime = Date.now()
-const finale = require('finale-rest')
-const express = require('express')
 const compression = require('compression')
-const helmet = require('helmet')
-const featurePolicy = require('feature-policy')
-const errorhandler = require('errorhandler')
-const cookieParser = require('cookie-parser')
 const serveIndex = require('serve-index')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const securityTxt = require('express-security.txt')
-const robots = require('express-robots-txt')
 const yaml = require('js-yaml')
 const swaggerUi = require('swagger-ui-express')
-const RateLimit = require('express-rate-limit')
-const ipfilter = require('express-ipfilter').IpFilter
-const swaggerDocument = yaml.load(fs.readFileSync('./swagger.yml', 'utf8'))
+import RateLimit = require('express-rate-limit')
 const {
   ensureFileIsPassed,
   handleZipFileUpload,
-  checkUploadSize,
-  checkFileType,
   handleXmlUpload
 } = require('./routes/fileUpload')
 const profileImageFileUpload = require('./routes/profileImageFileUpload')
