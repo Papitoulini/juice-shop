@@ -137,8 +137,8 @@ const startupGauge = new Prometheus.Gauge({
 })
 
 // Wraps the function and measures its (async) execution time
-const collectDurationPromise = (name: string, func: (...args: any) => Promise<any>) => {
-  return async (...args: any) => {
+const collectDurationPromise = <T>(name: string, func: (...args: T[]) => Promise<unknown>) => {
+  return async (...args: T[]) => {
     const end = startupGauge.startTimer({ task: name })
     try {
       const res = await func(...args)
@@ -484,7 +484,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // create a wallet when a new user is registered using API
     if (name === 'User') { // vuln-code-snippet neutral-line registerAdminChallenge
-      resource.create.send.before((req: Request, res: Response, context: { instance: { id: any }, continue: any }) => { // vuln-code-snippet vuln-line registerAdminChallenge
+      resource.create.send.before((req: Request, res: Response, context: { instance: { id: string }, continue: Function }) => { // vuln-code-snippet vuln-line registerAdminChallenge
         WalletModel.create({ UserId: context.instance.id }).catch((err: unknown) => {
           console.log(err)
         })
@@ -495,7 +495,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // translate challenge descriptions and hints on-the-fly
     if (name === 'Challenge') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | any[], continue: any }) => {
+      resource.list.fetch.after((req: Request, res: Response, context: { instance: Array<{ description: string }>, continue: Function }) => {
         for (let i = 0; i < context.instance.length; i++) {
           let description = context.instance[i].description
           if (utils.contains(description, '<em>(This challenge is <strong>')) {
@@ -511,7 +511,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { description: string, hint: string }, continue: any }) => {
+      resource.read.send.before((req: Request, res: Response, context: { instance: { description: string, hint: string }, continue: () => void }) => {
         context.instance.description = req.__(context.instance.description)
         if (context.instance.hint) {
           context.instance.hint = req.__(context.instance.hint)

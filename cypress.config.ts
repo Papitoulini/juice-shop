@@ -14,8 +14,8 @@ export default defineConfig({
     downloadsFolder: 'test/cypress/downloads',
     fixturesFolder: false,
     supportFile: 'test/cypress/support/e2e.ts',
-    setupNodeEvents (on: any) {
-      on('before:browser:launch', (browser: any = {}, launchOptions: any) => { // TODO Remove after upgrade to Cypress >=12.5.0 <or> Chrome 119 become available on GitHub Workflows, see https://github.com/cypress-io/cypress-documentation/issues/5479
+    setupNodeEvents (on: Cypress.PluginEvents) {
+      on('before:browser:launch', (browser: Cypress.Browser = {}, launchOptions: Cypress.BrowserLaunchOptions) => {
         if (browser.name === 'chrome' && browser.isHeadless) {
           launchOptions.args = launchOptions.args.map((arg: any) => {
             if (arg === '--headless') {
@@ -55,7 +55,7 @@ export default defineConfig({
           return couponIntent
         },
         GetFromMemories (property: string) {
-          for (const memory of config.get<MemoryConfig[]>('memories') as any) {
+          for (const memory of config.get<MemoryConfig[]>('memories')) {
             if (memory[property]) {
               return memory[property]
             }
