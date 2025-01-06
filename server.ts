@@ -134,16 +134,12 @@ const startupGauge = new Prometheus.Gauge({
   name: `${appName}_startup_duration_seconds`,
   help: `Duration ${appName} required to perform a certain task during startup`,
   labelNames: ['task']
-})
-
 // Wraps the function and measures its (async) execution time
-const collectDurationPromise = (name: string, func: (...args: any) => Promise<any>) => {
-  return async (...args: any) => {
+const collectDurationPromise = (name: string, func: (...args: any[]) => Promise<any>) => {
+  return async (...args: any[]) => {
     const end = startupGauge.startTimer({ task: name })
     try {
       const res = await func(...args)
-      end()
-      return res
     } catch (err) {
       console.error('Error in timed startup function: ' + name, err)
       throw err
@@ -327,20 +323,12 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   app.use('/rest/user/reset-password', new RateLimit({
     windowMs: 5 * 60 * 1000,
     max: 100,
-    keyGenerator ({ headers, ip }: { headers: any, ip: any }) { return headers['X-Forwarded-For'] ?? ip } // vuln-code-snippet vuln-line resetPasswordMortyChallenge
-  }))
-  // vuln-code-snippet end resetPasswordMortyChallenge
-
   // vuln-code-snippet start changeProductChallenge
   /** Authorization **/
-  /* Checks on JWT in Authorization header */ // vuln-code-snippet hide-line
-  app.use(verify.jwtChallenges()) // vuln-code-snippet hide-line
-  /* Baskets: Unauthorized users are not allowed to access baskets */
-  app.use('/rest/basket', security.isAuthorized(), security.appendUserId())
+  /* Checks on JWT in Authorization header */
+  app.use(verify.jwtChallenges())
   /* BasketItems: API only accessible for authenticated users */
   app.use('/api/BasketItems', security.isAuthorized())
-  app.use('/api/BasketItems/:id', security.isAuthorized())
-  /* Feedbacks: GET allowed for feedback carousel, POST allowed in order to provide feedback without being logged in */
   app.use('/api/Feedbacks/:id', security.isAuthorized())
   /* Users: Only POST is allowed in order to register a new user */
   app.get('/api/Users', security.isAuthorized())
@@ -492,39 +480,23 @@ restoreOverwrittenFilesWithOriginals().then(() => {
       }) // vuln-code-snippet neutral-line registerAdminChallenge
     } // vuln-code-snippet neutral-line registerAdminChallenge
     // vuln-code-snippet end registerAdminChallenge
-
-    // translate challenge descriptions and hints on-the-fly
-    if (name === 'Challenge') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | any[], continue: any }) => {
         for (let i = 0; i < context.instance.length; i++) {
           let description = context.instance[i].description
           if (utils.contains(description, '<em>(This challenge is <strong>')) {
             const warning = description.substring(description.indexOf(' <em>(This challenge is <strong>'))
-            description = description.substring(0, description.indexOf(' <em>(This challenge is <strong>'))
-            context.instance[i].description = req.__(description) + req.__(warning)
           } else {
-            context.instance[i].description = req.__(description)
-          }
-          if (context.instance[i].hint) {
+            context.instance[i].description = req.__(<string>description)
             context.instance[i].hint = req.__(context.instance[i].hint)
           }
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { description: string, hint: string }, continue: any }) => {
-        context.instance.description = req.__(context.instance.description)
-        if (context.instance.hint) {
-          context.instance.hint = req.__(context.instance.hint)
         }
         return context.continue
       })
     }
-
-    // translate security questions on-the-fly
     if (name === 'SecurityQuestion') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | any[], continue: any }) => {
-        for (let i = 0; i < context.instance.length; i++) {
-          context.instance[i].question = req.__(context.instance[i].question)
+      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | (string | any)[], continue: any }) => {
         }
         return context.continue
       })
@@ -535,16 +507,12 @@ restoreOverwrittenFilesWithOriginals().then(() => {
     }
 
     // translate product names and descriptions on-the-fly
-    if (name === 'Product') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: any[], continue: any }) => {
         for (let i = 0; i < context.instance.length; i++) {
-          context.instance[i].name = req.__(context.instance[i].name)
-          context.instance[i].description = req.__(context.instance[i].description)
+          context.instance[i].name = req.__(context.instance[i].name as string)
+          context.instance[i].description = req.__(context.instance[i].description as string)
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { name: string, description: string }, continue: any }) => {
-        context.instance.name = req.__(context.instance.name)
         context.instance.description = req.__(context.instance.description)
         return context.continue
       })

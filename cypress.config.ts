@@ -10,31 +10,15 @@ export default defineConfig({
   defaultCommandTimeout: 10000,
   e2e: {
     baseUrl: 'http://localhost:3000',
-    specPattern: 'test/cypress/e2e/**.spec.ts',
-    downloadsFolder: 'test/cypress/downloads',
     fixturesFolder: false,
-    supportFile: 'test/cypress/support/e2e.ts',
-    setupNodeEvents (on: any) {
-      on('before:browser:launch', (browser: any = {}, launchOptions: any) => { // TODO Remove after upgrade to Cypress >=12.5.0 <or> Chrome 119 become available on GitHub Workflows, see https://github.com/cypress-io/cypress-documentation/issues/5479
-        if (browser.name === 'chrome' && browser.isHeadless) {
-          launchOptions.args = launchOptions.args.map((arg: any) => {
-            if (arg === '--headless') {
-              return '--headless=new'
+          launchOptions.args = launchOptions.args.map((arg: string) => {
             }
-
-            return arg
-          })
-        }
         return launchOptions
-      })
-
-      on('task', {
-        GenerateCoupon (discount: number) {
+      }),
+        GenerateCoupon (discount: number): string {
           return security.generateCoupon(discount)
         },
         GetBlueprint () {
-          for (const product of config.get<ProductConfig[]>('products')) {
-            if (product.fileForRetrieveBlueprintChallenge) {
               const blueprint = product.fileForRetrieveBlueprintChallenge
               return blueprint
             }
@@ -67,16 +51,12 @@ export default defineConfig({
         GetOverwriteUrl () {
           return config.get('challenges.overwriteUrlForProductTamperingChallenge')
         },
-        GetPastebinLeakProduct () {
-          return config.get<ProductConfig[]>('products').filter(
-            (product) => product.keywordsForPastebinDataLeakChallenge
+            (product: ProductConfig) => product.keywordsForPastebinDataLeakChallenge
           )[0]
         },
         GetTamperingProductId () {
           const products = config.get<ProductConfig[]>('products')
           for (let i = 0; i < products.length; i++) {
-            if (products[i].urlForProductTamperingChallenge) {
-              return i + 1
             }
           }
         },
