@@ -1,10 +1,7 @@
-ngAfterViewInit () {
-    const products = this.productService.search('')
-    const quantities = this.quantityService.getAll()
-    forkJoin([quantities, products]).subscribe(([quantities, products]) => {
-      const dataTable: TableEntry[] = []
-      this.tableData = products
-      this.encodeProductDescription(products)
+    for (let i = 0; i < tableData.length; i++) {
+      tableData[i].description = DOMPurify.sanitize(tableData[i].description)
+    }
+  }
       for (const product of products) {
         dataTable.push({
           name: product.name,

@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-import express, { type NextFunction, type Request, type Response } from 'express'
-import path from 'path'
+    res.clearCookie('token')
+    if (req.body.layout) {
+      const sanitizedPath = path.resolve(path.normalize(req.body.layout)).toLowerCase()
+      const isForbiddenFile: boolean = (sanitizedPath.includes('ftp') || sanitizedPath.includes('ctf.key') || sanitizedPath.includes('encryptionkeys'))
+      if (!isForbiddenFile) {
+        res.render('dataErasureResult', {
 import { SecurityAnswerModel } from '../models/securityAnswer'
 import { UserModel } from '../models/user'
 import { SecurityQuestionModel } from '../models/securityQuestion'

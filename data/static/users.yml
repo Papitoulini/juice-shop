@@ -1,9 +1,9 @@
--
-  email: admin
-  password: 'admin123'
-  key: admin
+  username: wurstbrot
+  password: '[REDACTED]'
+  totpSecret: '[REDACTED]'
+  key: '[REDACTED]'
   role: 'admin'
-  securityQuestion:
+  securityQuestion: '[REDACTED]'
     id: 2
     answer: '@xI98PxDO+06!'
   feedback:

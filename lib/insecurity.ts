@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import fs from 'fs'
+import * as dotenv from 'dotenv'; dotenv.config();
+export const isAuthorized = () => expressJwt(({ secret: publicKey }) as any)
+export const denyAll = () => expressJwt({ secret: '' + Math.random() } as any)
+export const authorize = (user = {}) => jwt.sign(user, process.env.PRIVATE_KEY, { expiresIn: '6h', algorithm: 'RS256' })
+export const verify = (token: string) => token ? (jws.verify as ((token: string, secret: string) => boolean))(token, process.env.PUBLIC_KEY) : false
+export const decode = (token: string) => { return jws.decode(token)?.payload }
 import crypto from 'crypto'
 import { type Request, type Response, type NextFunction } from 'express'
 import { type UserModel } from 'models/user'

@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import fs from 'fs/promises'
+      res.status(200).json({
+        status: bot.training.state,
+        body: bot.training.state ? DOMPurify.sanitize(bot.greet(`${user.id}`)) : DOMPurify.sanitize(`${config.get<string>('application.chatBot.name')} isn't ready at the moment, please wait while I set things up`)
+      })
+    } catch (err) {
+      next(new Error('Blocked illegal activity by ' + req.socket.remoteAddress))
 import { type Request, type Response, type NextFunction } from 'express'
 import { type User } from '../data/types'
 import { UserModel } from '../models/user'

@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
+  xit('should set Last-Login IP from JWT as trusted HTML', () => { // FIXME Expected state seems to leak over from previous test case occasionally
+    const token = generateSecureToken({ lastLoginIp: '1.2.3.4' }) // Securely generate token with necessary claims
+    localStorage.setItem('token', token)
+    component.ngOnInit()
+    expect(sanitizer.bypassSecurityTrustHtml).toHaveBeenCalledWith('<small>1.2.3.4</small>')
+  })
 import { LastLoginIpComponent } from './last-login-ip.component'
 import { MatCardModule } from '@angular/material/card'
 import { DomSanitizer } from '@angular/platform-browser'

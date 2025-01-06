@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import models = require('../models/index')
+  return (req: Request, res: Response, next: NextFunction) => {
+    verifyPreLoginChallenges(req) // vuln-code-snippet hide-line
+    models.sequelize.query(`SELECT * FROM Users WHERE email = :email AND password = :password AND deletedAt IS NULL`, { replacements: { email: req.body.email || '', password: security.hash(req.body.password || '') }, model: UserModel, plain: true }) // vuln-code-snippet vuln-line loginAdminChallenge loginBenderChallenge loginJimChallenge
+      .then((authenticatedUser) => { // vuln-code-snippet neutral-line loginAdminChallenge loginBenderChallenge loginJimChallenge
+        const user = utils.queryResultToJson(authenticatedUser)
+        if (user.data?.id && user.data.totpSecret !== '') {
 import { type Request, type Response, type NextFunction } from 'express'
 import { type User } from '../data/types'
 import { BasketModel } from '../models/basket'
