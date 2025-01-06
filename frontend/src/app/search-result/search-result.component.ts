@@ -42,10 +42,10 @@ interface TableEntry {
 })
 export class SearchResultComponent implements OnDestroy, AfterViewInit {
   public displayedColumns = ['Image', 'Product', 'Description', 'Price', 'Select']
-  public tableData!: any[]
+  public tableData: TableEntry[] = []
   public pageSizeOptions: number[] = []
   public dataSource!: MatTableDataSource<TableEntry>
-  public gridDataSource!: any
+  public gridDataSource!: GridDataResult
   public searchValue?: SafeHtml
   public resultsLength = 0
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | null = null
@@ -122,7 +122,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
 
   trustProductDescription (tableData: any[]) { // vuln-code-snippet neutral-line restfulXssChallenge
     for (let i = 0; i < tableData.length; i++) { // vuln-code-snippet neutral-line restfulXssChallenge
-      tableData[i].description = this.sanitizer.bypassSecurityTrustHtml(tableData[i].description) // vuln-code-snippet vuln-line restfulXssChallenge
+      tableData[i].description = this.sanitizer.bypassSecurityTrustStyle(tableData[i].description) // vuln-code-snippet vuln-line restfulXssChallenge
     } // vuln-code-snippet neutral-line restfulXssChallenge
   } // vuln-code-snippet neutral-line restfulXssChallenge
   // vuln-code-snippet end restfulXssChallenge
@@ -148,7 +148,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       }) // vuln-code-snippet hide-end
       this.dataSource.filter = queryParam.toLowerCase()
-      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
+      this.searchValue = this.sanitizer.bypassSecurityTrustStyle(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
       this.gridDataSource.subscribe((result: any) => {
         if (result.length === 0) {
           this.emptyState = true
@@ -183,7 +183,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
 
   addToBasket (id?: number) {
     this.basketService.find(Number(sessionStorage.getItem('bid'))).subscribe((basket) => {
-      const productsInBasket: any = basket.Products
+      const productsInBasket: Product[] = basket.Products
       let found = false
       for (let i = 0; i < productsInBasket.length; i++) {
         if (productsInBasket[i].id === id) {
@@ -232,7 +232,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
     return localStorage.getItem('token')
   }
 
-  onResize (event: any) {
+  onResize (event: ResizeEvent) {
     if (event.target.innerWidth < 2600) {
       this.breakpoint = 4
       if (event.target.innerWidth < 1740) {

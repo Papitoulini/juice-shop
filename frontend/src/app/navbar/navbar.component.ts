@@ -52,7 +52,7 @@ library.add(faLanguage, faSearch, faSignInAlt, faSignOutAlt, faComment, faBomb, 
 })
 export class NavbarComponent implements OnInit {
   public userEmail: string = ''
-  public languages: any = []
+  public languages: Language[] = []
   public selectedLanguage: string = 'placeholder'
   public version: string = ''
   public applicationName: string = 'OWASP Juice Shop'
@@ -73,14 +73,14 @@ export class NavbarComponent implements OnInit {
   ngOnInit () {
     this.getLanguages()
     this.basketService.getItemTotal().subscribe(x => (this.itemTotal = x))
-    this.administrationService.getApplicationVersion().subscribe((version: any) => {
+    this.administrationService.getApplicationVersion().subscribe((version: string) => {
       if (version) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.version = `v${version}`
       }
     }, (err) => { console.log(err) })
 
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+    this.configurationService.getApplicationConfiguration().subscribe((config: { application?: { name?: string } }) => {
       if (config?.application?.name) {
         this.applicationName = config.application.name
       }
@@ -154,12 +154,12 @@ export class NavbarComponent implements OnInit {
   isLoggedIn () {
     return localStorage.getItem('token')
   }
-
   logout () {
     this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => { console.log(err) })
     localStorage.removeItem('token')
     this.cookieService.remove('token')
-    sessionStorage.removeItem('bid')
+    // sessionStorage.removeItem('bid')
+  }
     sessionStorage.removeItem('itemTotal')
     this.userService.isLoggedIn.next(false)
     this.ngZone.run(async () => await this.router.navigate(['/']))

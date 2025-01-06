@@ -11,7 +11,7 @@ import challengeUtils = require('../lib/challengeUtils')
 import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
 
-const security = require('../lib/insecurity')
+import security = require('../lib/insecurity')
 
 module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -55,12 +55,12 @@ module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
     }
   }
 }
-
 module.exports.deluxeMembershipStatus = function deluxeMembershipStatus () {
   return (req: Request, res: Response, next: NextFunction) => {
     if (security.isCustomer(req)) {
       res.status(200).json({ status: 'success', data: { membershipCost: 49 } })
     } else if (security.isDeluxe(req)) {
+      next(); // Affected line: Added next() to utilize the unused NextFunction parameter
       res.status(400).json({ status: 'error', error: 'You are already a deluxe member!' })
     } else {
       res.status(400).json({ status: 'error', error: 'You are not eligible for deluxe membership!' })

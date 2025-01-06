@@ -31,7 +31,7 @@ describe('AccountingComponent', () => {
   let fixture: ComponentFixture<OrderHistoryComponent>
   let productService
   let orderHistoryService
-  let dialog: any
+  let dialog: MatDialog
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

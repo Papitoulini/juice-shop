@@ -25,11 +25,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent
   let fixture: ComponentFixture<ForgotPasswordComponent>
-  let securityQuestionService: any
-  let userService: any
+  let securityQuestionService: SecurityQuestionService
+  let userService: UserService
 
   beforeEach(waitForAsync(() => {
-    securityQuestionService = jasmine.createSpyObj('SecurityQuestionService', ['findBy'])
+    securityQuestionService = jasmine.createSpyObj<SecurityQuestionService>('SecurityQuestionService', ['findBy'])
     securityQuestionService.findBy.and.returnValue(of({}))
     userService = jasmine.createSpyObj('UserService', ['resetPassword'])
     userService.resetPassword.and.returnValue(of({}))

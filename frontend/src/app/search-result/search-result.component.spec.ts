@@ -35,8 +35,8 @@ class MockSocket {
     callback(str)
   }
 
-  emit (a: any, b: any) {
-    return null
+  emit () {
+    // Intentionally left blank
   }
 }
 
@@ -51,17 +51,17 @@ class MockActivatedRoute {
 describe('SearchResultComponent', () => {
   let component: SearchResultComponent
   let fixture: ComponentFixture<SearchResultComponent>
-  let productService: any
-  let basketService: any
-  let translateService: any
+  let productService: ProductService
+  let basketService: BasketService
+  let translateService: TranslateService
   let activatedRoute: MockActivatedRoute
-  let dialog: any
-  let sanitizer: any
-  let socketIoService: any
-  let mockSocket: any
+  let dialog: MatDialog
+  let sanitizer: DomSanitizer
+  let socketIoService: SocketIoService
+  let mockSocket: MockSocket
   let quantityService
   let deluxeGuard
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

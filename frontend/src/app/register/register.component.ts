@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       securityAnswer: this.securityAnswerControl.value
     }
 
-    this.userService.save(user).subscribe((response: any) => {
+    this.userService.save(user).subscribe((response: User) => {
       this.securityAnswerService.save({
         UserId: response.id,
         answer: this.securityAnswerControl.value,

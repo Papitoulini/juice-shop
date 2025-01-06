@@ -27,11 +27,11 @@ export class ContactComponent implements OnInit {
   public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.pattern('-?[\\d]*')])
   public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
   public rating: number = 0
-  public feedback: any = undefined
-  public captcha: any
-  public captchaId: any
-  public confirmation: any
-  public error: any
+  public feedback: string = undefined
+  public captcha: string
+  public captchaId: string
+  public confirmation: any | undefined
+  public error: any | undefined
 
   constructor (private readonly userService: UserService, private readonly captchaService: CaptchaService, private readonly feedbackService: FeedbackService,
     private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }

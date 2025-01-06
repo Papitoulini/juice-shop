@@ -19,8 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 describe('ProductReviewEditComponent', () => {
   let component: ProductReviewEditComponent
   let fixture: ComponentFixture<ProductReviewEditComponent>
-  let productReviewService: any
-  let dialogRef: any
+  let productReviewService: jasmine.SpyObj<ProductReviewService>
+  let dialogRef: MatDialogRef<ProductReviewEditComponent>
 
   beforeEach(waitForAsync(() => {
     productReviewService = jasmine.createSpyObj('ProductReviewService', ['patch'])

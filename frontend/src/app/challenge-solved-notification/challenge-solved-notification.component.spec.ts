@@ -25,7 +25,7 @@ class MockSocket {
     callback()
   }
 
-  emit (a: any, b: any) {
+  emit () {
     return null
   }
 }
@@ -33,12 +33,12 @@ class MockSocket {
 describe('ChallengeSolvedNotificationComponent', () => {
   let component: ChallengeSolvedNotificationComponent
   let fixture: ComponentFixture<ChallengeSolvedNotificationComponent>
-  let socketIoService: any
-  let translateService: any
-  let cookieService: any
-  let challengeService: any
-  let configurationService: any
-  let mockSocket: any
+  let socketIoService: SocketIoService
+  let translateService: TranslateService
+  let cookieService: CookieService
+  let challengeService: ChallengeService
+  let configurationService: ConfigurationService
+  let mockSocket: MockSocket
 
   beforeEach(waitForAsync(() => {
     mockSocket = new MockSocket()

@@ -17,10 +17,10 @@ export class SecurityAnswerService {
 
   constructor (private readonly http: HttpClient) { }
 
-  save (params: any) {
+  save (params: Record<string, unknown>) {
     return this.http.post(this.host + '/', params).pipe(
-      map((response: any) => response.data),
-      catchError((err) => { throw err })
+      map((response: { data: Record<string, unknown> }) => response.data),
+      catchError((err: unknown) => { throw err })
     )
   }
 }

@@ -24,7 +24,7 @@ import { EventEmitter } from '@angular/core'
 describe('ComplaintComponent', () => {
   let component: ComplaintComponent
   let fixture: ComponentFixture<ComplaintComponent>
-  let userService: any
+  let userService: UserService
   let complaintService: any
   let translateService
 

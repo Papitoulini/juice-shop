@@ -32,9 +32,9 @@ describe('AddressComponent', () => {
   let component: AddressComponent
   let fixture: ComponentFixture<AddressComponent>
   let addressService
-  let snackBar: any
+  let snackBar: MatSnackBar
   let translateService
-
+  
   beforeEach(waitForAsync(() => {
     addressService = jasmine.createSpyObj('AddressService', ['get', 'del'])
     addressService.get.and.returnValue(of([]))

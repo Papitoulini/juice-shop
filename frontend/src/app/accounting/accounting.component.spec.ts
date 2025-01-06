@@ -30,7 +30,7 @@ describe('AccountingComponent', () => {
   let productService
   let quantityService
   let orderHistoryService
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     quantityService = jasmine.createSpyObj('QuantityService', ['getAll', 'put'])

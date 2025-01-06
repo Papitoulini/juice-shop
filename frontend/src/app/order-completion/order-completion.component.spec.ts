@@ -33,10 +33,10 @@ export class MockActivatedRoute {
 describe('OrderCompletionComponent', () => {
   let component: OrderCompletionComponent
   let fixture: ComponentFixture<OrderCompletionComponent>
-  let trackOrderService: any
-  let activatedRoute: any
-  let basketService: any
-  let addressService: any
+  let trackOrderService: jasmine.SpyObj<TrackOrderService>
+  let activatedRoute: ActivatedRoute
+  let basketService: BasketService
+  let addressService: AddressService
   let configurationService: any
 
   beforeEach(waitForAsync(() => {

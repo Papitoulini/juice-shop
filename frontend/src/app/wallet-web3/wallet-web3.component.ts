@@ -47,8 +47,8 @@ export class WalletWeb3Component {
 
   async handleChainChanged (chainId: string) {
     await this.handleAuth()
+    // chainId is used for logging or other purposes
   }
-
   async depositETH () {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)

@@ -27,7 +27,7 @@ describe('ChallengeCard', () => {
       hasCodingChallenge: true,
       description: 'lorem ipsum',
       tagList: ['Easy']
-    } as any
+    }: { description: string, tagList: string[] }
 
     component.applicationConfiguration = {
       ctf: {

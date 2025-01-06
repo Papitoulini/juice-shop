@@ -47,14 +47,14 @@ class MockSocket {
 describe('NavbarComponent', () => {
   let component: NavbarComponent
   let fixture: ComponentFixture<NavbarComponent>
-  let administrationService: any
-  let configurationService: any
-  let userService: any
-  let challengeService: any
-  let translateService: any
-  let cookieService: any
-  let mockSocket: any
-  let socketIoService: any
+  let administrationService: { [key: string]: any }
+  let configurationService: { [key: string]: any }
+  let userService: { [key: string]: unknown }
+  let challengeService: { [key: string]: unknown }
+  let translateService: { [key: string]: unknown }
+  let cookieService: { [key: string]: Record<string, unknown> }
+  let mockSocket: { [key: string]: Record<string, unknown> }
+  let socketIoService: unknown
   let location: Location
   let loginGuard
 

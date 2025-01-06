@@ -30,7 +30,7 @@ export const makeKeyNonUpdatable = (model: Model, column: string) => {
 
     const validationErrors: ValidationErrorItemType[] = []
 
-    changedKeys.forEach((fieldName: any) => {
+    changedKeys.forEach((fieldName: string) => {
       const fieldDefinition = instance.rawAttributes[fieldName]
 
       if (

@@ -71,12 +71,12 @@ export class SidenavComponent implements OnInit {
   isLoggedIn () {
     return localStorage.getItem('token')
   }
-
   logout () {
     this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => { console.log(err) })
     localStorage.removeItem('token')
     this.cookieService.remove('token')
-    sessionStorage.removeItem('bid')
+    // sessionStorage.removeItem('bid')
+  }
     sessionStorage.removeItem('itemTotal')
     this.userService.isLoggedIn.next(false)
     this.ngZone.run(async () => await this.router.navigate(['/']))

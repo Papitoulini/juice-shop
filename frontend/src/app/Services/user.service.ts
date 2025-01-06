@@ -25,7 +25,7 @@ export class UserService {
 
   constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: Record<string, unknown>) {
     return this.http.get(this.hostServer + '/rest/user/authentication-details/', { params }).pipe(map((response: any) =>
       response.data), catchError((err) => { throw err }))
   }
@@ -34,16 +34,16 @@ export class UserService {
     return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
-  save (params: any) {
+  save (params: { [key: string]: any }) {
     return this.http.post(this.host + '/', params).pipe(
-      map((response: any) => response.data),
+      map((response: Response) => response.data),
       catchError((err) => { throw err })
     )
   }
 
-  login (params: any) {
+  login (params: { [key: string]: any }) {
     this.isLoggedIn.next(true)
-    return this.http.post(this.hostServer + '/rest/user/login', params).pipe(map((response: any) => response.authentication), catchError((err) => { throw err }))
+    return this.http.post(this.hostServer + '/rest/user/login', params).pipe(map((response: { authentication: { [key: string]: any } }) => response.authentication), catchError((err) => { throw err }))
   }
 
   getLoggedInState () {
@@ -52,7 +52,7 @@ export class UserService {
 
   changePassword (passwords: Passwords) {
     return this.http.get(this.hostServer + '/rest/user/change-password?current=' + passwords.current + '&new=' +
-    passwords.new + '&repeat=' + passwords.repeat).pipe(map((response: any) => response.user), catchError((err) => { throw err.error }))
+    passwords.new + '&repeat=' + passwords.repeat).pipe(map((response: { user: any }) => response.user), catchError((err) => { throw err.error }))
   }
 
   resetPassword (params: any) {
@@ -75,7 +75,7 @@ export class UserService {
     return this.http.get(this.hostServer + '/rest/deluxe-membership').pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
-  upgradeToDeluxe (paymentMode: string, paymentId: any) {
+  upgradeToDeluxe (paymentMode: string, paymentId: string) {
     return this.http.post(this.hostServer + '/rest/deluxe-membership', { paymentMode, paymentId }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

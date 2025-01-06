@@ -14,12 +14,12 @@ interface displayCard {
   expMonth: number
   expYear: number
 }
-
 module.exports.getPaymentMethods = function getPaymentMethods () {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const displayableCards: displayCard[] = []
     const cards = await CardModel.findAll({ where: { UserId: req.body.UserId } })
-    cards.forEach(card => {
+    const displayableCards: displayCard[] = cards.map(card => ({
+      /* Card properties mapping */
+    }))
       const displayableCard: displayCard = {
         UserId: card.UserId,
         id: card.id,
@@ -35,12 +35,12 @@ module.exports.getPaymentMethods = function getPaymentMethods () {
     res.status(200).json({ status: 'success', data: displayableCards })
   }
 }
-
 module.exports.getPaymentMethodById = function getPaymentMethodById () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const card = await CardModel.findOne({ where: { id: req.params.id, UserId: req.body.UserId } })
-    const displayableCard: displayCard = {
-      UserId: 0,
+    if (card) {
+      const displayableCard: displayCard = {
+        UserId: 0,
       id: 0,
       fullName: '',
       cardNum: '',

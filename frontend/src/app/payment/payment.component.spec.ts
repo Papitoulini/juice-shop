@@ -46,11 +46,11 @@ describe('PaymentComponent', () => {
   let translateService
   let basketService
   let dialog
-  let cookieService: any
-  let walletService: any
-  let deliveryService: any
-  let userService: any
-  let snackBar: any
+  let cookieService: CookieService
+  let walletService: WalletService
+  let deliveryService: DeliveryService | undefined
+  let userService: UserService
+  let snackBar: SnackBarService | undefined
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
@@ -215,7 +215,7 @@ describe('PaymentComponent', () => {
     translateService.get.and.returnValue(of('Translation of DISCOUNT_APPLIED'))
     spyOn(sessionStorage, 'setItem')
     component.showConfirmation(70)
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('couponDiscount', 70 as any)
+    expect(sessionStorage.setItem).toHaveBeenCalledWith('couponDiscount', '70')
   })
 
   it('should store payment id on calling getMessage', () => {
@@ -286,7 +286,7 @@ describe('PaymentComponent', () => {
     component.paymentId = 1
     spyOn(sessionStorage, 'setItem')
     component.choosePayment()
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('paymentId', 1 as any)
+    expect(sessionStorage.setItem).toHaveBeenCalledWith('paymentId', '1')
   })
 
   it('should store wallet as paymentId in session storage on calling choosePayment while paymentMode is equal to wallet', () => {

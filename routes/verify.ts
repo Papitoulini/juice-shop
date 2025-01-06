@@ -15,8 +15,8 @@ import config from 'config'
 import jws from 'jws'
 
 import * as utils from '../lib/utils'
+import jwt = require('jsonwebtoken')
 const security = require('../lib/insecurity')
-const jwt = require('jsonwebtoken')
 const cache = require('../data/datacache')
 const challenges = cache.challenges
 const products = cache.products
@@ -111,10 +111,10 @@ exports.serverSideChallenges = () => (req: Request, res: Response, next: NextFun
 function jwtChallenge (challenge: Challenge, req: Request, algorithm: string, email: string | RegExp) {
   const token = utils.jwtFrom(req)
   if (token) {
-    const decoded = jws.decode(token) ? jwt.decode(token) : null
+    const decodedToken = jws.decode(token) ? jwt.decode(token) : null;
     jwt.verify(token, security.publicKey, (err: VerifyErrors | null, verified: JwtPayload) => {
       if (err === null) {
-        challengeUtils.solveIf(challenge, () => { return hasAlgorithm(token, algorithm) && hasEmail(decoded, email) })
+        challengeUtils.solveIf(challenge, () => { return hasAlgorithm(token, algorithm) && hasEmail(decodedToken, email) })
       }
     })
   }

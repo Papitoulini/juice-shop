@@ -30,15 +30,15 @@ export class PaymentMethodComponent implements OnInit {
   public numberControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(1000000000000000), Validators.max(9999999999999999)])
   public monthControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public yearControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public confirmation: any
-  public error: any
-  public storedCards: any
-  public card: any = {}
-  public dataSource
-  public monthRange: any[]
-  public yearRange: any[]
+  public confirmation: string
+  public error: string
+  public storedCards: CreditCard[]
+  public card: CreditCard = {}
+  public dataSource: MatTableDataSource<CreditCard>
+  public monthRange: number[]
+  public yearRange: number[]
   public cardsExist: boolean = false
-  public paymentId: any = undefined
+  public paymentId: string | undefined = undefined
 
   constructor (public paymentService: PaymentService, private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
 

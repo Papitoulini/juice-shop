@@ -17,13 +17,13 @@ export class FeedbackService {
 
   constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: { [key: string]: any }) {
     return this.http.get(this.host + '/', {
       params
-    }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    }).pipe(map((response: { data: any }) => response.data), catchError((err) => { throw err }))
   }
 
-  save (params: any) {
+  save (params: { [key: string]: any }) {
     return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 

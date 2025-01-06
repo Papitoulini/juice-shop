@@ -25,7 +25,7 @@ export class ComplaintComponent implements OnInit {
   public customerControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
   public messageControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   @ViewChild('fileControl', { static: true }) fileControl!: ElementRef // For controlling the DOM Element for file input.
-  public fileUploadError: any = undefined // For controlling error handling related to file input.
+  public fileUploadError: string | undefined = undefined // For controlling error handling related to file input.
   public uploader: FileUploader = new FileUploader({
     url: environment.hostServer + '/file-upload',
     authToken: `Bearer ${localStorage.getItem('token')}`,
@@ -79,7 +79,7 @@ export class ComplaintComponent implements OnInit {
 
   saveComplaint () {
     this.complaint.message = this.messageControl.value
-    this.complaintService.save(this.complaint).subscribe((savedComplaint: any) => {
+    this.complaintService.save(this.complaint).subscribe((savedComplaint: Complaint) => {
       this.translate.get('CUSTOMER_SUPPORT_COMPLAINT_REPLY', { ref: savedComplaint.id }).subscribe((customerSupportReply) => {
         this.confirmation = customerSupportReply
       }, (translationId) => {

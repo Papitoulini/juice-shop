@@ -40,23 +40,23 @@ import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-s
 import authenticatedUsers from './routes/authenticatedUsers'
 
 const startTime = Date.now()
-const finale = require('finale-rest')
+import finale = require('finale-rest')
 const express = require('express')
-const compression = require('compression')
-const helmet = require('helmet')
-const featurePolicy = require('feature-policy')
-const errorhandler = require('errorhandler')
-const cookieParser = require('cookie-parser')
-const serveIndex = require('serve-index')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const securityTxt = require('express-security.txt')
-const robots = require('express-robots-txt')
-const yaml = require('js-yaml')
-const swaggerUi = require('swagger-ui-express')
-const RateLimit = require('express-rate-limit')
+import compression = require('compression')
+import helmet = require('helmet')
+import featurePolicy = require('feature-policy')
+import errorhandler = require('errorhandler')
+import cookieParser = require('cookie-parser')
+import serveIndex = require('serve-index')
+import bodyParser = require('body-parser')
+import cors = require('cors')
+import securityTxt = require('express-security.txt')
+import robots = require('express-robots-txt')
+import yaml = require('js-yaml')
+import swaggerUi = require('swagger-ui-express')
+import RateLimit = require('express-rate-limit')
 const ipfilter = require('express-ipfilter').IpFilter
-const swaggerDocument = yaml.load(fs.readFileSync('./swagger.yml', 'utf8'))
+import swaggerDocument = yaml.load(fs.readFileSync('./swagger.yml', 'utf8'))
 const {
   ensureFileIsPassed,
   handleZipFileUpload,
@@ -64,70 +64,70 @@ const {
   checkFileType,
   handleXmlUpload
 } = require('./routes/fileUpload')
-const profileImageFileUpload = require('./routes/profileImageFileUpload')
-const profileImageUrlUpload = require('./routes/profileImageUrlUpload')
-const redirect = require('./routes/redirect')
-const vulnCodeSnippet = require('./routes/vulnCodeSnippet')
-const vulnCodeFixes = require('./routes/vulnCodeFixes')
-const angular = require('./routes/angular')
-const easterEgg = require('./routes/easterEgg')
-const premiumReward = require('./routes/premiumReward')
-const privacyPolicyProof = require('./routes/privacyPolicyProof')
-const appVersion = require('./routes/appVersion')
-const repeatNotification = require('./routes/repeatNotification')
-const continueCode = require('./routes/continueCode')
-const restoreProgress = require('./routes/restoreProgress')
-const fileServer = require('./routes/fileServer')
-const quarantineServer = require('./routes/quarantineServer')
-const keyServer = require('./routes/keyServer')
-const logFileServer = require('./routes/logfileServer')
-const metrics = require('./routes/metrics')
-const currentUser = require('./routes/currentUser')
-const login = require('./routes/login')
-const changePassword = require('./routes/changePassword')
-const resetPassword = require('./routes/resetPassword')
-const securityQuestion = require('./routes/securityQuestion')
-const search = require('./routes/search')
-const coupon = require('./routes/coupon')
-const basket = require('./routes/basket')
-const order = require('./routes/order')
-const verify = require('./routes/verify')
-const recycles = require('./routes/recycles')
-const b2bOrder = require('./routes/b2bOrder')
-const showProductReviews = require('./routes/showProductReviews')
-const createProductReviews = require('./routes/createProductReviews')
-const checkKeys = require('./routes/checkKeys')
-const nftMint = require('./routes/nftMint')
-const web3Wallet = require('./routes/web3Wallet')
-const updateProductReviews = require('./routes/updateProductReviews')
-const likeProductReviews = require('./routes/likeProductReviews')
-const security = require('./lib/insecurity')
+import profileImageFileUpload = require('./routes/profileImageFileUpload')
+import profileImageUrlUpload = require('./routes/profileImageUrlUpload')
+import redirect = require('./routes/redirect')
+import vulnCodeSnippet = require('./routes/vulnCodeSnippet')
+import vulnCodeFixes = require('./routes/vulnCodeFixes')
+import angular = require('./routes/angular')
+import easterEgg = require('./routes/easterEgg')
+import premiumReward = require('./routes/premiumReward')
+import privacyPolicyProof = require('./routes/privacyPolicyProof')
+import appVersion = require('./routes/appVersion')
+import repeatNotification = require('./routes/repeatNotification')
+import continueCode = require('./routes/continueCode')
+import restoreProgress = require('./routes/restoreProgress')
+import fileServer = require('./routes/fileServer')
+import quarantineServer = require('./routes/quarantineServer')
+import keyServer = require('./routes/keyServer')
+import logFileServer = require('./routes/logfileServer')
+import metrics = require('./routes/metrics')
+import currentUser = require('./routes/currentUser')
+import login = require('./routes/login')
+import changePassword = require('./routes/changePassword')
+import resetPassword = require('./routes/resetPassword')
+import securityQuestion = require('./routes/securityQuestion')
+import search = require('./routes/search')
+import coupon = require('./routes/coupon')
+import basket = require('./routes/basket')
+import order = require('./routes/order')
+import verify = require('./routes/verify')
+import recycles = require('./routes/recycles')
+import b2bOrder = require('./routes/b2bOrder')
+import showProductReviews = require('./routes/showProductReviews')
+import createProductReviews = require('./routes/createProductReviews')
+import checkKeys = require('./routes/checkKeys')
+import nftMint = require('./routes/nftMint')
+import web3Wallet = require('./routes/web3Wallet')
+import updateProductReviews = require('./routes/updateProductReviews')
+import likeProductReviews = require('./routes/likeProductReviews')
+import security = require('./lib/insecurity')
 const app = express()
 const server = require('http').Server(app)
 const appConfiguration = require('./routes/appConfiguration')
-const captcha = require('./routes/captcha')
-const trackOrder = require('./routes/trackOrder')
-const countryMapping = require('./routes/countryMapping')
-const basketItems = require('./routes/basketItems')
-const saveLoginIp = require('./routes/saveLoginIp')
-const userProfile = require('./routes/userProfile')
-const updateUserProfile = require('./routes/updateUserProfile')
-const videoHandler = require('./routes/videoHandler')
-const twoFactorAuth = require('./routes/2fa')
-const languageList = require('./routes/languages')
-const imageCaptcha = require('./routes/imageCaptcha')
-const dataExport = require('./routes/dataExport')
-const address = require('./routes/address')
-const payment = require('./routes/payment')
-const wallet = require('./routes/wallet')
-const orderHistory = require('./routes/orderHistory')
-const delivery = require('./routes/delivery')
-const deluxe = require('./routes/deluxe')
-const memory = require('./routes/memory')
-const chatbot = require('./routes/chatbot')
-const locales = require('./data/static/locales.json')
+import captcha = require('./routes/captcha')
+import trackOrder = require('./routes/trackOrder')
+import countryMapping = require('./routes/countryMapping')
+import basketItems = require('./routes/basketItems')
+import saveLoginIp = require('./routes/saveLoginIp')
+import userProfile = require('./routes/userProfile')
+import updateUserProfile = require('./routes/updateUserProfile')
+import videoHandler = require('./routes/videoHandler')
+import twoFactorAuth = require('./routes/2fa')
+import languageList = require('./routes/languages')
+import imageCaptcha = require('./routes/imageCaptcha')
+import dataExport = require('./routes/dataExport')
+import address = require('./routes/address')
+import payment = require('./routes/payment')
+import wallet = require('./routes/wallet')
+import orderHistory = require('./routes/orderHistory')
+import delivery = require('./routes/delivery')
+import deluxe = require('./routes/deluxe')
+import memory = require('./routes/memory')
+import chatbot = require('./routes/chatbot')
+import locales = require('./data/static/locales.json')
+import antiCheat = require('./lib/antiCheat')
 const i18n = require('i18n')
-const antiCheat = require('./lib/antiCheat')
 
 const appName = config.get<string>('application.customMetricsPrefix')
 const startupGauge = new Prometheus.Gauge({
@@ -137,8 +137,8 @@ const startupGauge = new Prometheus.Gauge({
 })
 
 // Wraps the function and measures its (async) execution time
-const collectDurationPromise = (name: string, func: (...args: any) => Promise<any>) => {
-  return async (...args: any) => {
+const collectDurationPromise = (name: string, func: (...args: unknown[]) => Promise<unknown>) => {
+  return async (...args: unknown[]) => {
     const end = startupGauge.startTimer({ task: name })
     try {
       const res = await func(...args)
@@ -311,9 +311,9 @@ restoreOverwrittenFilesWithOriginals().then(() => {
     }
     next()
   })
-
   /* HTTP request logging */
-  const accessLogStream = require('file-stream-rotator').getStream({
+  import fileStreamRotator = require('file-stream-rotator');
+  const accessLogStream = fileStreamRotator.getStream({
     filename: path.resolve('logs/access.log'),
     frequency: 'daily',
     verbose: false,
@@ -484,7 +484,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // create a wallet when a new user is registered using API
     if (name === 'User') { // vuln-code-snippet neutral-line registerAdminChallenge
-      resource.create.send.before((req: Request, res: Response, context: { instance: { id: any }, continue: any }) => { // vuln-code-snippet vuln-line registerAdminChallenge
+      resource.create.send.before((req: Request, res: Response, context: { instance: { id: string }, continue: Function }) => { // vuln-code-snippet vuln-line registerAdminChallenge
         WalletModel.create({ UserId: context.instance.id }).catch((err: unknown) => {
           console.log(err)
         })
@@ -495,7 +495,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // translate challenge descriptions and hints on-the-fly
     if (name === 'Challenge') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | any[], continue: any }) => {
+      resource.list.fetch.after((req: Request, res: Response, context: { instance: Array<{ description: string }>, continue: Function }) => {
         for (let i = 0; i < context.instance.length; i++) {
           let description = context.instance[i].description
           if (utils.contains(description, '<em>(This challenge is <strong>')) {
@@ -511,7 +511,7 @@ restoreOverwrittenFilesWithOriginals().then(() => {
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { description: string, hint: string }, continue: any }) => {
+      resource.read.send.before((req: Request, res: Response, context: { instance: { description: string, hint: string }, continue: () => void }) => {
         context.instance.description = req.__(context.instance.description)
         if (context.instance.hint) {
           context.instance.hint = req.__(context.instance.hint)
@@ -522,13 +522,13 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // translate security questions on-the-fly
     if (name === 'SecurityQuestion') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: string | any[], continue: any }) => {
+      resource.list.fetch.after((req: Request, res: Response, context: { instance: Array<{ question: string }>, continue: () => void }) => {
         for (let i = 0; i < context.instance.length; i++) {
           context.instance[i].question = req.__(context.instance[i].question)
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { question: string }, continue: any }) => {
+      resource.read.send.before((req: Request, res: Response, context: { instance: { question: string }, continue: () => void }) => {
         context.instance.question = req.__(context.instance.question)
         return context.continue
       })
@@ -536,14 +536,14 @@ restoreOverwrittenFilesWithOriginals().then(() => {
 
     // translate product names and descriptions on-the-fly
     if (name === 'Product') {
-      resource.list.fetch.after((req: Request, res: Response, context: { instance: any[], continue: any }) => {
+      resource.list.fetch.after((req: Request, res: Response, context: { instance: Array<{ name: string, description: string }>, continue: () => void }) => {
         for (let i = 0; i < context.instance.length; i++) {
           context.instance[i].name = req.__(context.instance[i].name)
           context.instance[i].description = req.__(context.instance[i].description)
         }
         return context.continue
       })
-      resource.read.send.before((req: Request, res: Response, context: { instance: { name: string, description: string }, continue: any }) => {
+      resource.read.send.before((req: Request, res: Response, context: { instance: { name: string, description: string }, continue: () => void }) => {
         context.instance.name = req.__(context.instance.name)
         context.instance.description = req.__(context.instance.description)
         return context.continue
@@ -650,16 +650,16 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   console.error(err)
 })
 
-const multer = require('multer')
+import multer = require('multer')
 const uploadToMemory = multer({ storage: multer.memoryStorage(), limits: { fileSize: 200000 } })
-const mimeTypeMap: any = {
+const mimeTypeMap: Record<string, string> = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg'
 }
 const uploadToDisk = multer({
   storage: multer.diskStorage({
-    destination: (req: Request, file: any, cb: any) => {
+    destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
       const isValid = mimeTypeMap[file.mimetype]
       let error: Error | null = new Error('Invalid mime type')
       if (isValid) {
@@ -667,7 +667,7 @@ const uploadToDisk = multer({
       }
       cb(error, path.resolve('frontend/dist/frontend/assets/public/images/uploads/'))
     },
-    filename: (req: Request, file: any, cb: any) => {
+    filename: (req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
       const name = security.sanitizeFilename(file.originalname)
         .toLowerCase()
         .split(' ')
@@ -688,7 +688,7 @@ logger.info(`Entity models ${colors.bold(Object.keys(sequelize.models).length.to
 /* Serve metrics */
 let metricsUpdateLoop: any
 const Metrics = metrics.observeMetrics() // vuln-code-snippet neutral-line exposedMetricsChallenge
-app.get('/metrics', metrics.serveMetrics()) // vuln-code-snippet vuln-line exposedMetricsChallenge
+app.get('/metrics', metrics.serveMetrics(true)) // vuln-code-snippet vuln-line exposedMetricsChallenge
 errorhandler.title = `${config.get<string>('application.name')} (Express ${utils.version('express')})`
 
 export async function start (readyCallback?: () => void) {

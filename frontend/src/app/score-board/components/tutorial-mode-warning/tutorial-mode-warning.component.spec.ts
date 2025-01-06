@@ -28,18 +28,18 @@ describe('TutorialModeWarningComponent', () => {
         name: 'my name two',
         description: 'lorem ipsum',
         tutorialOrder: null,
-        solved: false
-      }
-    ] as any
+        solved: false,
+      },
+    ]);
 
     component.applicationConfig = {
       challenges: {
-        restrictToTutorialsFirst: true
-      }
-    } as any
+        restrictToTutorialsFirst: true,
+      },
+    };
 
-    fixture.detectChanges()
-  })
+    fixture.detectChanges();
+  });
 
   it('should show warning when there are configured and unsolved tutorial challenges exist', () => {
     component.ngOnChanges()
@@ -49,12 +49,12 @@ describe('TutorialModeWarningComponent', () => {
   it('not show if tutorial is not configured', () => {
     component.applicationConfig = {
       challenges: {
-        restrictToTutorialsFirst: false
-      }
-    } as any
-    component.ngOnChanges()
-    expect(component.tutorialModeActive).toBe(false)
-  })
+        restrictToTutorialsFirst: false,
+      },
+    };
+    component.ngOnChanges();
+    expect(component.tutorialModeActive).toBe(false);
+  });
 
   it('should not show warning when all tutorial mode challenges are solved', () => {
     component.allChallenges = [
@@ -71,7 +71,7 @@ describe('TutorialModeWarningComponent', () => {
         tutorialOrder: null,
         solved: false
       }
-    ] as any
+    ] as Array<{ id: string; solved: boolean }>
     component.ngOnChanges()
     expect(component.tutorialModeActive).toBe(false)
   })

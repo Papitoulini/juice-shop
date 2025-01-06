@@ -34,11 +34,11 @@ import { throwError } from 'rxjs/internal/observable/throwError'
 describe('TwoFactorAuthComponent', () => {
   let component: TwoFactorAuthComponent
   let fixture: ComponentFixture<TwoFactorAuthComponent>
-  let twoFactorAuthService: any
-  let configurationService: any
+  let twoFactorAuthService: jasmine.SpyObj<TwoFactorAuthenticationService>
+  let configurationService: jasmine.SpyObj<ConfigurationService>
 
   beforeEach(waitForAsync(() => {
-    twoFactorAuthService = jasmine.createSpyObj('TwoFactorAuthService', ['status', 'setup', 'disable'])
+    twoFactorAuthService = jasmine.createSpyObj<TwoFactorAuthenticationService>('TwoFactorAuthService', ['status', 'setup', 'disable'])
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { } }))
     TestBed.configureTestingModule({

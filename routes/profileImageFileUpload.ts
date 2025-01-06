@@ -9,7 +9,7 @@ import { UserModel } from '../models/user'
 import logger from '../lib/logger'
 
 import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
+import security = require('../lib/insecurity')
 const fileType = require('file-type')
 
 module.exports = function fileUpload () {

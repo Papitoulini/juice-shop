@@ -23,8 +23,8 @@ export class ChangePasswordComponent {
   public passwordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public newPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)])
   public repeatNewPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), matchValidator(this.newPasswordControl)])
-  public error: any
-  public confirmation: any
+  public error: string
+  public confirmation: string
 
   constructor (private readonly userService: UserService, private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService) { }
 
@@ -39,8 +39,8 @@ export class ChangePasswordComponent {
     this.userService.changePassword({
       current: this.passwordControl.value,
       new: this.newPasswordControl.value,
-      repeat: this.repeatNewPasswordControl.value
-    }).subscribe((response: any) => {
+      // repeat: this.repeatNewPasswordControl.value (unused variable)
+    }).subscribe((response: Response) => {
       this.error = undefined
       this.translate.get('PASSWORD_SUCCESSFULLY_CHANGED').subscribe((passwordSuccessfullyChanged) => {
         this.confirmation = passwordSuccessfullyChanged

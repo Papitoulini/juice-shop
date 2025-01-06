@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button'
 describe('TokenSaleComponent', () => {
   let component: TokenSaleComponent
   let fixture: ComponentFixture<TokenSaleComponent>
-  let configurationService: any
+  let configurationService: jasmine.SpyObj<ConfigurationService>
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])

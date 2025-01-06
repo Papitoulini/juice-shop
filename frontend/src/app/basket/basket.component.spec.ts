@@ -27,7 +27,7 @@ describe('BasketComponent', () => {
   let component: BasketComponent
   let fixture: ComponentFixture<BasketComponent>
   let deluxeGuard
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({

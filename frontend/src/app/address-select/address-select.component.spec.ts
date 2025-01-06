@@ -31,7 +31,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 describe('AddressSelectComponent', () => {
   let component: AddressSelectComponent
   let fixture: ComponentFixture<AddressSelectComponent>
-  let snackBar: any
+  let snackBar: MatSnackBar
   let translateService
 
   beforeEach(waitForAsync(() => {

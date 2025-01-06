@@ -28,7 +28,7 @@ export function couponCode (query: string, user: string) {
   }
 }
 
-export function testFunction (query: string, user: string) {
+export function testFunction (query: string) {
   return {
     action: 'response',
     body: '3be2e438b7f3d04c89d7749f727bb3bd'

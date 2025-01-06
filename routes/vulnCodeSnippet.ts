@@ -10,7 +10,7 @@ import { getCodeChallenges } from '../lib/codingChallenges'
 import * as accuracy from '../lib/accuracy'
 import * as utils from '../lib/utils'
 
-const challengeUtils = require('../lib/challengeUtils')
+import challengeUtils = require('../lib/challengeUtils')
 
 interface SnippetRequestBody {
   challenge: string
@@ -21,7 +21,7 @@ interface VerdictRequestBody {
   key: string
 }
 
-const setStatusCode = (error: any) => {
+const setStatusCode = (error: Error) => {
   switch (error.name) {
     case 'BrokenBoundary':
       return 422
@@ -40,7 +40,7 @@ export const retrieveCodeSnippet = async (challengeKey: string) => {
 
 exports.serveCodeSnippet = () => async (req: Request<SnippetRequestBody, Record<string, unknown>, Record<string, unknown>>, res: Response, next: NextFunction) => {
   try {
-    const snippetData = await retrieveCodeSnippet(req.params.challenge)
+    const snippetData = await retrieveCodeSnippet(req.body.challenge)
     if (snippetData == null) {
       res.status(404).json({ status: 'error', error: `No code challenge for challenge key: ${req.params.challenge}` })
       return
@@ -72,7 +72,7 @@ export const getVerdict = (vulnLines: number[], neutralLines: number[], selected
 }
 
 exports.checkVulnLines = () => async (req: Request<Record<string, unknown>, Record<string, unknown>, VerdictRequestBody>, res: Response, next: NextFunction) => {
-  const key = req.body.key
+  const { key } = req.body
   let snippetData
   try {
     snippetData = await retrieveCodeSnippet(key)

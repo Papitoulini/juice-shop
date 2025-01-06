@@ -37,7 +37,7 @@ interface IAuthenticatedUsers {
   get: (token: string) => ResponseWithUser | undefined
   tokenOf: (user: UserModel) => string | undefined
   from: (req: Request) => ResponseWithUser | undefined
-  updateFrom: (req: Request, user: ResponseWithUser) => any
+  updateFrom: (req: Request, user: ResponseWithUser) => ResponseWithUser
 }
 
 export const hash = (data: string) => crypto.createHash('md5').update(data).digest('hex')
@@ -51,8 +51,8 @@ export const cutOffPoisonNullByte = (str: string) => {
   return str
 }
 
-export const isAuthorized = () => expressJwt(({ secret: publicKey }) as any)
-export const denyAll = () => expressJwt({ secret: '' + Math.random() } as any)
+export const isAuthorized = () => expressJwt(({ secret: publicKey } as { secret: string }))
+export const denyAll = () => expressJwt({ secret: '' + Math.random() } as { secret: string })
 export const authorize = (user = {}) => jwt.sign(user, privateKey, { expiresIn: '6h', algorithm: 'RS256' })
 export const verify = (token: string) => token ? (jws.verify as ((token: string, secret: string) => boolean))(token, publicKey) : false
 export const decode = (token: string) => { return jws.decode(token)?.payload }
@@ -179,7 +179,7 @@ export const appendUserId = () => {
     try {
       req.body.UserId = authenticatedUsers.tokenMap[utils.jwtFrom(req)].data.id
       next()
-    } catch (error: any) {
+    } catch (error: Error) {
       res.status(401).json({ status: 'error', message: error })
     }
   }
@@ -188,7 +188,7 @@ export const appendUserId = () => {
 export const updateAuthenticatedUsers = () => (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token || utils.jwtFrom(req)
   if (token) {
-    jwt.verify(token, publicKey, (err: Error | null, decoded: any) => {
+    jwt.verify(token, publicKey, (err: Error | null, decoded: JwtPayload) => {
       if (err === null) {
         if (authenticatedUsers.get(token) === undefined) {
           authenticatedUsers.put(token, decoded)

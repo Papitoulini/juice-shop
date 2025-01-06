@@ -26,7 +26,7 @@ import { CookieModule } from 'ngx-cookie'
 describe('OAuthComponent', () => {
   let component: OAuthComponent
   let fixture: ComponentFixture<OAuthComponent>
-  let userService: any
+  let userService: jasmine.SpyObj<UserService>
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['oauthLogin', 'login', 'save'])

@@ -23,11 +23,11 @@ import { of, throwError } from 'rxjs'
 describe('ContactComponent', () => {
   let component: ContactComponent
   let fixture: ComponentFixture<ContactComponent>
-  let userService: any
-  let feedbackService: any
-  let captchaService: any
-  let snackBar: any
-  let translateService
+  let userService: UserService
+  let feedbackService: FeedbackService
+  let captchaService: CaptchaService
+  let snackBar: MatSnackBar
+  let translateService: TranslateService
 
   beforeEach(waitForAsync(() => {
     translateService = jasmine.createSpyObj('TranslateService', ['get'])

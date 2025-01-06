@@ -51,7 +51,7 @@ export class CodeSnippetComponent implements OnInit {
   public showFeedbackButtons: boolean = true
   public randomFixes: RandomFixes[] = []
 
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any, private readonly configurationService: ConfigurationService, private readonly codeSnippetService: CodeSnippetService, private readonly vulnLinesService: VulnLinesService, private readonly codeFixesService: CodeFixesService, private readonly challengeService: ChallengeService, private readonly cookieService: CookieService) { }
+  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: RandomFixes[], private readonly configurationService: ConfigurationService, private readonly codeSnippetService: CodeSnippetService, private readonly vulnLinesService: VulnLinesService, private readonly codeFixesService: CodeFixesService, private readonly challengeService: ChallengeService, private readonly cookieService: CookieService) { }
 
   ngOnInit () {
     this.configurationService.getApplicationConfiguration().subscribe((config) => {

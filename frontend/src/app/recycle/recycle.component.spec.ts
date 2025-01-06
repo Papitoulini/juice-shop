@@ -38,9 +38,9 @@ describe('RecycleComponent', () => {
   let fixture: ComponentFixture<RecycleComponent>
   let recycleService: any
   let userService: any
-  let configurationService: any
-  let translateService
-  let snackBar: any
+  let configurationService: ConfigurationService
+  let translateService: TranslateService
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     recycleService = jasmine.createSpyObj('RecycleService', ['save', 'find'])

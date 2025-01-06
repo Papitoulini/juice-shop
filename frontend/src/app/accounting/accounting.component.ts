@@ -34,12 +34,12 @@ export class AccountingComponent implements AfterViewInit, OnDestroy {
   public orderData: Order[]
   public orderSource
   public displayedColumns = ['Product', 'Price', 'Quantity']
-  public tableData: any[]
+  public tableData: Array<any>
   public dataSource
   @ViewChild('paginator', { static: true }) paginator: MatPaginator
   private productSubscription: Subscription
   private quantitySubscription: Subscription
-  public quantityMap: any
+  public quantityMap: Map<string, number>
   constructor (private readonly productService: ProductService, private readonly quantityService: QuantityService, private readonly orderHistoryService: OrderHistoryService, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngAfterViewInit () {

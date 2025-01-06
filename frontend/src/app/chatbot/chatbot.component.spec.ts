@@ -28,7 +28,7 @@ enum MessageSources {
 describe('ComplaintComponent', () => {
   let component: ChatbotComponent
   let fixture: ComponentFixture<ChatbotComponent>
-  let chatbotService: any
+  let chatbotService: { [key: string]: any }
   let translateService
 
   beforeEach(waitForAsync(() => {
