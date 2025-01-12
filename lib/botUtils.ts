@@ -9,7 +9,7 @@ import { challenges } from '../data/datacache'
 import * as security from './insecurity'
 import * as challengeUtils from './challengeUtils'
 
-export async function productPrice (query: string, user: string) {
+export async function productPrice (query: string, _user: string) {
   const products = await ProductModel.findAll()
   const queriedProducts = products
     .filter((product: Product) => fuzz.partial_ratio(query, product.name) > 60)
@@ -20,8 +20,8 @@ export async function productPrice (query: string, user: string) {
   }
 }
 
-export function couponCode (query: string, user: string) {
-  challengeUtils.solveIf(challenges.bullyChatbotChallenge, () => { return true })
+export function couponCode(query: string, user: string) {
+  const _unused = challengeUtils.solveIf(challenges.bullyChatbotChallenge, () => { return true })
   return {
     action: 'response',
     body: `Oooookay, if you promise to stop nagging me here's a 10% coupon code for you: ${security.generateCoupon(10)}`
