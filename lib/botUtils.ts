@@ -20,7 +20,7 @@ export async function productPrice (query: string, user: string) {
   }
 }
 
-export function couponCode (query: string, user: string) {
+export function couponCode (query: string) {
   challengeUtils.solveIf(challenges.bullyChatbotChallenge, () => { return true })
   return {
     action: 'response',

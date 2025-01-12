@@ -42,7 +42,7 @@ function totalAccuracy (phase: Phase) {
   let totalSolved = 0
   Object.entries(solves).forEach(([key, value]) => {
     if (value[phase]) {
-      sumAccuracy += 1 / value.attempts[phase]
+      sumAccuracy += value.attempts[phase] ? 1 / value.attempts[phase] : 0
       totalSolved++
     }
   })

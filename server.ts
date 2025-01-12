@@ -40,7 +40,7 @@ import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-s
 import authenticatedUsers from './routes/authenticatedUsers'
 
 const startTime = Date.now()
-const finale = require('finale-rest')
+import finale = require('finale-rest')
 const express = require('express')
 const compression = require('compression')
 const helmet = require('helmet')
