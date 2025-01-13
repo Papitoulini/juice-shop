@@ -44,7 +44,7 @@
 
 /** Evergreen browsers require these. */
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
-import 'core-js/es/reflect'
+import 'core-js/es/reflect';
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
@@ -64,8 +64,8 @@ import 'core-js/es/reflect'
 /** *************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js' // Included with Angular CLI.
-(window as any).global = window
+import 'zone.js'; // Included with Angular CLI.
+(window as Window & typeof globalThis).global = window;
 
 /** *************************************************************************************************
  * APPLICATION IMPORTS
