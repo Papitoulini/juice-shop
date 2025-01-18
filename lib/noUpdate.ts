@@ -30,24 +30,7 @@ export const makeKeyNonUpdatable = (model: Model, column: string) => {
 
     const validationErrors: ValidationErrorItemType[] = []
 
-    changedKeys.forEach((fieldName: any) => {
+    changedKeys.forEach((fieldName: string) => {
       const fieldDefinition = instance.rawAttributes[fieldName]
 
       if (
-        instance._previousDataValues[fieldName] !== undefined &&
-        instance._previousDataValues[fieldName] !== null &&
-        (fieldDefinition.fieldName === column)
-      ) {
-        validationErrors.push(
-          new ValidationErrorItem(
-            `\`${fieldName}\` cannot be updated due \`noUpdate\` constraint`,
-            'noUpdate Violation',
-            fieldName
-          )
-        )
-      }
-    })
-
-    if (validationErrors.length > 0) { throw new ValidationError(null, validationErrors) }
-  })
-}

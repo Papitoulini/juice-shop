@@ -15,12 +15,7 @@ exports.getRecycleItem = () => (req: Request, res: Response) => {
     }
   }).then((Recycle) => {
     return res.send(utils.queryResultToJson(Recycle))
-  }).catch((_: unknown) => {
+  }).catch((error: unknown) => {
     return res.send('Error fetching recycled items. Please try again')
   })
-}
-
-exports.blockRecycleItems = () => (req: Request, res: Response) => {
-  const errMsg = { err: 'Sorry, this endpoint is not supported.' }
-  return res.send(utils.queryResultToJson(errMsg))
 }

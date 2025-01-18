@@ -28,37 +28,7 @@ export class OAuthComponent implements OnInit {
     })
   }
 
-  login (profile: any) {
+  login (profile: { email: string }) {
     this.userService.login({ email: profile.email, password: btoa(profile.email.split('').reverse().join('')), oauth: true }).subscribe((authentication) => {
       const expires = new Date()
       expires.setHours(expires.getHours() + 8)
-      this.cookieService.put('token', authentication.token, { expires })
-      localStorage.setItem('token', authentication.token)
-      sessionStorage.setItem('bid', authentication.bid)
-      this.userService.isLoggedIn.next(true)
-      this.ngZone.run(async () => await this.router.navigate(['/']))
-    }, (error) => {
-      this.invalidateSession(error)
-      this.ngZone.run(async () => await this.router.navigate(['/login']))
-    })
-  }
-
-  invalidateSession (error: Error) {
-    console.log(error)
-    this.cookieService.remove('token')
-    localStorage.removeItem('token')
-    sessionStorage.removeItem('bid')
-  }
-
-  parseRedirectUrlParams () {
-    const hash = this.route.snapshot.data.params.substr(1)
-    const splitted = hash.split('&')
-    const params: any = {}
-    for (let i = 0; i < splitted.length; i++) {
-      const param: string = splitted[i].split('=')
-      const key: string = param[0]
-      params[key] = param[1]
-    }
-    return params
-  }
-}

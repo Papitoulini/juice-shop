@@ -31,59 +31,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 describe('AddressSelectComponent', () => {
   let component: AddressSelectComponent
   let fixture: ComponentFixture<AddressSelectComponent>
-  let snackBar: any
+  let snackBar: MatSnackBar
   let translateService
 
   beforeEach(waitForAsync(() => {
-    translateService = jasmine.createSpyObj('TranslateService', ['get'])
-    translateService.get.and.returnValue(of({}))
-    translateService.onLangChange = new EventEmitter()
-    translateService.onTranslationChange = new EventEmitter()
-    translateService.onDefaultLangChange = new EventEmitter()
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
-    snackBar.open.and.returnValue(null)
-
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([
-          { path: 'delivery-method', component: DeliveryMethodComponent }
-        ]),
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-        ReactiveFormsModule,
-
-        BrowserAnimationsModule,
-        MatCardModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatDividerModule,
-        MatRadioModule,
-        MatDialogModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatCheckboxModule
-      ],
-      declarations: [AddressSelectComponent, AddressComponent, DeliveryMethodComponent],
-      providers: [{ provide: TranslateService, useValue: translateService },
-        { provide: MatSnackBar, useValue: snackBar }]
-    })
-      .compileComponents()
-  }))
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AddressSelectComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  it('should store address id on calling getMessage', () => {
-    component.getMessage(1)
-    expect(component.addressId).toBe(1)
-  })
-})

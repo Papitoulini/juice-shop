@@ -1,73 +1,10 @@
 import { retrieveCodeSnippet } from '../routes/vulnCodeSnippet'
 import colors from 'colors/safe'
 const Diff = require('diff')
-const fs = require('fs')
+import fs = require('fs')
 const fixesPath = 'data/static/codefixes'
-const cacheFile = 'rsn/cache.json'
-
-type CacheData = Record<string, {
-  added: number[]
-  removed: number[]
-}>
-
-function readFiles () {
-  const files = fs.readdirSync(fixesPath)
-  const keys = files.filter((file: string) => !file.endsWith('.info.yml') && !file.endsWith('.editorconfig'))
-  return keys
-}
-
-function writeToFile (json: CacheData) {
-  fs.writeFileSync(cacheFile, JSON.stringify(json, null, '\t'))
-}
-
-function getDataFromFile () {
-  const data = fs.readFileSync(cacheFile).toString()
-  return JSON.parse(data)
-}
-
-function filterString (text: string) {
-  text = text.replace(/\r/g, '')
-  return text
-}
-
-const checkDiffs = async (keys: string[]) => {
+import cacheFile = require('rsn/cache.json')
   const data: CacheData = keys.reduce((prev, curr) => {
-    return {
-      ...prev,
-      [curr]: {
-        added: [],
-        removed: []
-      }
-    }
-  }, {})
-  for (const val of keys) {
-    await retrieveCodeSnippet(val.split('_')[0])
-      .then(snippet => {
-        if (snippet == null) return
-        process.stdout.write(val + ': ')
-        const fileData = fs.readFileSync(fixesPath + '/' + val).toString()
-        const diff = Diff.diffLines(filterString(fileData), filterString(snippet.snippet))
-        let line = 0
-        for (const part of diff) {
-          if (part.removed) continue
-          const prev = line
-          line += part.count
-          if (!(part.added)) continue
-          for (let i = 0; i < part.count; i++) {
-            if (!snippet.vulnLines.includes(prev + i + 1) && !snippet.neutralLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red(colors.inverse(prev + i + 1 + '')))
-              process.stdout.write(' ')
-              data[val].added.push(prev + i + 1)
-            } else if (snippet.vulnLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red(colors.bold(prev + i + 1 + ' ')))
-            } else if (snippet.neutralLines.includes(prev + i + 1)) {
-              process.stdout.write(colors.red(prev + i + 1 + ' '))
-            }
-          }
-        }
-        line = 0
-        let norm = 0
-        for (const part of diff) {
           if (part.added) {
             norm--
             continue

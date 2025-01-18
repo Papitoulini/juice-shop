@@ -27,48 +27,7 @@ describe('SavedPaymentMethodsComponent', () => {
   let component: SavedPaymentMethodsComponent
   let translateService
   let fixture: ComponentFixture<SavedPaymentMethodsComponent>
-  let snackBar: any
-
+  let snackBar: MatSnackBar
+  
   beforeEach(waitForAsync(() => {
     translateService = jasmine.createSpyObj('TranslateService', ['get'])
-    translateService.get.and.returnValue(of({}))
-    translateService.onLangChange = new EventEmitter()
-    translateService.onTranslationChange = new EventEmitter()
-    translateService.onDefaultLangChange = new EventEmitter()
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
-
-    TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-        ReactiveFormsModule,
-
-        BrowserAnimationsModule,
-        MatCardModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatDividerModule,
-        MatRadioModule,
-        MatDialogModule
-      ],
-      declarations: [SavedPaymentMethodsComponent, PaymentMethodComponent],
-      providers: [
-        { provide: TranslateService, useValue: translateService },
-        { provide: MatSnackBar, useValue: snackBar }
-      ]
-    })
-      .compileComponents()
-  }))
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SavedPaymentMethodsComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-})

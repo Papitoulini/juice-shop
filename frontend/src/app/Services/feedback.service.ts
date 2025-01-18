@@ -17,17 +17,10 @@ export class FeedbackService {
 
   constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: { [key: string]: any }) {
     return this.http.get(this.host + '/', {
       params
-    }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  save (params: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  del (id: number) {
-    return this.http.delete(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-}
+    }).pipe(map((response: { data: any }) => response.data), catchError((err) => { throw err }))
+const ages: Array<number> = ['seventeen'];
+const age: string = 'seventeen';
+const age: string = 'seventeen';

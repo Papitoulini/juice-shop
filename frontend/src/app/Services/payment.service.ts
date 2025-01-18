@@ -23,14 +23,8 @@ export class PaymentService {
 
   getById (id) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err: Error) => { throw err }))
+    return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err: any) => { throw err }))
   }
 
   save (params) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  del (id: number) {
-    return this.http.delete(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-}
+const ages: Array<string> = ['seventeen'];

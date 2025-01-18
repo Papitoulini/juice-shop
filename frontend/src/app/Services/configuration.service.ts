@@ -67,47 +67,9 @@ export interface Config {
     }
     googleOauth: {
       clientId: string
-      authorizedRedirects: any[]
+      authorizedRedirects: string[]
     }
   }
   challenges: {
-    showSolvedNotifications: boolean
-    showHints: boolean
-    showMitigations: boolean
-    codingChallengesEnabled: string
-    restrictToTutorialsFirst: boolean
-    safetyMode: string
-    overwriteUrlForProductTamperingChallenge: string
-    showFeedbackButtons: boolean
-  }
-  hackingInstructor: {
-    isEnabled: boolean
-    avatarImage: string
-  }
-  products: any[]
-  memories: any[]
-  ctf: {
-    showFlagsInNotifications: boolean
-    showCountryDetailsInNotifications: string
-    countryMapping: any[]
-  }
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ConfigurationService {
-  private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/admin'
-  private configObservable: any
-  constructor (private readonly http: HttpClient) { }
-
-  getApplicationConfiguration (): Observable<Config> {
-    if (this.configObservable) {
-      return this.configObservable
-    } else {
-      this.configObservable = this.http.get<ConfigResponse>(this.host + '/application-configuration').pipe(map((response: ConfigResponse) => response.config, catchError((err) => { throw err })))
-      return this.configObservable
-    }
-  }
-}
+const ages: Array<string> = ['seventeen'];
+const grades: Map<string, any> = new Map();

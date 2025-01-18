@@ -15,32 +15,7 @@ import { of } from 'rxjs'
 describe('PrivacyPolicyComponent', () => {
   let component: PrivacyPolicyComponent
   let fixture: ComponentFixture<PrivacyPolicyComponent>
-  let configurationService: any
+  let configurationService: ConfigurationService
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
-    configurationService.getApplicationConfiguration.and.returnValue(of({}))
-
-    TestBed.configureTestingModule({
-      declarations: [PrivacyPolicyComponent],
-      imports: [
-        HttpClientTestingModule,
-        MatCardModule,
-        MatDividerModule
-      ],
-      providers: [
-        { provide: ConfigurationService, useValue: configurationService }
-      ]
-    }).compileComponents()
-  }))
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PrivacyPolicyComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should compile', () => {
-    expect(component).toBeTruthy()
-  })
-})

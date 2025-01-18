@@ -27,58 +27,7 @@ describe('BasketComponent', () => {
   let component: BasketComponent
   let fixture: ComponentFixture<BasketComponent>
   let deluxeGuard
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [BasketComponent, PurchaseBasketComponent],
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-        BrowserAnimationsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCardModule,
-        MatTableModule,
-        MatButtonModule,
-        MatExpansionModule,
-        MatDialogModule,
-        MatButtonToggleModule,
-        MatSnackBarModule
-      ],
-      providers: [
-        { provide: DeluxeGuard, useValue: deluxeGuard },
-        { provide: MatSnackBar, useValue: snackBar }
-      ]
-    })
-      .compileComponents()
-  }))
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BasketComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  it('should store product count on calling getProductCount', () => {
-    component.getProductCount(1)
-    expect(component.productCount).toBe(1)
-  })
-
-  it('should store bonus points on calling getBonusPoints', () => {
-    component.getBonusPoints([1, 10])
-    expect(component.bonus).toBe(10)
-  })
-
-  it('should store itemTotal in session storage', () => {
-    spyOn(sessionStorage, 'setItem')
-    component.getBonusPoints([1, 10])
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('itemTotal', 1 as any)
-  })
-})

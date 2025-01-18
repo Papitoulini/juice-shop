@@ -12,12 +12,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./address-select.component.scss']
 })
 export class AddressSelectComponent {
-  public addressId: any = undefined
+  public addressId: string | undefined = undefined
   public showNextButton: boolean = true
 
   constructor (private readonly router: Router, private readonly ngZone: NgZone) {}
-
-  getMessage (id) {
-    this.addressId = id
-  }
-}

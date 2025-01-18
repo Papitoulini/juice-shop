@@ -17,12 +17,7 @@ library.add(faArrowCircleLeft)
   styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
-  public user: any
+  public user: User
   constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any, private readonly userService: UserService) { }
 
   ngOnInit () {
-    this.userService.get(this.dialogData.id).subscribe((user) => {
-      this.user = user
-    }, (err) => { console.log(err) })
-  }
-}

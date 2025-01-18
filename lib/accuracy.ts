@@ -42,28 +42,5 @@ function totalAccuracy (phase: Phase) {
   let totalSolved = 0
   Object.entries(solves).forEach(([key, value]) => {
     if (value[phase]) {
-      sumAccuracy += 1 / value.attempts[phase]
-      totalSolved++
-    }
-  })
-  return sumAccuracy / totalSolved
-}
-
-function calculateAccuracy (challengeKey: string, phase: Phase) {
-  let accuracy = 0
-  if (solves[challengeKey][phase]) {
-    accuracy = 1 / solves[challengeKey].attempts[phase]
-  }
-  logger.info(`Accuracy for '${phase === 'fix it' ? 'Fix It' : 'Find It'}' phase of coding challenge ${colors.cyan(challengeKey)}: ${accuracy > 0.5 ? colors.green(accuracy.toString()) : (accuracy > 0.25 ? colors.yellow(accuracy.toString()) : colors.red(accuracy.toString()))}`)
-  return accuracy
-}
-
-function storeVerdict (challengeKey: string, phase: Phase, verdict: boolean) {
-  if (!solves[challengeKey]) {
-    solves[challengeKey] = { 'find it': false, 'fix it': false, attempts: { 'find it': 0, 'fix it': 0 } }
-  }
-  if (!solves[challengeKey][phase]) {
-    solves[challengeKey][phase] = verdict
-    solves[challengeKey].attempts[phase]++
-  }
-}
+      sumAccuracy += value[phase] ? 1 / value.attempts[phase] : 0
+      totalSolved += value[phase] ? 1 : 0

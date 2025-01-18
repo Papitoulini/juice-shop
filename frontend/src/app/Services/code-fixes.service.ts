@@ -29,10 +29,7 @@ export class CodeFixesService {
     return this.http.get(this.host + `/${key}`).pipe(map((response: Fixes) => response), catchError((error: any) => { throw error }))
   }
 
-  check (key: string, selectedFix: number): any {
+  check (key: string, selectedFix: number): Observable<any> {
     return this.http.post(this.host, {
       key,
-      selectedFix
-    }).pipe(map((response: result) => response), catchError((error: any) => { throw error }))
-  }
-}
+      selectedFix: string

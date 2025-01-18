@@ -17,10 +17,7 @@ export class VulnLinesService {
 
   constructor (private readonly http: HttpClient) { }
 
-  check (key: string, selectedLines: number[]): any {
+  check (key: string, selectedLines: number[]): Observable<any> {
     return this.http.post(this.host, {
-      key,
-      selectedLines
-    }).pipe(map((response: result) => response), catchError((error: any) => { throw error }))
-  }
-}
+      key: any,
+      selectedLines: any[]

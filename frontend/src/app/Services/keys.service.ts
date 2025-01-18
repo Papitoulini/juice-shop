@@ -14,61 +14,7 @@ export class KeysService {
 
   nftUnlocked () {
     return this.http.get(this.host + '/nftUnlocked').pipe(
-      map((response: any) => response),
+      map((response: { [key: string]: any }) => response),
       catchError((err) => {
         throw err
       })
-    )
-  }
-
-  nftMintListen () {
-    return this.http.get(this.host + '/nftMintListen').pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-
-  checkNftMinted () {
-    return this.http.get(this.hostServer + '/api/Challenges/?key=nftMintChallenge').pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-
-  submitKey (privateKey: string) {
-    const endpoint = this.host + '/submitKey'
-    const params = { privateKey }
-    return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-
-  verifyNFTWallet (walletAddress: string) {
-    const endpoint = this.host + '/walletNFTVerify'
-    const params = { walletAddress }
-    return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-
-  walletAddressSend (walletAddress: string) {
-    const endpoint = this.host + '/walletExploitAddress'
-    const params = { walletAddress }
-    return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
-      catchError((err) => {
-        throw err
-      })
-    )
-  }
-}

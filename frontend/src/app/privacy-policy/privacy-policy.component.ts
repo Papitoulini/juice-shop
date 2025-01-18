@@ -21,15 +21,7 @@ export class PrivacyPolicyComponent implements OnInit {
 
   ngOnInit (): void {
     this.applicationUrl = this._document.location.protocol + '//' + this._document.location.hostname
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+    this.configurationService.getApplicationConfiguration().subscribe((config: ApplicationConfig) => {
       if (config?.application?.name) {
         this.applicationName = config.application.name
       }
-      if (config?.application?.privacyContactEmail) {
-        this.privacyContactEmail = config.application.privacyContactEmail
-      } else {
-        this.privacyContactEmail = `donotreply@${this._document.location.hostname}`
-      }
-    }, (err) => { console.log(err) })
-  }
-}
