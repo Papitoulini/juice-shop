@@ -20,12 +20,12 @@ describe('BasketService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get basket directly from the rest api', inject([BasketService, HttpTestingController],
+it('should get basket directly from the rest api', inject([BasketService, HttpTestingController],
     fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
-      service.find(1).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/rest/basket/1')
-      req.flush({ data: 'apiResponse' })
+      let res: any;
+      service.find(1).subscribe((data) => (res = data));
+      const req = httpMock.expectOne('http://localhost:3000/rest/basket/1');
+      req.flush({ data: 'apiResponse' });
       tick()
       expect(req.request.method).toBe('GET')
       expect(res).toBe('apiResponse')
@@ -33,9 +33,9 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should get single basket item directly from the rest api', inject([BasketService, HttpTestingController],
+it('should get single basket item directly from the rest api', inject([BasketService, HttpTestingController],
     fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: BasketItem
       service.get(1).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/api/BasketItems/1')
       req.flush({ data: 'apiResponse' })
@@ -46,12 +46,12 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should create basket item directly from the rest api', inject([BasketService, HttpTestingController],
-    fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
-      service.save().subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/api/BasketItems/')
-      req.flush({ data: 'apiResponse' })
+it('should create basket item directly from the rest api', inject([BasketService, HttpTestingController],
+  fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
+    let res: { data: string };
+    service.save().subscribe((data) => (res = data));
+    const req = httpMock.expectOne('http://localhost:3000/api/BasketItems/');
+    req.flush({ data: 'apiResponse' });
       tick()
       expect(req.request.method).toBe('POST')
       expect(res).toBe('apiResponse')
@@ -59,12 +59,12 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should update basket item directly from the rest api', inject([BasketService, HttpTestingController],
+it('should update basket item directly from the rest api', inject([BasketService, HttpTestingController],
     fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
-      service.put(1, {}).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/api/BasketItems/1')
-      req.flush({ data: 'apiResponse' })
+      let res: any;
+      service.put(1, {}).subscribe((data) => (res = data));
+      const req = httpMock.expectOne('http://localhost:3000/api/BasketItems/1');
+      req.flush({ data: 'apiResponse' });
       tick()
       expect(req.request.method).toBe('PUT')
       expect(res).toBe('apiResponse')
@@ -72,7 +72,7 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should delete basket item directly from the rest api', inject([BasketService, HttpTestingController],
+it('should delete basket item directly from the rest api', inject([BasketService, HttpTestingController],
     fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
       let res: any
       service.del(1).subscribe((data) => (res = data))
@@ -85,12 +85,12 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should place order for basket via the rest api', inject([BasketService, HttpTestingController],
-    fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
-      service.checkout(1).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/rest/basket/1/checkout')
-      req.flush({ orderConfirmation: 'apiResponse' })
+it('should place order for basket via the rest api', inject([BasketService, HttpTestingController],
+  fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
+    let res: { orderConfirmation: string };
+    service.checkout(1).subscribe((data) => (res = data));
+    const req = httpMock.expectOne('http://localhost:3000/rest/basket/1/checkout');
+    req.flush({ orderConfirmation: 'apiResponse' });
       tick()
       expect(req.request.method).toBe('POST')
       expect(res).toBe('apiResponse')
@@ -98,12 +98,12 @@ describe('BasketService', () => {
     })
   ))
 
-  it('should apply coupon to basket via the rest api', inject([BasketService, HttpTestingController],
-    fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
-      let res: any
-      service.applyCoupon(1, '1234567890').subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/rest/basket/1/coupon/1234567890')
-      req.flush({ discount: 'apiResponse' })
+it('should apply coupon to basket via the rest api', inject([BasketService, HttpTestingController],
+  fakeAsync((service: BasketService, httpMock: HttpTestingController) => {
+    let res: { discount: string }
+    service.applyCoupon(1, '1234567890').subscribe((data) => (res = data))
+    const req = httpMock.expectOne('http://localhost:3000/rest/basket/1/coupon/1234567890')
+    req.flush({ discount: 'apiResponse' })
       tick()
       expect(req.request.method).toBe('PUT')
       expect(res).toBe('apiResponse')

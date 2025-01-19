@@ -20,12 +20,12 @@ describe('FeedbackService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get all feedback directly from the rest api', inject([FeedbackService, HttpTestingController],
+it('should get all feedback directly from the rest api', inject([FeedbackService, HttpTestingController],
     fakeAsync((service: FeedbackService, httpMock: HttpTestingController) => {
-      let res: any
-      service.find(null).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/api/Feedbacks/')
-      req.flush({ data: 'apiResponse' })
+      let res: any;
+      service.find(null).subscribe((data) => (res = data));
+      const req = httpMock.expectOne('http://localhost:3000/api/Feedbacks/');
+      req.flush({ data: 'apiResponse' });
 
       tick()
       expect(req.request.method).toBe('GET')

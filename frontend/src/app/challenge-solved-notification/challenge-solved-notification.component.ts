@@ -12,14 +12,14 @@ import { CountryMappingService } from 'src/app/Services/country-mapping.service'
 import { SocketIoService } from '../Services/socket-io.service'
 
 interface ChallengeSolvedMessage {
-  challenge: string
-  hidden?: any
-  isRestore?: any
-  flag: any
-  key?: any
-}
-
+challenge: string
+{
 interface ChallengeSolvedNotification {
+  hidden?: string | null
+  isRestore?: boolean
+  flag: string
+  key: string | null
+}
   message: string
   flag: string
   country?: { code: string, name: string }
@@ -33,12 +33,12 @@ interface ChallengeSolvedNotification {
 })
 export class ChallengeSolvedNotificationComponent implements OnInit {
   public notifications: ChallengeSolvedNotification[] = []
-  public showCtfFlagsInNotifications: boolean = false
-  public showCtfCountryDetailsInNotifications: string = 'none'
-  public countryMap?: any
+public showCtfFlagsInNotifications: boolean = false
+         public showCtfCountryDetailsInNotifications: string = 'none'
+         public countryMap: { [key: string]: any } | undefined
 
-  constructor (private readonly ngZone: NgZone, private readonly configurationService: ConfigurationService, private readonly challengeService: ChallengeService, private readonly countryMappingService: CountryMappingService, private readonly translate: TranslateService, private readonly cookieService: CookieService, private readonly ref: ChangeDetectorRef, private readonly io: SocketIoService) {
-  }
+         constructor (private readonly ngZone: NgZone, private readonly configurationService: ConfigurationService, private readonly challengeService: ChallengeService, private readonly countryMappingService: CountryMappingService, private readonly translate: TranslateService, private readonly cookieService: CookieService, private readonly ref: ChangeDetectorRef, private readonly io: SocketIoService) {
+         }
 
   ngOnInit () {
     this.ngZone.runOutsideAngular(() => {
@@ -70,9 +70,9 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
 
         if (config.ctf.showCountryDetailsInNotifications) {
           this.showCtfCountryDetailsInNotifications = config.ctf.showCountryDetailsInNotifications
-
+TypeScript
           if (config.ctf.showCountryDetailsInNotifications !== 'none') {
-            this.countryMappingService.getCountryMapping().subscribe((countryMap: any) => {
+            this.countryMappingService.getCountryMapping().subscribe((countryMap: object) => {
               this.countryMap = countryMap
             }, (err) => { console.log(err) })
           }

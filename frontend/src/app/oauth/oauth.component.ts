@@ -15,9 +15,9 @@ import { Component, NgZone, type OnInit } from '@angular/core'
 })
 export class OAuthComponent implements OnInit {
   constructor (private readonly cookieService: CookieService, private readonly userService: UserService, private readonly router: Router, private readonly route: ActivatedRoute, private readonly ngZone: NgZone) { }
-
+TypeScript
   ngOnInit () {
-    this.userService.oauthLogin(this.parseRedirectUrlParams().access_token).subscribe((profile: any) => {
+    this.userService.oauthLogin(this.parseRedirectUrlParams().access_token).subscribe((profile: { email: string }) => {
       const password = btoa(profile.email.split('').reverse().join(''))
       this.userService.save({ email: profile.email, password, passwordRepeat: password }).subscribe(() => {
         this.login(profile)
@@ -26,9 +26,9 @@ export class OAuthComponent implements OnInit {
       this.invalidateSession(error)
       this.ngZone.run(async () => await this.router.navigate(['/login']))
     })
-  }
+}
 
-  login (profile: any) {
+  login (profile: { email: string }) {
     this.userService.login({ email: profile.email, password: btoa(profile.email.split('').reverse().join('')), oauth: true }).subscribe((authentication) => {
       const expires = new Date()
       expires.setHours(expires.getHours() + 8)
@@ -51,11 +51,11 @@ export class OAuthComponent implements OnInit {
   }
 
   parseRedirectUrlParams () {
-    const hash = this.route.snapshot.data.params.substr(1)
+const hash = this.route.snapshot.data.params.substr(1)
     const splitted = hash.split('&')
-    const params: any = {}
+    const params: { [key: string]: string } = {}
     for (let i = 0; i < splitted.length; i++) {
-      const param: string = splitted[i].split('=')
+      const param: string[] = splitted[i].split('=')
       const key: string = param[0]
       params[key] = param[1]
     }

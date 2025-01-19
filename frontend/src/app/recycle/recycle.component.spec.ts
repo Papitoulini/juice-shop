@@ -34,16 +34,16 @@ import { MatDividerModule } from '@angular/material/divider'
 import { MatSnackBar } from '@angular/material/snack-bar'
 
 describe('RecycleComponent', () => {
-  let component: RecycleComponent
-  let fixture: ComponentFixture<RecycleComponent>
-  let recycleService: any
-  let userService: any
-  let configurationService: any
-  let translateService
-  let snackBar: any
+let component: RecycleComponent
+let fixture: ComponentFixture<RecycleComponent>
+let recycleService: RecycleService
+let userService: UserService
+let configurationService: ConfigurationService;
+let translateService: TranslateService;
+let snackBar: MatSnackBar;
 
-  beforeEach(waitForAsync(() => {
-    recycleService = jasmine.createSpyObj('RecycleService', ['save', 'find'])
+beforeEach(waitForAsync(() => {
+  recycleService = jasmine.createSpyObj('RecycleService', ['save', 'find']);
     recycleService.save.and.returnValue(of({}))
     recycleService.find.and.returnValue(of([{}]))
     userService = jasmine.createSpyObj('UserService', ['whoAmI'])

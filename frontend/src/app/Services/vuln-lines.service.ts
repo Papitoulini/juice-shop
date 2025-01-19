@@ -15,12 +15,12 @@ export class VulnLinesService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/snippets/verdict'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  check (key: string, selectedLines: number[]): any {
-    return this.http.post(this.host, {
-      key,
-      selectedLines
+         check (key: string, selectedLines: number[]): string[] {
+           return this.http.post(this.host, {
+             key,
+             selectedLines
     }).pipe(map((response: result) => response), catchError((error: any) => { throw error }))
   }
 }

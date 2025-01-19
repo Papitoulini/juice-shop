@@ -19,12 +19,12 @@ import { ConfigurationService } from '../Services/configuration.service'
 describe('WelcomeBannerComponent', () => {
   let component: WelcomeBannerComponent
   let fixture: ComponentFixture<WelcomeBannerComponent>
-  let cookieService: any
-  let matDialogRef: MatDialogRef<WelcomeBannerComponent>
-  let configurationService: any
+let cookieService: any
+let matDialogRef: MatDialogRef<WelcomeBannerComponent>
+let configurationService: ConfigurationService
 
-  beforeEach(waitForAsync(() => {
-    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
+beforeEach(waitForAsync(() => {
+  configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { } }))
     matDialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
     TestBed.configureTestingModule({

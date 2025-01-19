@@ -32,12 +32,12 @@ export class LoginComponent implements OnInit {
   public passwordControl = new UntypedFormControl('', [Validators.required, Validators.minLength(1)])
 
   public hide = true
-  public user: any
-  public rememberMe: UntypedFormControl = new UntypedFormControl(false)
-  public error: any
-  public clientId = '1005568560502-6hm16lef8oh46hr2d98vf2ohlnj4nfhq.apps.googleusercontent.com'
-  public oauthUnavailable: boolean = true
-  public redirectUri: string = ''
+public user: any
+public rememberMe: UntypedFormControl = new UntypedFormControl(false)
+public error: Error | null = null
+public clientId = '1005568560502-6hm16lef8oh46hr2d98vf2ohlnj4nfhq.apps.googleusercontent.com'
+public oauthUnavailable: boolean = true
+public redirectUri: string = ''
   constructor (private readonly configurationService: ConfigurationService, private readonly userService: UserService, private readonly windowRefService: WindowRefService, private readonly cookieService: CookieService, private readonly router: Router, private readonly formSubmitService: FormSubmitService, private readonly basketService: BasketService, private readonly ngZone: NgZone) { }
 
   ngOnInit () {
@@ -71,12 +71,12 @@ export class LoginComponent implements OnInit {
 
   login () {
     this.user = {}
-    this.user.email = this.emailControl.value
-    this.user.password = this.passwordControl.value
-    this.userService.login(this.user).subscribe((authentication: any) => {
-      localStorage.setItem('token', authentication.token)
-      const expires = new Date()
-      expires.setHours(expires.getHours() + 8)
+this.user.email = this.emailControl.value
+this.user.password = this.passwordControl.value
+this.userService.login(this.user).subscribe((authentication: { token: string }) => {
+  localStorage.setItem('token', authentication.token)
+  const expires = new Date()
+  expires.setHours(expires.getHours() + 8)
       this.cookieService.put('token', authentication.token, { expires })
       sessionStorage.setItem('bid', authentication.bid)
       this.basketService.updateNumberOfCartItems()

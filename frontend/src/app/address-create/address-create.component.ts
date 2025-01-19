@@ -23,12 +23,12 @@ export class AddressCreateComponent implements OnInit {
   public numberControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(1111111), Validators.max(9999999999)])
   public pinControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(8)])
   public addressControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
-  public cityControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public stateControl: UntypedFormControl = new UntypedFormControl()
-  public address: any = undefined
-  public mode = 'create'
-  private addressId: string = undefined
-
+TypeScript
+public cityControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+public stateControl: UntypedFormControl = new UntypedFormControl()
+public address: { [key: string]: any } = undefined
+public mode = 'create'
+private addressId: string = undefined
   constructor (private readonly location: Location, private readonly formSubmitService: FormSubmitService,
     private readonly addressService: AddressService, private readonly router: Router, public activatedRoute: ActivatedRoute,
     private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }

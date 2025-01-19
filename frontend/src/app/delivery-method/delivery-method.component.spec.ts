@@ -28,13 +28,13 @@ import { MatExpansionModule } from '@angular/material/expansion'
 import { MatDividerModule } from '@angular/material/divider'
 
 describe('DeliveryMethodComponent', () => {
-  let component: DeliveryMethodComponent
-  let fixture: ComponentFixture<DeliveryMethodComponent>
-  let addressService: any
-  let deliveryService: any
+let component: DeliveryMethodComponent
+let fixture: ComponentFixture<DeliveryMethodComponent>
+         let addressService: AddressService
+         let deliveryService: DeliveryService
 
-  beforeEach(waitForAsync(() => {
-    addressService = jasmine.createSpyObj('AddressService', ['getById'])
+         beforeEach(waitForAsync(() => {
+    addressService = jasmine.createSpyObj('AddressService', ['getById']);
     addressService.getById.and.returnValue(of([]))
     deliveryService = jasmine.createSpyObj('DeliveryService', ['get'])
     deliveryService.get.and.returnValue(of([]))

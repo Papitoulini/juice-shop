@@ -24,15 +24,16 @@ export class CodeFixesService {
   private readonly host = this.hostServer + '/snippets/fixes'
 
   constructor (private readonly http: HttpClient) { }
+TypeScript
+get (key: string): Observable<Fixes> {
+  return this.http.get(this.host + `/${key}`).pipe(map((response: Fixes) => response), catchError((error: any) => { throw error }))
+}
 
-  get (key: string): Observable<Fixes> {
-    return this.http.get(this.host + `/${key}`).pipe(map((response: Fixes) => response), catchError((error: any) => { throw error }))
-  }
-
-  check (key: string, selectedFix: number): any {
+check (key: string, selectedFix: number): Fixes {
     return this.http.post(this.host, {
+TypeScript
       key,
       selectedFix
-    }).pipe(map((response: result) => response), catchError((error: any) => { throw error }))
+    }).pipe(map((response: result) => response), catchError((error: result | undefined) => { throw error }))
   }
 }

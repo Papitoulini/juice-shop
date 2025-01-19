@@ -28,12 +28,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { type Product } from '../Models/product.model'
 
 describe('ProductDetailsComponent', () => {
-  let component: ProductDetailsComponent
-  let fixture: ComponentFixture<ProductDetailsComponent>
-  let userService: any
-  let productReviewService: any
-  let dialog: any
-  let dialogRefMock
+let component: ProductDetailsComponent
+let fixture: ComponentFixture<ProductDetailsComponent>
+let userService: UserService
+let productReviewService: ProductReviewService
+let dialog: import { MatDialog } from '@angular/material/dialog';
+let dialogRefMock
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['whoAmI'])

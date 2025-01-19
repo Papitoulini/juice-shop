@@ -14,12 +14,12 @@ import challengeUtils = require('../lib/challengeUtils')
 import config from 'config'
 import jws from 'jws'
 
-import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
-const jwt = require('jsonwebtoken')
-const cache = require('../data/datacache')
-const challenges = cache.challenges
-const products = cache.products
+import * as utils from '../lib/utils';
+import { jsonwebtoken } from 'jsonwebtoken';
+import { cache } from '../data/datacache';
+const security = require('../lib/insecurity');
+const challenges = cache.challenges;
+const products = cache.products;
 
 exports.emptyUserRegistration = () => (req: Request, res: Response, next: NextFunction) => {
   challengeUtils.solveIf(challenges.emptyUserRegistration, () => {

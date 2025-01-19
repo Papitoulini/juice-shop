@@ -32,13 +32,13 @@ import { TwoFactorAuthService } from '../Services/two-factor-auth-service'
 import { throwError } from 'rxjs/internal/observable/throwError'
 
 describe('TwoFactorAuthComponent', () => {
-  let component: TwoFactorAuthComponent
-  let fixture: ComponentFixture<TwoFactorAuthComponent>
-  let twoFactorAuthService: any
-  let configurationService: any
+let component: TwoFactorAuthComponent
+let fixture: ComponentFixture<TwoFactorAuthComponent>;
+let twoFactorAuthService: TwoFactorAuthService;
+let configurationService: ConfigurationService;
 
-  beforeEach(waitForAsync(() => {
-    twoFactorAuthService = jasmine.createSpyObj('TwoFactorAuthService', ['status', 'setup', 'disable'])
+beforeEach(waitForAsync(() => {
+    twoFactorAuthService = jasmine.createSpyObj('TwoFactorAuthService', ['status', 'setup', 'disable']);
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { } }))
     TestBed.configureTestingModule({

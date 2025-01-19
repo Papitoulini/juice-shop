@@ -22,12 +22,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { EventEmitter } from '@angular/core'
 
 describe('ComplaintComponent', () => {
-  let component: ComplaintComponent
-  let fixture: ComponentFixture<ComplaintComponent>
-  let userService: any
-  let complaintService: any
-  let translateService
-
+TypeScript
+let component: ComplaintComponent
+let fixture: ComponentFixture<ComplaintComponent>
+let userService: UserService
+let complaintService: ComplaintService
+let translateService: TranslateService
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['whoAmI'])
     userService.whoAmI.and.returnValue(of({}))

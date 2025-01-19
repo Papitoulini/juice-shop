@@ -1,12 +1,12 @@
 import { type Request, type Response } from 'express'
 import challengeUtils = require('../lib/challengeUtils')
 import * as utils from '../lib/utils'
-import { challenges } from '../data/datacache'
-const nftABI = require('../data/static/contractABIs').nftABI
-const ethers = require('ethers')
-const nftAddress = '0x41427790c94E7a592B17ad694eD9c06A02bb9C39'
-const addressesMinted = new Set()
-let isEventListenerCreated = false
+import { challenges } from '../data/datacache';
+import { nftABI } from '../data/static/contractABIs';
+import { ethers } from 'ethers';
+const nftAddress = '0x41427790c94E7a592B17ad694eD9c06A02bb9C39';
+const addressesMinted = new Set();
+import { isEventListenerCreated } from 'some-module';
 
 module.exports.nftMintListener = function nftMintListener () {
   return (req: Request, res: Response) => {

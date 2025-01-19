@@ -25,19 +25,19 @@ export class ContactComponent implements OnInit {
   public authorControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
   public feedbackControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.pattern('-?[\\d]*')])
-  public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
-  public rating: number = 0
-  public feedback: any = undefined
-  public captcha: any
-  public captchaId: any
-  public confirmation: any
-  public error: any
+public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
+public rating: number = 0
+         public feedback: string | undefined = undefined
+public captcha: string
+public captchaId: string
+         public confirmation: string
+         public error: any
 
   constructor (private readonly userService: UserService, private readonly captchaService: CaptchaService, private readonly feedbackService: FeedbackService,
     private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
-
+TypeScript
   ngOnInit () {
-    this.userService.whoAmI().subscribe((data: any) => {
+    this.userService.whoAmI().subscribe((data: { id: string }) => {
       this.feedback = {}
       this.userIdControl.setValue(data.id)
       this.feedback.UserId = data.id
@@ -51,12 +51,12 @@ export class ContactComponent implements OnInit {
 
     this.formSubmitService.attachEnterKeyHandler('feedback-form', 'submitButton', () => { this.save() })
   }
-
-  getNewCaptcha () {
-    this.captchaService.getCaptcha().subscribe((data: any) => {
-      this.captcha = data.captcha
-      this.captchaId = data.captchaId
-    }, (err) => err)
+TypeScript
+getNewCaptcha () {
+  this.captchaService.getCaptcha().subscribe((data: { captcha: string, captchaId: string }) => {
+    this.captcha = data.captcha
+    this.captchaId = data.captchaId
+  }, (err) => err)
   }
 
   save () {

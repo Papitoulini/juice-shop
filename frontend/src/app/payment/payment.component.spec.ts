@@ -44,16 +44,16 @@ describe('PaymentComponent', () => {
   let fixture: ComponentFixture<PaymentComponent>
   let configurationService
   let translateService
-  let basketService
-  let dialog
-  let cookieService: any
-  let walletService: any
-  let deliveryService: any
-  let userService: any
-  let snackBar: any
+let basketService;
+let dialog;
+let cookieService: CookieService;
+let walletService: WalletService;
+let deliveryService: DeliveryService;
+let userService: UserService;
+let snackBar: SnackBar;
 
-  beforeEach(waitForAsync(() => {
-    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
+beforeEach(waitForAsync(() => {
+    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration']);
     configurationService.getApplicationConfiguration.and.returnValue(of({}))
     translateService = jasmine.createSpyObj('TranslateService', ['get'])
     translateService.get.and.returnValue(of({}))
@@ -284,11 +284,11 @@ describe('PaymentComponent', () => {
     component.mode = 'shop'
     component.paymentMode = 'card'
     component.paymentId = 1
+it('should store wallet as paymentId in session storage on calling choosePayment while paymentMode is equal to wallet', () => {
     spyOn(sessionStorage, 'setItem')
     component.choosePayment()
-    expect(sessionStorage.setItem).toHaveBeenCalledWith('paymentId', 1 as any)
+    expect(sessionStorage.setItem).toHaveBeenCalledWith('paymentId', 1)
   })
-
   it('should store wallet as paymentId in session storage on calling choosePayment while paymentMode is equal to wallet', () => {
     component.mode = 'shop'
     component.paymentMode = 'wallet'

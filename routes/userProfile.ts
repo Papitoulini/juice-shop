@@ -10,13 +10,13 @@ import { challenges } from '../data/datacache'
 import { UserModel } from '../models/user'
 import challengeUtils = require('../lib/challengeUtils')
 import config from 'config'
-import * as utils from '../lib/utils'
-import { AllHtmlEntities as Entities } from 'html-entities'
-const security = require('../lib/insecurity')
-const pug = require('pug')
-const themes = require('../views/themes/themes').themes
-const entities = new Entities()
-
+import * as utils from '../lib/utils';
+TypeScript
+import { AllHtmlEntities as Entities } from 'html-entities';
+import { security } from '../lib/insecurity';
+import pug from 'pug';
+import { themes } from '../views/themes/themes';
+const entities = new Entities();
 module.exports = function getUserProfile () {
   return (req: Request, res: Response, next: NextFunction) => {
     fs.readFile('views/userProfile.pug', function (err, buf) {

@@ -195,12 +195,12 @@ export function isChallengeEnabled (challenge: Challenge): boolean {
 }
 
 export const parseJsonCustom = (jsonString: string) => {
-  const parser = clarinet.parser()
-  const result: any[] = []
-  parser.onkey = parser.onopenobject = (k: any) => {
-    result.push({ key: k, value: null })
+const parser = clarinet.parser()
+  const result: { [key: string]: unknown }[] = []
+  parser.onkey = parser.onopenobject = (k: string) => {
+result.push({ [k]: null })
   }
-  parser.onvalue = (v: any) => {
+  parser.onvalue = (v: string | null) => {
     result[result.length - 1].value = v
   }
   parser.write(jsonString)

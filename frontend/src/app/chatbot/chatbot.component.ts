@@ -66,12 +66,12 @@ export class ChatbotComponent implements OnInit, OnDestroy {
       if (response.action) {
         this.currentAction = this.messageActions[response.action]
       }
-    })
-
-    this.userService.whoAmI().subscribe((user: any) => {
-      this.profileImageSrc = user.profileImage
-    }, (err) => {
-      console.log(err)
+TypeScript
+this.userService.whoAmI().subscribe((user: { profileImage: string }) => {
+  this.profileImageSrc = user.profileImage
+}, (err) => {
+  console.log(err)
+})
     })
   }
 

@@ -16,13 +16,13 @@ import { ConfigurationService } from '../Services/configuration.service'
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent
-  let configurationService: any
-  let cookieService: any
-  let fixture: ComponentFixture<WelcomeComponent>
-  let dialog: any
+  let configurationService: ConfigurationService
+let cookieService: CookieService
+let fixture: ComponentFixture<WelcomeComponent>
+let dialog: MatDialog
 
-  beforeEach(() => {
-    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
+beforeEach(() => {
+  configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: {} }))
     dialog = jasmine.createSpyObj('MatDialog', ['open'])
     dialog.open.and.returnValue(null)

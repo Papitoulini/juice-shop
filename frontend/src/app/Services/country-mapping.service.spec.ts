@@ -20,12 +20,12 @@ describe('CountryMappingService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get the country mapping directly through the rest API', inject([CountryMappingService, HttpTestingController],
-    fakeAsync((service: CountryMappingService, httpMock: HttpTestingController) => {
-      let res: any
-      service.getCountryMapping().subscribe((data) => (res = data))
+it('should get the country mapping directly through the rest API', inject([CountryMappingService, HttpTestingController],
+           fakeAsync((service: CountryMappingService, httpMock: HttpTestingController) => {
+             let res: any
+             service.getCountryMapping().subscribe((data) => (res = data as any))
 
-      const req = httpMock.expectOne('http://localhost:3000/rest/country-mapping')
+             const req = httpMock.expectOne('http://localhost:3000/rest/country-mapping')
       req.flush('apiResponse')
 
       tick()

@@ -16,12 +16,12 @@ export class ChatbotService {
   private readonly host = this.hostServer + '/rest/chatbot'
 
   constructor (private readonly http: HttpClient) { }
+TypeScript
+getChatbotStatus () {
+  return this.http.get(this.host + '/status').pipe(map((response: { data: any }) => response.data), catchError((error: Error) => { throw error }))
+}
 
-  getChatbotStatus () {
-    return this.http.get(this.host + '/status').pipe(map((response: any) => response), catchError((error: Error) => { throw error }))
-  }
-
-  getResponse (action, query) {
+getResponse (action, query) {
     return this.http.post(this.host + '/respond', { action, query }).pipe(map((response: any) => response), catchError((error: Error) => { throw error }))
   }
 }

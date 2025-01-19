@@ -49,19 +49,19 @@ class MockActivatedRoute {
 }
 
 describe('SearchResultComponent', () => {
-  let component: SearchResultComponent
-  let fixture: ComponentFixture<SearchResultComponent>
-  let productService: any
-  let basketService: any
-  let translateService: any
-  let activatedRoute: MockActivatedRoute
-  let dialog: any
-  let sanitizer: any
-  let socketIoService: any
-  let mockSocket: any
-  let quantityService
-  let deluxeGuard
-  let snackBar: any
+let component: SearchResultComponent
+let fixture: ComponentFixture<SearchResultComponent>;
+let productService: ProductService;
+let basketService: BasketService;
+let translateService: TranslateService;
+let activatedRoute: MockActivatedRoute;
+let dialog: TranslateService;
+let sanitizer: DOMSanitizer;
+let socketIoService: SocketIoService;
+let mockSocket: Socket;
+let quantityService: QuantityService;
+let deluxeGuard: any;
+let snackBar: SnackBar;
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

@@ -31,16 +31,16 @@ export class MockActivatedRoute {
 }
 
 describe('OrderCompletionComponent', () => {
-  let component: OrderCompletionComponent
-  let fixture: ComponentFixture<OrderCompletionComponent>
-  let trackOrderService: any
-  let activatedRoute: any
-  let basketService: any
-  let addressService: any
-  let configurationService: any
+let component: OrderCompletionComponent
+let fixture: ComponentFixture<OrderCompletionComponent>
+let trackOrderService: TrackOrderService
+let activatedRoute: ActivatedRoute;
+let basketService: BasketService;
+let addressService: AddressService;
+let configurationService: ConfigurationService;
 
-  beforeEach(waitForAsync(() => {
-    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
+beforeEach(waitForAsync(() => {
+    configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration']);
     configurationService.getApplicationConfiguration.and.returnValue(of({}))
     trackOrderService = jasmine.createSpyObj('TrackOrderService', ['find'])
     trackOrderService.find.and.returnValue(of({ data: [{ products: [] }] }))

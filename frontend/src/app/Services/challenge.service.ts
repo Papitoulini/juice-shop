@@ -25,28 +25,28 @@ export class ChallengeService {
   repeatNotification (challengeName: string) {
     return this.http.get(this.hostServer + '/rest/repeat-notification', { params: { challenge: challengeName }, responseType: 'text' as const }).pipe(catchError((err) => { throw err }))
   }
-
-  continueCode () {
-    return this.http.get(this.hostServer + '/rest/continue-code').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
-  }
-
-  continueCodeFindIt () {
+TypeScript
+continueCode () {
+  return this.http.get(this.hostServer + '/rest/continue-code').pipe(map((response: { continueCode: string }) => response.continueCode), catchError((err) => { throw err }))
+}
+TypeScript
+continueCodeFindIt () {
     return this.http.get(this.hostServer + '/rest/continue-code-findIt').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
   }
-
+TypeScript
   continueCodeFixIt () {
-    return this.http.get(this.hostServer + '/rest/continue-code-fixIt').pipe(map((response: any) => response.continueCode), catchError((err) => { throw err }))
+    return this.http.get(this.hostServer + '/rest/continue-code-fixIt').pipe(map((response: { continueCode: string }) => response.continueCode), catchError((err) => { throw err }))
   }
-
+TypeScript
   restoreProgress (continueCode: string) {
     return this.http.put(this.hostServer + '/rest/continue-code/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
+TypeScript
+restoreProgressFindIt (continueCode: string) {
+  return this.http.put(this.hostServer + '/rest/continue-code-findIt/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+}
 
-  restoreProgressFindIt (continueCode: string) {
-    return this.http.put(this.hostServer + '/rest/continue-code-findIt/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  restoreProgressFixIt (continueCode: string) {
+restoreProgressFixIt (continueCode: string) {
     return this.http.put(this.hostServer + '/rest/continue-code-fixIt/apply/' + continueCode, {}).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

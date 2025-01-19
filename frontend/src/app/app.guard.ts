@@ -27,9 +27,9 @@ export class LoginGuard implements CanActivate {
       queryParams: { error }
     }))
   }
-
+TypeScript
   tokenDecode () {
-    let payload: any = null
+    let payload: null | string = null
     const token = localStorage.getItem('token')
     if (token) {
       try {

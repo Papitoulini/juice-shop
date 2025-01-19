@@ -20,12 +20,12 @@ describe('CodeSnippetService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get single snippet directly from the rest api', inject([CodeSnippetService, HttpTestingController],
-    fakeAsync((service: CodeSnippetService, httpMock: HttpTestingController) => {
-      let res: any
-      service.get('testChallenge').subscribe((data) => (res = data))
+it('should get single snippet directly from the rest api', inject([CodeSnippetService, HttpTestingController],
+           fakeAsync((service: CodeSnippetService, httpMock: HttpTestingController) => {
+             let res: any;
+             service.get('testChallenge').subscribe((data) => (res = data as any));
 
-      const req = httpMock.expectOne('http://localhost:3000/snippets/testChallenge')
+             const req = httpMock.expectOne('http://localhost:3000/snippets/testChallenge')
       req.flush({ snippet: 'apiResponse' })
       tick()
 
@@ -35,12 +35,12 @@ describe('CodeSnippetService', () => {
     })
   ))
 
-  it('should get list of challenges with code snippets directly from the rest api', inject([CodeSnippetService, HttpTestingController],
-    fakeAsync((service: CodeSnippetService, httpMock: HttpTestingController) => {
-      let res: any
-      service.challenges().subscribe((data) => (res = data))
+it('should get list of challenges with code snippets directly from the rest api', inject([CodeSnippetService, HttpTestingController],
+           fakeAsync((service: CodeSnippetService, httpMock: HttpTestingController) => {
+             let res: any
+             service.challenges().subscribe((data: any) => (res = data))
 
-      const req = httpMock.expectOne('http://localhost:3000/snippets')
+             const req = httpMock.expectOne('http://localhost:3000/snippets')
       req.flush({ challenges: ['directoryListingChallenge', 'accessLogDisclosureChallenge', '...', 'xssBonusChallenge'] })
       tick()
 

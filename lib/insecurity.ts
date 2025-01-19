@@ -35,9 +35,9 @@ interface IAuthenticatedUsers {
   idMap: Record<string, string>
   put: (token: string, user: ResponseWithUser) => void
   get: (token: string) => ResponseWithUser | undefined
-  tokenOf: (user: UserModel) => string | undefined
+tokenOf: (user: UserModel) => string | undefined
   from: (req: Request) => ResponseWithUser | undefined
-  updateFrom: (req: Request, user: ResponseWithUser) => any
+  updateFrom: (req: Request, user: ResponseWithUser) => ResponseWithUser
 }
 
 export const hash = (data: string) => crypto.createHash('md5').update(data).digest('hex')
@@ -90,12 +90,12 @@ export const authenticatedUsers: IAuthenticatedUsers = {
     const token = utils.jwtFrom(req)
     this.put(token, user)
   }
+TypeScript
 }
 
-export const userEmailFrom = ({ headers }: any) => {
+export const userEmailFrom = ({ headers }: { [key: string]: string | undefined }) => {
   return headers ? headers['x-user-email'] : undefined
 }
-
 export const generateCoupon = (discount: number, date = new Date()) => {
   const coupon = utils.toMMMYY(date) + '-' + discount
   return z85.encode(coupon)
@@ -177,21 +177,21 @@ export const isCustomer = (req: Request) => {
 export const appendUserId = () => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
+TypeScript
       req.body.UserId = authenticatedUsers.tokenMap[utils.jwtFrom(req)].data.id
       next()
-    } catch (error: any) {
-      res.status(401).json({ status: 'error', message: error })
+    } catch (error) {
+      res.status(401).json({ status: 'error', message: error.message })
     }
-  }
 }
 
 export const updateAuthenticatedUsers = () => (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.token || utils.jwtFrom(req)
-  if (token) {
-    jwt.verify(token, publicKey, (err: Error | null, decoded: any) => {
-      if (err === null) {
-        if (authenticatedUsers.get(token) === undefined) {
-          authenticatedUsers.put(token, decoded)
+const token = req.cookies.token || utils.jwtFrom(req)
+         if (token) {
+           jwt.verify(token, publicKey, (err: Error | null, decoded: jwt.DecodedJwt) => {
+             if (err === null) {
+               if (authenticatedUsers.get(token) === undefined) {
+                 authenticatedUsers.put(token, decoded)
           res.cookie('token', token)
         }
       }

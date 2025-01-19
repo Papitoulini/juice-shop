@@ -247,12 +247,12 @@ contract HelloWorld {
         }
       }
     }
+TypeScript
   }
 
-  async handleChainChanged (chainId: string) {
-    await this.handleAuth()
+  async handleChainChanged(chainId: string) {
+    await this.handleAuth();
   }
-
   async handleAuth () {
     try {
       const { isConnected } = getAccount()

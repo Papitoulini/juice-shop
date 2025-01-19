@@ -14,12 +14,12 @@ import { UserDetailsComponent } from './user-details.component'
 import { of, throwError } from 'rxjs'
 
 describe('UserDetailsComponent', () => {
-  let component: UserDetailsComponent
-  let fixture: ComponentFixture<UserDetailsComponent>
-  let userService: any
+let component: UserDetailsComponent
+         let fixture: ComponentFixture<UserDetailsComponent>
+         let userService: UserService
 
-  beforeEach(waitForAsync(() => {
-    userService = jasmine.createSpyObj('UserService', ['get'])
+         beforeEach(waitForAsync(() => {
+           userService = jasmine.createSpyObj('UserService', ['get'])
     userService.get.and.returnValue(of({}))
 
     TestBed.configureTestingModule({

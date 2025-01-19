@@ -26,12 +26,12 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 
 describe('SavedAddressComponent', () => {
-  let component: SavedAddressComponent
-  let fixture: ComponentFixture<SavedAddressComponent>
-  let snackBar: any
+let component: SavedAddressComponent
+let fixture: ComponentFixture<SavedAddressComponent>
+let snackBar: MatSnackBar
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+beforeEach(waitForAsync(() => {
+  TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         TranslateModule.forRoot(),

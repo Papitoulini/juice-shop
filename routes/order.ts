@@ -16,11 +16,11 @@ import config from 'config'
 import * as utils from '../lib/utils'
 import * as db from '../data/mongodb'
 import { challenges, products } from '../data/datacache'
-
-const fs = require('fs')
-const PDFDocument = require('pdfkit')
-const security = require('../lib/insecurity')
-
+TypeScript
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
+import { security } from '../lib/insecurity';
+import { security } from '../lib/insecurity'; // Removed require statement
 interface Product {
   quantity: number
   id?: number
@@ -66,12 +66,12 @@ module.exports = function placeOrder () {
           const basketProducts: Product[] = []
           let totalPoints = 0
           basket.Products?.forEach(({ BasketItem, price, deluxePrice, name, id }) => {
-            if (BasketItem != null) {
-              challengeUtils.solveIf(challenges.christmasSpecialChallenge, () => { return BasketItem.ProductId === products.christmasSpecial.id })
-              QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product: any) => {
-                const newQuantity = product.quantity - BasketItem.quantity
-                QuantityModel.update({ quantity: newQuantity }, { where: { ProductId: BasketItem?.ProductId } }).catch((error: unknown) => {
-                  next(error)
+if (BasketItem != null) {
+          challengeUtils.solveIf(challenges.christmasSpecialChallenge, () => { return BasketItem.ProductId === products.christmasSpecial.id })
+          QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product: QuantityModel) => {
+            const newQuantity = product.quantity - BasketItem.quantity
+            QuantityModel.update({ quantity: newQuantity }, { where: { ProductId: BasketItem?.ProductId } }).catch((error: Error) => {
+              next(error)
                 })
               }).catch((error: unknown) => {
                 next(error)

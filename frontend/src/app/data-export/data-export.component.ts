@@ -15,15 +15,15 @@ import { DomSanitizer } from '@angular/platform-browser'
   styleUrls: ['./data-export.component.scss']
 })
 export class DataExportComponent implements OnInit {
-  public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5)])
-  public formatControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public captcha: any
-  private dataRequest: any = undefined
-  public confirmation: any
-  public error: any
-  public lastSuccessfulTry: any
-  public presenceOfCaptcha: boolean = false
-  public userData: any
+public captchaControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)])
+public formatControl: FormControl = new FormControl('', [Validators.required])
+public captcha: string | null
+private dataRequest: never
+public confirmation: string | null
+public error: string | null
+public lastSuccessfulTry: string | null
+public presenceOfCaptcha: boolean = false
+public userData: { [key: string]: string | number }
 
   constructor (public sanitizer: DomSanitizer, private readonly imageCaptchaService: ImageCaptchaService, private readonly dataSubjectService: DataSubjectService) { }
   ngOnInit () {
@@ -39,22 +39,22 @@ export class DataExportComponent implements OnInit {
       this.presenceOfCaptcha = true
     }
   }
-
-  getNewCaptcha () {
-    this.imageCaptchaService.getCaptcha().subscribe((data: any) => {
-      this.captcha = this.sanitizer.bypassSecurityTrustHtml(data.image)
-    })
-  }
+TypeScript
+getNewCaptcha () {
+  this.imageCaptchaService.getCaptcha().subscribe((data: string) => {
+    this.captcha = this.sanitizer.bypassSecurityTrustHtml(data)
+  })
+}
 
   save () {
     if (this.presenceOfCaptcha) {
       this.dataRequest.answer = this.captchaControl.value
-    }
-    this.dataRequest.format = this.formatControl.value
-    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: any) => {
-      this.error = null
-      this.confirmation = data.confirmation
-      this.userData = data.userData
+TypeScript
+this.dataRequest.format = this.formatControl.value
+this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: { confirmation: any, userData: any }) => {
+  this.error = null
+  this.confirmation = data.confirmation
+  this.userData = data.userData
       window.open('', '_blank', 'width=500')?.document.write(this.userData)
       this.lastSuccessfulTry = new Date()
       localStorage.setItem('lstdtxprt', JSON.stringify(this.lastSuccessfulTry))

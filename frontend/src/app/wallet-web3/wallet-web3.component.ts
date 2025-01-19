@@ -43,12 +43,12 @@ export class WalletWeb3Component {
   ngOnInit (): void {
     this.handleAuth()
     window.ethereum.on('chainChanged', this.handleChainChanged.bind(this))
+TypeScript
   }
 
-  async handleChainChanged (chainId: string) {
-    await this.handleAuth()
+  async handleChainChanged(chainId: string) {
+    await this.handleAuth();
   }
-
   async depositETH () {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)

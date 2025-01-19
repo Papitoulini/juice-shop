@@ -6,12 +6,12 @@
 import { type Request, type Response, type NextFunction } from 'express'
 import { UserModel } from '../models/user'
 import challengeUtils = require('../lib/challengeUtils')
+TypeScript
+import * as utils from '../lib/utils';
+import { cache } from '../data/datacache';
+import { security } as security from '../lib/insecurity';
 
-import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
-const cache = require('../data/datacache')
-const challenges = cache.challenges
-
+const challenges = cache.challenges;
 module.exports = function saveLoginIp () {
   return (req: Request, res: Response, next: NextFunction) => {
     const loggedInUser = security.authenticatedUsers.from(req)

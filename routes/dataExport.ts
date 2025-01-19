@@ -8,9 +8,9 @@ import { MemoryModel } from '../models/memory'
 import { type ProductModel } from '../models/product'
 import * as db from '../data/mongodb'
 import { challenges } from '../data/datacache'
-
-import challengeUtils = require('../lib/challengeUtils')
-const security = require('../lib/insecurity')
+TypeScript
+import { challengeUtils } from '../lib/challengeUtils';
+import security from '../lib/insecurity';
 
 module.exports = function dataExport () {
   return async (req: Request, res: Response, next: NextFunction) => {

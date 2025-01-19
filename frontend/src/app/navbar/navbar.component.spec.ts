@@ -37,26 +37,26 @@ import { NgMatSearchBarModule } from 'ng-mat-search-bar'
 import { LoginGuard } from '../app.guard'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-
+TypeScript
 class MockSocket {
-  on (str: string, callback: any) {
+  on (str: string, callback: (arg: string) => void) {
     callback(str)
   }
 }
 
 describe('NavbarComponent', () => {
-  let component: NavbarComponent
-  let fixture: ComponentFixture<NavbarComponent>
-  let administrationService: any
-  let configurationService: any
-  let userService: any
-  let challengeService: any
-  let translateService: any
-  let cookieService: any
-  let mockSocket: any
-  let socketIoService: any
-  let location: Location
-  let loginGuard
+let component: NavbarComponent
+let fixture: ComponentFixture<NavbarComponent>
+let administrationService: AdministrationService
+let configurationService: ConfigurationService
+let userService: UserService
+let challengeService: ChallengeService;
+let translateService: TranslationService;
+let cookieService: CookieService;
+let mockSocket: Socket | null;
+let socketIoService: SocketIoService;
+let location: Location;
+let loginGuard: LoginGuard;
 
   beforeEach(waitForAsync(() => {
     administrationService = jasmine.createSpyObj('AdministrationService', ['getApplicationVersion'])
@@ -274,9 +274,9 @@ describe('NavbarComponent', () => {
     tick()
     expect(location.path()).toBe('/')
   }))
-
+TypeScript
   it('should set selected a language', () => {
-    spyOn(translateService, 'use').and.callFake((lang: any) => lang)
+    spyOn(translateService, 'use').and.callFake((lang: string) => lang)
     component.changeLanguage('xx')
     expect(translateService.use).toHaveBeenCalledWith('xx')
   })

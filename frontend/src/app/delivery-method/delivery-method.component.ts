@@ -22,12 +22,12 @@ library.add(faRocket, faShippingFast, faTruck)
   styleUrls: ['./delivery-method.component.scss']
 })
 export class DeliveryMethodComponent implements OnInit {
-  public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
-  public methods: DeliveryMethod[]
-  public address: any
-  public dataSource
-  public deliveryMethodId: number = undefined
-  selection = new SelectionModel<DeliveryMethod>(false, [])
+public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
+         public methods: DeliveryMethod[]
+         public address: string | null
+         public dataSource
+         public deliveryMethodId: number = undefined
+         selection = new SelectionModel<DeliveryMethod>(false, [])
 
   constructor (private readonly location: Location, private readonly deliverySerivce: DeliveryService,
     private readonly addressService: AddressService, private readonly router: Router, private readonly ngZone: NgZone) { }

@@ -16,23 +16,23 @@ import { SocketIoService } from '../Services/socket-io.service'
 import { of, throwError } from 'rxjs'
 import { EventEmitter } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-
+TypeScript
 class MockSocket {
-  on (str: string, callback: any) {
+  on (str: string, callback: (...args: any[]) => void) {
     callback()
   }
 }
 
 describe('ServerStartedNotificationComponent', () => {
-  let component: ServerStartedNotificationComponent
-  let fixture: ComponentFixture<ServerStartedNotificationComponent>
-  let challengeService: any
-  let translateService: any
-  let cookieService: any
-  let socketIoService: any
-  let mockSocket: any
+let component: ServerStartedNotificationComponent
+let fixture: ComponentFixture<ServerStartedNotificationComponent>
+let challengeService: ChallengeService
+let translateService: TranslateService;
+let cookieService: CookieService;
+let socketIoService: SocketIoService;
+let mockSocket: SocketIO.Server;
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     challengeService = jasmine.createSpyObj('ChallengeService', ['restoreProgress'])
     challengeService.restoreProgress.and.returnValue(of({}))
     translateService = jasmine.createSpyObj('TranslateService', ['get'])

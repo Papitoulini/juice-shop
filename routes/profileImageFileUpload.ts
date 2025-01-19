@@ -7,10 +7,10 @@ import fs = require('fs')
 import { type Request, type Response, type NextFunction } from 'express'
 import { UserModel } from '../models/user'
 import logger from '../lib/logger'
-
-import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
-const fileType = require('file-type')
+TypeScript
+import * as utils from '../lib/utils';
+import { security } from '../lib/insecurity';
+import { fileType } from 'file-type';
 
 module.exports = function fileUpload () {
   return async (req: Request, res: Response, next: NextFunction) => {

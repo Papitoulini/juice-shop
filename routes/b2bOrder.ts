@@ -8,11 +8,11 @@ import { type Request, type Response, type NextFunction } from 'express'
 import challengeUtils = require('../lib/challengeUtils')
 
 import * as utils from '../lib/utils'
-import { challenges } from '../data/datacache'
-const security = require('../lib/insecurity')
-const safeEval = require('notevil')
+import { challenges } from '../data/datacache';
+import { security } as security from '../lib/insecurity';
+import safeEval from 'notevil';
 
-module.exports = function b2bOrder () {
+module.exports = function b2bOrder() {
   return ({ body }: Request, res: Response, next: NextFunction) => {
     if (utils.isChallengeEnabled(challenges.rceChallenge) || utils.isChallengeEnabled(challenges.rceOccupyChallenge)) {
       const orderLinesData = body.orderLinesData || ''

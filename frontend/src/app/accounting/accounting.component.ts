@@ -32,17 +32,17 @@ export class AccountingComponent implements AfterViewInit, OnDestroy {
   public orderHistoryColumns = ['OrderId', 'Price', 'Status', 'StatusButton']
   @ViewChild('paginatorOrderHistory', { static: true }) paginatorOrderHistory: MatPaginator
   public orderData: Order[]
-  public orderSource
+public orderSource
   public displayedColumns = ['Product', 'Price', 'Quantity']
-  public tableData: any[]
+  public tableData: string[] = []
   public dataSource
   @ViewChild('paginator', { static: true }) paginator: MatPaginator
-  private productSubscription: Subscription
-  private quantitySubscription: Subscription
-  public quantityMap: any
-  constructor (private readonly productService: ProductService, private readonly quantityService: QuantityService, private readonly orderHistoryService: OrderHistoryService, private readonly snackBarHelperService: SnackBarHelperService) { }
+private productSubscription: Subscription
+         private quantitySubscription: Subscription
+         public quantityMap: { [key: string]: number }
+         constructor (private readonly productService: ProductService, private readonly quantityService: QuantityService, private readonly orderHistoryService: OrderHistoryService, private readonly snackBarHelperService: SnackBarHelperService) { }
 
-  ngAfterViewInit () {
+         ngAfterViewInit () {
     this.loadQuantity()
     this.loadProducts()
     this.loadOrders()
@@ -59,12 +59,12 @@ export class AccountingComponent implements AfterViewInit, OnDestroy {
       })
     }, (err) => { console.log(err) })
   }
-
-  loadProducts () {
-    this.productSubscription = this.productService.search('').subscribe((tableData: any) => {
-      this.tableData = tableData
-      this.dataSource = new MatTableDataSource<Element>(this.tableData)
-      this.dataSource.paginator = this.paginator
+loadProducts () {
+  this.productSubscription = this.productService.search('').subscribe((tableData: any[]) => {
+    this.tableData = tableData
+    this.dataSource = new MatTableDataSource<Element>(this.tableData)
+    this.dataSource.paginator = this.paginator
+}
     }, (err) => { console.log(err) })
   }
 

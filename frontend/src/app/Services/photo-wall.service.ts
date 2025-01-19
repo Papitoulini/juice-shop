@@ -19,9 +19,9 @@ export class PhotoWallService {
 
   addMemory (caption: string, image: File) {
     const postData = new FormData()
-    postData.append('image', image, caption)
-    postData.append('caption', caption)
-    return this.http.post(this.host, postData).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+postData.append('image', image, caption)
+         postData.append('caption', caption)
+         return this.http.post(this.host, postData).pipe(map((response: { data: any }) => response.data), catchError((err) => { throw err }))
   }
 
   get () {

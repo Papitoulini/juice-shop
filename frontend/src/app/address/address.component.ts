@@ -23,18 +23,18 @@ library.add(faEdit, faTrashAlt)
 export class AddressComponent implements OnInit {
   @Output() emitSelection = new EventEmitter()
   @Input('allowEdit') public allowEdit: boolean = false
-  @Input('addNewAddressDiv') public addNewAddressDiv: boolean = true
+@Input('addNewAddressDiv') public addNewAddressDiv: boolean = true
   @Input('showNextButton') public showNextButton: boolean = false
-  public addressId: any = undefined
-  public displayedColumns = ['Name', 'Address', 'Country']
-  selection = new SelectionModel<Element>(false, [])
-  public storedAddresses: any[]
-  public dataSource
-  public confirmation: any
-  public error: any
-  public addressExist: boolean = false
+  public addressId: undefined = undefined
+public displayedColumns = ['Name', 'Address', 'Country']
+         selection = new SelectionModel<Element>(false, [])
+         public storedAddresses: string[] = []
+public dataSource: any;
+         public confirmation: string | null;
+         public error: Error | null;
+         public addressExist: boolean = false;
 
-  constructor (private readonly addressService: AddressService, private readonly translate: TranslateService,
+         constructor(private readonly addressService: AddressService, private readonly translate: TranslateService,
     private readonly router: Router, private readonly ngZone: NgZone, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {
