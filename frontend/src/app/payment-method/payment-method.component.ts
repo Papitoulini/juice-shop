@@ -28,14 +28,14 @@ export class PaymentMethodComponent implements OnInit {
   public nameControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
   public numberControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(1000000000000000), Validators.max(9999999999999999)])
-  public monthControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public yearControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public confirmation: any
-  public error: any
-  public storedCards: any
-  public card: any = {}
+public monthControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+public yearControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+public confirmation: boolean | null
+public error: boolean | null
+  public storedCards: Array<any> = []
+public card: { [key: string]: any } = {}
   public dataSource
-  public monthRange: any[]
+  public monthRange: string[]
   public yearRange: any[]
   public cardsExist: boolean = false
   public paymentId: any = undefined

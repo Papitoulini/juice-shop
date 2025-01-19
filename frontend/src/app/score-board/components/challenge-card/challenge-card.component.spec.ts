@@ -25,9 +25,9 @@ describe('ChallengeCard', () => {
       name: 'my name',
       mitigationUrl: 'https://owasp.example.com',
       hasCodingChallenge: true,
-      description: 'lorem ipsum',
+description: 'lorem ipsum',
       tagList: ['Easy']
-    } as any
+    } 
 
     component.applicationConfiguration = {
       ctf: {

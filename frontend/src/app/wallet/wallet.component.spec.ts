@@ -23,9 +23,9 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 describe('WalletComponent', () => {
   let component: WalletComponent
   let fixture: ComponentFixture<WalletComponent>
-  let walletService
+let walletService
   let translateService
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     walletService = jasmine.createSpyObj('AddressService', ['get', 'put'])

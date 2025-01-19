@@ -17,9 +17,9 @@ export class AdministrationService {
 
   constructor (private readonly http: HttpClient) { }
 
-  getApplicationVersion () {
+getApplicationVersion () {
     return this.http.get(this.host + '/application-version').pipe(
-      map((response: any) => response.version),
+      map((response: { version: string }) => response.version),
       catchError((error: Error) => { throw error })
     )
   }

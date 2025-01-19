@@ -20,9 +20,9 @@ export class OrderSummaryComponent implements OnInit {
   public bonus = 0
   public itemTotal = 0
   public deliveryPrice = 0
-  public promotionalDiscount = 0
-  public address: any
-  public paymentMethod: any
+public promotionalDiscount = 0
+  public address: Address
+  public paymentMethod: PaymentMethod
   constructor (private readonly router: Router, private readonly addressService: AddressService, private readonly paymentService: PaymentService, private readonly basketService: BasketService, private readonly deliveryService: DeliveryService, private readonly ngZone: NgZone, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {

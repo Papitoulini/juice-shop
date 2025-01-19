@@ -15,7 +15,7 @@ import config from 'config'
 import jws from 'jws'
 
 import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
+import security = require('../lib/insecurity')
 const jwt = require('jsonwebtoken')
 const cache = require('../data/datacache')
 const challenges = cache.challenges
@@ -110,9 +110,9 @@ exports.serverSideChallenges = () => (req: Request, res: Response, next: NextFun
 
 function jwtChallenge (challenge: Challenge, req: Request, algorithm: string, email: string | RegExp) {
   const token = utils.jwtFrom(req)
-  if (token) {
+if (token) {
     const decoded = jws.decode(token) ? jwt.decode(token) : null
-    jwt.verify(token, security.publicKey, (err: VerifyErrors | null, verified: JwtPayload) => {
+    jwt.verify(token, security.publicKey, (err: VerifyErrors | null, verified: object) => {
       if (err === null) {
         challengeUtils.solveIf(challenge, () => { return hasAlgorithm(token, algorithm) && hasEmail(decoded, email) })
       }

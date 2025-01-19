@@ -20,9 +20,9 @@ describe('SecurityQuestionService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get all challenges directly from the rest api', inject([SecurityQuestionService, HttpTestingController],
+it('should get all challenges directly from the rest api', inject([SecurityQuestionService, HttpTestingController],
     fakeAsync((service: SecurityQuestionService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: { data: string }
       service.find(null).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/api/SecurityQuestions/')
       req.flush({ data: 'apiResponse' })
@@ -35,9 +35,9 @@ describe('SecurityQuestionService', () => {
     })
   ))
 
-  it('should get security question by user email directly from the rest api', inject([SecurityQuestionService, HttpTestingController],
+it('should get security question by user email directly from the rest api', inject([SecurityQuestionService, HttpTestingController],
     fakeAsync((service: SecurityQuestionService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: { question: string }
       service.findBy('x@y.z').subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/user/security-question?email=x@y.z')
       req.flush({ question: 'apiResponse' })

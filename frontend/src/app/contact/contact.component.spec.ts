@@ -21,14 +21,14 @@ import { MatSliderModule } from '@angular/material/slider'
 import { of, throwError } from 'rxjs'
 
 describe('ContactComponent', () => {
-  let component: ContactComponent
-  let fixture: ComponentFixture<ContactComponent>
-  let userService: any
-  let feedbackService: any
-  let captchaService: any
-  let snackBar: any
-  let translateService
-
+let component: ContactComponent
+let fixture: ComponentFixture<ContactComponent>
+  let userService: UserService
+let feedbackService: FeedbackService
+  let captchaService: CaptchaService | undefined
+  let snackBar: MatSnackBar
+  let translateService: any
+  
   beforeEach(waitForAsync(() => {
     translateService = jasmine.createSpyObj('TranslateService', ['get'])
     translateService.get.and.returnValue(of({}))

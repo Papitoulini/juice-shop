@@ -24,13 +24,13 @@ class MockSocket {
 }
 
 describe('ServerStartedNotificationComponent', () => {
-  let component: ServerStartedNotificationComponent
-  let fixture: ComponentFixture<ServerStartedNotificationComponent>
-  let challengeService: any
-  let translateService: any
-  let cookieService: any
-  let socketIoService: any
-  let mockSocket: any
+let component: ServerStartedNotificationComponent
+let fixture: ComponentFixture<ServerStartedNotificationComponent>
+  let challengeService: ChallengeService
+let translateService: TranslateService
+let cookieService: CookieService
+  let socketIoService: SocketIoService | null = null
+  let mockSocket: SocketIoService | null = null
 
   beforeEach(waitForAsync(() => {
     challengeService = jasmine.createSpyObj('ChallengeService', ['restoreProgress'])

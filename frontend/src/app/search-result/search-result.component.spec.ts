@@ -33,11 +33,11 @@ import { DeluxeGuard } from '../app.guard'
 class MockSocket {
   on (str: string, callback: any) {
     callback(str)
-  }
+}
 
-  emit (a: any, b: any) {
-    return null
-  }
+  // emit () {
+  //   return null
+  // }
 }
 
 class MockActivatedRoute {
@@ -49,19 +49,19 @@ class MockActivatedRoute {
 }
 
 describe('SearchResultComponent', () => {
-  let component: SearchResultComponent
-  let fixture: ComponentFixture<SearchResultComponent>
-  let productService: any
-  let basketService: any
-  let translateService: any
-  let activatedRoute: MockActivatedRoute
-  let dialog: any
-  let sanitizer: any
-  let socketIoService: any
-  let mockSocket: any
-  let quantityService
+let component: SearchResultComponent
+let fixture: ComponentFixture<SearchResultComponent>
+let productService: ProductService
+  let basketService: BasketService
+let translateService: TranslateService
+let activatedRoute: MockActivatedRoute
+let dialog: MatDialog
+let sanitizer: DomSanitizer
+  let socketIoService: SocketIoService | null = null
+  let mockSocket: MockSocket | null = null
+let quantityService
   let deluxeGuard
-  let snackBar: any
+  let snackBar: MatSnackBar | undefined
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

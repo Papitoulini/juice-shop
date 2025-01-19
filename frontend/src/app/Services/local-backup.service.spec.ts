@@ -14,9 +14,9 @@ import * as FileSaver from 'file-saver'
 import { ChallengeService } from './challenge.service'
 
 describe('LocalBackupService', () => {
-  let snackBar: any
-  let cookieService: any
-  let challengeService: any
+let snackBar: MatSnackBar
+  let cookieService: CookieService
+  let challengeService: ChallengeService
 
   beforeEach(() => {
     snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])

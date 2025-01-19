@@ -8,7 +8,7 @@ import { UserModel } from '../models/user'
 import challengeUtils = require('../lib/challengeUtils')
 
 import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
+import security = require('../lib/insecurity')
 const cache = require('../data/datacache')
 const challenges = cache.challenges
 

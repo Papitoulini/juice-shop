@@ -13,9 +13,9 @@ describe('LastLoginIpComponent', () => {
   let fixture: ComponentFixture<LastLoginIpComponent>
   let sanitizer
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     sanitizer = jasmine.createSpyObj('DomSanitizer', ['bypassSecurityTrustHtml', 'sanitize'])
-    sanitizer.bypassSecurityTrustHtml.and.callFake((args: any) => args)
+    sanitizer.bypassSecurityTrustHtml.and.callFake((args: string) => args)
     sanitizer.sanitize.and.returnValue({})
 
     TestBed.configureTestingModule({

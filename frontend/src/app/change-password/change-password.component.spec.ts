@@ -18,9 +18,9 @@ import { MatCardModule } from '@angular/material/card'
 import { of, throwError } from 'rxjs'
 
 describe('ChangePasswordComponent', () => {
-  let component: ChangePasswordComponent
+let component: ChangePasswordComponent
   let fixture: ComponentFixture<ChangePasswordComponent>
-  let userService: any
+  let userService: jasmine.SpyObj<UserService>
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['changePassword'])

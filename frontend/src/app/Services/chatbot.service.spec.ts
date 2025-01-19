@@ -20,9 +20,9 @@ describe('ChatbotService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get status from the REST API', inject([ChatbotService, HttpTestingController],
+it('should get status from the REST API', inject([ChatbotService, HttpTestingController],
     fakeAsync((service: ChatbotService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: { status: boolean, body: string }
       service.getChatbotStatus().subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/chatbot/status')
       req.flush({ status: true, body: 'apiResponse' })
@@ -36,9 +36,9 @@ describe('ChatbotService', () => {
     })
   ))
 
-  it('should get query response from the REST API', inject([ChatbotService, HttpTestingController],
+it('should get query response from the REST API', inject([ChatbotService, HttpTestingController],
     fakeAsync((service: ChatbotService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: { action: string, body: string }
       service.getResponse('query', 'apiQuery').subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/chatbot/respond')
       req.flush({ action: 'response', body: 'apiResponse' })

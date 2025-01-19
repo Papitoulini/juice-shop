@@ -45,16 +45,16 @@ class MockSocket {
 }
 
 describe('NavbarComponent', () => {
-  let component: NavbarComponent
-  let fixture: ComponentFixture<NavbarComponent>
-  let administrationService: any
-  let configurationService: any
-  let userService: any
-  let challengeService: any
-  let translateService: any
-  let cookieService: any
-  let mockSocket: any
-  let socketIoService: any
+let component: NavbarComponent
+let fixture: ComponentFixture<NavbarComponent>
+let administrationService: AdminService
+let configurationService: ConfigService
+let userService: UserService
+let challengeService: ChallengeService
+let translateService: TranslateService
+  let cookieService: CookieService | null
+  let mockSocket: WebSocket
+  let socketIoService: SocketIOService
   let location: Location
   let loginGuard
 

@@ -30,9 +30,9 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 describe('LoginComponent', () => {
-  let component: LoginComponent
+let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  let userService: any
+  let userService: UserService
   let location: Location
 
   beforeEach(waitForAsync(() => {

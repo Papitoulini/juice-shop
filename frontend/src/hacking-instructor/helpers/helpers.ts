@@ -20,7 +20,7 @@ export async function sleep (timeInMs: number): Promise<void> {
   })
 }
 
-export function waitForInputToHaveValue (inputSelector: string, value: string, options: any = { ignoreCase: true, replacement: [] }) {
+export function waitForInputToHaveValue (inputSelector: string, value: string, options: { ignoreCase?: boolean, replacement?: any[] } = { ignoreCase: true, replacement: [] }) {
   return async () => {
     const inputElement: HTMLInputElement = document.querySelector(
       inputSelector
@@ -172,9 +172,9 @@ export function waitForAdminLogIn () {
     while (true) {
       let role: string = ''
       try {
-        const token: string = localStorage.getItem('token')
+const token: string = localStorage.getItem('token')
         const decodedToken = jwtDecode(token)
-        const payload = decodedToken as any
+        const payload: { data: { role: string } } = decodedToken
         role = payload.data.role
       } catch {
         console.log('Role from token could not be accessed.')

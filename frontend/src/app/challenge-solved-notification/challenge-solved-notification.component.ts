@@ -12,11 +12,11 @@ import { CountryMappingService } from 'src/app/Services/country-mapping.service'
 import { SocketIoService } from '../Services/socket-io.service'
 
 interface ChallengeSolvedMessage {
-  challenge: string
-  hidden?: any
-  isRestore?: any
-  flag: any
-  key?: any
+challenge: string
+  hidden?: boolean
+isRestore?: boolean
+  flag: string
+  key?: string
 }
 
 interface ChallengeSolvedNotification {
@@ -33,9 +33,9 @@ interface ChallengeSolvedNotification {
 })
 export class ChallengeSolvedNotificationComponent implements OnInit {
   public notifications: ChallengeSolvedNotification[] = []
-  public showCtfFlagsInNotifications: boolean = false
+public showCtfFlagsInNotifications: boolean = false
   public showCtfCountryDetailsInNotifications: string = 'none'
-  public countryMap?: any
+  public countryMap?: CountryMap
 
   constructor (private readonly ngZone: NgZone, private readonly configurationService: ConfigurationService, private readonly challengeService: ChallengeService, private readonly countryMappingService: CountryMappingService, private readonly translate: TranslateService, private readonly cookieService: CookieService, private readonly ref: ChangeDetectorRef, private readonly io: SocketIoService) {
   }

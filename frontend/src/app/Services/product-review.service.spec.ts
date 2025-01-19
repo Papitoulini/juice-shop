@@ -20,9 +20,9 @@ describe('ProductReviewService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+it('should get product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
     fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: { data: string }
       service.get(42).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/products/42/reviews')
       req.flush({ data: 'apiResponse' })
@@ -34,10 +34,10 @@ describe('ProductReviewService', () => {
     })
   ))
 
-  it('should create product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+it('should create product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
     fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
-      let res: any
-      service.create(42, { message: 'A', author: 'B' }).subscribe((data: any) => (res = data))
+      let res: { data: string }
+      service.create(42, { message: 'A', author: 'B' }).subscribe((data: { data: string }) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/products/42/reviews')
       req.flush({ data: 'apiResponse' })
 
@@ -49,10 +49,10 @@ describe('ProductReviewService', () => {
     })
   ))
 
-  it('should edit product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+it('should edit product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
     fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
-      let res: any
-      service.patch(null as unknown as { id: string, message: string }).subscribe((data: any) => (res = data))
+      let res: { data: string }
+      service.patch({ id: '', message: '' } as { id: string, message: string }).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/products/reviews')
       req.flush({ data: 'apiResponse' })
 

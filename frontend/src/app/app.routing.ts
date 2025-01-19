@@ -288,9 +288,9 @@ export function token1 (...args: number[]) { // vuln-code-snippet neutral-line t
 } // vuln-code-snippet neutral-line tokenSaleChallenge
 
 export function token2 (...args: number[]) { // vuln-code-snippet neutral-line tokenSaleChallenge
-  const T = Array.prototype.slice.call(arguments) // vuln-code-snippet neutral-line tokenSaleChallenge
-  const M = T.shift() // vuln-code-snippet neutral-line tokenSaleChallenge
-  return T.reverse().map(function (m, H) { // vuln-code-snippet neutral-line tokenSaleChallenge
+  const args2 = Array.prototype.slice.call(arguments) // vuln-code-snippet neutral-line tokenSaleChallenge
+  const M = args2.shift() // vuln-code-snippet neutral-line tokenSaleChallenge
+  return args2.reverse().map(function (m, H) { // vuln-code-snippet neutral-line tokenSaleChallenge
     return String.fromCharCode(m - M - 24 - H) // vuln-code-snippet neutral-line tokenSaleChallenge
   }).join('') // vuln-code-snippet neutral-line tokenSaleChallenge
 } // vuln-code-snippet neutral-line tokenSaleChallenge

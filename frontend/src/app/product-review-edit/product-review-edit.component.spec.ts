@@ -17,10 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 describe('ProductReviewEditComponent', () => {
-  let component: ProductReviewEditComponent
-  let fixture: ComponentFixture<ProductReviewEditComponent>
-  let productReviewService: any
-  let dialogRef: any
+let component: ProductReviewEditComponent
+let fixture: ComponentFixture<ProductReviewEditComponent>
+  let productReviewService: ProductReviewService
+  let dialogRef: MatDialogRef<ProductReviewEditComponent> | null = null
 
   beforeEach(waitForAsync(() => {
     productReviewService = jasmine.createSpyObj('ProductReviewService', ['patch'])

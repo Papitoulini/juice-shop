@@ -40,22 +40,22 @@ library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, f
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  public couponConfirmation: any
-  public couponError: any
-  public card: any = {}
-  public twitterUrl = null
-  public facebookUrl = null
+public couponConfirmation: string
+  public couponError: string
+  public card: { [key: string]: string } = {}
+  public twitterUrl: string | null = null
+  public facebookUrl: string | null = null
   public applicationName = 'OWASP Juice Shop'
-  private campaignCoupon: string
-  public couponControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
-  public clientDate: any
-  public paymentId: any = undefined
-  public couponPanelExpanded: boolean = false
+private campaignCoupon: string
+public couponControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
+  public clientDate: Date
+  public paymentId: string | undefined
+public couponPanelExpanded: boolean = false
   public paymentPanelExpanded: boolean = false
-  public mode: any
-  public walletBalance: number = 0
+  public mode: 'view' | 'edit' = 'view'
+public walletBalance: number = 0
   public walletBalanceStr: string
-  public totalPrice: any = 0
+  public totalPrice: number = 0
   public paymentMode: string = 'card'
   private readonly campaigns = {
     WMNSDY2019: { validOn: 1551999600000, discount: 75 },
@@ -141,9 +141,9 @@ export class PaymentComponent implements OnInit {
           this.couponError = { error: translationId }
         })
         this.resetCouponForm()
-      }
+}
     } else {
-      this.basketService.applyCoupon(Number(sessionStorage.getItem('bid')), encodeURIComponent(this.couponControl.value)).subscribe((discount: any) => {
+      this.basketService.applyCoupon(Number(sessionStorage.getItem('bid')), encodeURIComponent(this.couponControl.value)).subscribe((discount: { [key: string]: any }) => {
         this.showConfirmation(discount)
       }, (err) => {
         this.couponConfirmation = undefined

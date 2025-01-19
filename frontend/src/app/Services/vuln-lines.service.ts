@@ -15,9 +15,9 @@ export class VulnLinesService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/snippets/verdict'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  check (key: string, selectedLines: number[]): any {
+  check (key: string, selectedLines: number[]): Observable<any> {
     return this.http.post(this.host, {
       key,
       selectedLines

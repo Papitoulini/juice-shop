@@ -20,7 +20,7 @@ interface OrderDetail {
 })
 export class BasketService {
   public hostServer = environment.hostServer
-  public itemTotal = new Subject<any>()
+  public itemTotal = new Subject<number>()
   private readonly host = this.hostServer + '/api/BasketItems'
 
   constructor (private readonly http: HttpClient) { }
@@ -58,9 +58,9 @@ export class BasketService {
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.itemTotal.next(basket.Products.reduce((itemTotal, product) => itemTotal + product.BasketItem.quantity, 0))
     }, (err) => { console.log(err) })
-  }
+}
 
-  getItemTotal (): Observable<any> {
+  getItemTotal (): Observable<number> {
     return this.itemTotal.asObservable()
   }
 }

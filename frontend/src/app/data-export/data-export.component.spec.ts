@@ -22,9 +22,9 @@ import { MatButtonModule } from '@angular/material/button'
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent
-  let fixture: ComponentFixture<DataExportComponent>
-  let imageCaptchaService: any
-  let dataSubjectService: any
+let fixture: ComponentFixture<DataExportComponent>
+  let imageCaptchaService: ImageCaptchaService
+  let dataSubjectService: DataSubjectService
   let domSanitizer: DomSanitizer
 
   beforeEach(waitForAsync(() => {

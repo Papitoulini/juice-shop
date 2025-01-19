@@ -12,27 +12,27 @@ export class KeysService {
 
   constructor (private readonly http: HttpClient) {}
 
-  nftUnlocked () {
+nftUnlocked () {
     return this.http.get(this.host + '/nftUnlocked').pipe(
-      map((response: any) => response),
+      map((response: { [key: string]: any }) => response),
       catchError((err) => {
         throw err
       })
     )
   }
 
-  nftMintListen () {
+nftMintListen () {
     return this.http.get(this.host + '/nftMintListen').pipe(
       map((response: any) => response),
-      catchError((err) => {
+      catchError((err: any) => {
         throw err
       })
     )
   }
 
-  checkNftMinted () {
-    return this.http.get(this.hostServer + '/api/Challenges/?key=nftMintChallenge').pipe(
-      map((response: any) => response),
+checkNftMinted () {
+    return this.http.get<any>(this.hostServer + '/api/Challenges/?key=nftMintChallenge').pipe(
+      map((response) => response),
       catchError((err) => {
         throw err
       })
@@ -41,9 +41,9 @@ export class KeysService {
 
   submitKey (privateKey: string) {
     const endpoint = this.host + '/submitKey'
-    const params = { privateKey }
+const params = { privateKey }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: { [key: string]: any }) => response),
       catchError((err) => {
         throw err
       })
@@ -52,9 +52,9 @@ export class KeysService {
 
   verifyNFTWallet (walletAddress: string) {
     const endpoint = this.host + '/walletNFTVerify'
-    const params = { walletAddress }
+const params = { walletAddress }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: any) => response as Response),
       catchError((err) => {
         throw err
       })
@@ -63,10 +63,10 @@ export class KeysService {
 
   walletAddressSend (walletAddress: string) {
     const endpoint = this.host + '/walletExploitAddress'
-    const params = { walletAddress }
+const params = { walletAddress }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
-      catchError((err) => {
+      map((response: any) => response as Response),
+      catchError((err: any) => {
         throw err
       })
     )

@@ -19,14 +19,14 @@ import { VulnLinesService } from '../Services/vuln-lines.service'
 import { ChallengeService } from '../Services/challenge.service'
 
 describe('CodeSnippetComponent', () => {
-  let component: CodeSnippetComponent
-  let fixture: ComponentFixture<CodeSnippetComponent>
-  let configurationService: any
-  let cookieService: any
-  let codeSnippetService: any
-  let codeFixesService: any
-  let vulnLinesService: any
-  let challengeService: any
+let component: CodeSnippetComponent
+let fixture: ComponentFixture<CodeSnippetComponent>
+let configurationService: ConfigurationService
+  let cookieService: CookieService
+let codeSnippetService: CodeSnippetService
+let codeFixesService: CodeFixesService
+  let vulnLinesService: VulnLinesService | null
+  let challengeService: ChallengeService
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])

@@ -14,9 +14,9 @@ import { catchError, map } from 'rxjs/operators'
 export class ComplaintService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Complaints'
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  save (params: any) {
+  save (params: { [key: string]: any }) {
     return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

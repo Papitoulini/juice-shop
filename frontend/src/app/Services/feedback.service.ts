@@ -15,15 +15,15 @@ export class FeedbackService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Feedbacks'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
-    return this.http.get(this.host + '/', {
+  find (params?: { [key: string]: any }) {
+return this.http.get(this.host + '/', {
       params
-    }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+    }).pipe(map((response: any) => response.data), catchError((err: any) => { throw err }))
   }
 
-  save (params: any) {
+  save (params: Record<string, unknown>) {
     return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 

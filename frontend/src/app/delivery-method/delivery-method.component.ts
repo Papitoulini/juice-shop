@@ -22,9 +22,9 @@ library.add(faRocket, faShippingFast, faTruck)
   styleUrls: ['./delivery-method.component.scss']
 })
 export class DeliveryMethodComponent implements OnInit {
-  public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
+public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
   public methods: DeliveryMethod[]
-  public address: any
+  public address: Address
   public dataSource
   public deliveryMethodId: number = undefined
   selection = new SelectionModel<DeliveryMethod>(false, [])

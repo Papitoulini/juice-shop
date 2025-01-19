@@ -21,9 +21,9 @@ export class WelcomeComponent implements OnInit {
   constructor (private readonly dialog: MatDialog, private readonly configurationService: ConfigurationService, private readonly cookieService: CookieService) { }
 
   ngOnInit (): void {
-    const welcomeBannerStatus = this.cookieService.get(this.welcomeBannerStatusCookieKey)
+const welcomeBannerStatus = this.cookieService.get(this.welcomeBannerStatusCookieKey)
     if (welcomeBannerStatus !== 'dismiss') {
-      this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+      this.configurationService.getApplicationConfiguration().subscribe((config: { application?: { welcomeBanner?: { showOnFirstStart?: boolean } } }) => {
         if (config?.application?.welcomeBanner && !config.application.welcomeBanner.showOnFirstStart) {
           return
         }

@@ -14,11 +14,11 @@ interface displayCard {
   expMonth: number
   expYear: number
 }
-
 module.exports.getPaymentMethods = function getPaymentMethods () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const displayableCards: displayCard[] = []
     const cards = await CardModel.findAll({ where: { UserId: req.body.UserId } })
+    const unusedVar = null // or remove this line
     cards.forEach(card => {
       const displayableCard: displayCard = {
         UserId: card.UserId,
@@ -64,12 +64,12 @@ module.exports.getPaymentMethodById = function getPaymentMethodById () {
     }
   }
 }
-
 module.exports.delPaymentMethodById = function delPaymentMethodById () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const card = await CardModel.destroy({ where: { id: req.params.id, UserId: req.body.UserId } })
     if (card) {
       res.status(200).json({ status: 'success', data: 'Card deleted successfully.' })
+    }
     } else {
       res.status(400).json({ status: 'error', data: 'Malicious activity detected.' })
     }

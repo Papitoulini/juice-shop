@@ -42,10 +42,10 @@ interface TableEntry {
 })
 export class SearchResultComponent implements OnDestroy, AfterViewInit {
   public displayedColumns = ['Image', 'Product', 'Description', 'Price', 'Select']
-  public tableData!: any[]
-  public pageSizeOptions: number[] = []
+  public tableData!: TableEntry[]
+public pageSizeOptions: number[] = []
   public dataSource!: MatTableDataSource<TableEntry>
-  public gridDataSource!: any
+  public gridDataSource: MatTableDataSource<TableEntry>
   public searchValue?: SafeHtml
   public resultsLength = 0
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | null = null
@@ -118,12 +118,12 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
       }
       this.cdRef.detectChanges()
     }, (err) => { console.log(err) })
-  }
+}
 
-  trustProductDescription (tableData: any[]) { // vuln-code-snippet neutral-line restfulXssChallenge
-    for (let i = 0; i < tableData.length; i++) { // vuln-code-snippet neutral-line restfulXssChallenge
-      tableData[i].description = this.sanitizer.bypassSecurityTrustHtml(tableData[i].description) // vuln-code-snippet vuln-line restfulXssChallenge
-    } // vuln-code-snippet neutral-line restfulXssChallenge
+  trustProductDescription (tableData: { description: string }[]) {
+    for (let i = 0; i < tableData.length; i++) {
+      tableData[i].description = this.sanitizer.bypassSecurityTrustHtml(tableData[i].description)
+    }
   } // vuln-code-snippet neutral-line restfulXssChallenge
   // vuln-code-snippet end restfulXssChallenge
 
@@ -147,9 +147,9 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
       this.ngZone.runOutsideAngular(() => { // vuln-code-snippet hide-start
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       }) // vuln-code-snippet hide-end
-      this.dataSource.filter = queryParam.toLowerCase()
+this.dataSource.filter = queryParam.toLowerCase()
       this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
-      this.gridDataSource.subscribe((result: any) => {
+      this.gridDataSource.subscribe((result: unknown) => {
         if (result.length === 0) {
           this.emptyState = true
         } else {
@@ -181,9 +181,9 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
     })
   }
 
-  addToBasket (id?: number) {
+addToBasket (id?: number) {
     this.basketService.find(Number(sessionStorage.getItem('bid'))).subscribe((basket) => {
-      const productsInBasket: any = basket.Products
+      const productsInBasket: { id: number }[] = basket.Products
       let found = false
       for (let i = 0; i < productsInBasket.length; i++) {
         if (productsInBasket[i].id === id) {
@@ -230,9 +230,9 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
 
   isLoggedIn () {
     return localStorage.getItem('token')
-  }
+}
 
-  onResize (event: any) {
+  onResize (event: ResizeEvent) {
     if (event.target.innerWidth < 2600) {
       this.breakpoint = 4
       if (event.target.innerWidth < 1740) {

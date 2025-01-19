@@ -4,9 +4,9 @@ import { CookieModule, CookieService } from 'ngx-cookie'
 import { CodeFixesComponent } from './code-fixes.component'
 
 describe('CodeFixesComponent', () => {
-  let component: CodeFixesComponent
+let component: CodeFixesComponent
   let fixture: ComponentFixture<CodeFixesComponent>
-  let cookieService: any
+  let cookieService: CookieService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

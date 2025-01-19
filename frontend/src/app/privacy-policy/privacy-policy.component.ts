@@ -19,9 +19,9 @@ export class PrivacyPolicyComponent implements OnInit {
 
   constructor (@Inject(DOCUMENT) private readonly _document: HTMLDocument, private readonly configurationService: ConfigurationService) { }
 
-  ngOnInit (): void {
+ngOnInit (): void {
     this.applicationUrl = this._document.location.protocol + '//' + this._document.location.hostname
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+    this.configurationService.getApplicationConfiguration().subscribe((config: ApplicationConfiguration) => {
       if (config?.application?.name) {
         this.applicationName = config.application.name
       }

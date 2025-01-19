@@ -11,9 +11,9 @@ import path from 'path'
 import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
 
-const libxml = require('libxmljs')
-const vm = require('vm')
-const unzipper = require('unzipper')
+import libxml = require('libxmljs')
+import vm = require('vm')
+import unzipper = require('unzipper')
 
 function ensureFileIsPassed ({ file }: Request, res: Response, next: NextFunction) {
   if (file != null) {
@@ -32,9 +32,9 @@ function handleZipFileUpload ({ file }: Request, res: Response, next: NextFuncti
         fs.write(fd, buffer, 0, buffer.length, null, function (err) {
           if (err != null) { next(err) }
           fs.close(fd, function () {
-            fs.createReadStream(tempFile)
+fs.createReadStream(tempFile)
               .pipe(unzipper.Parse())
-              .on('entry', function (entry: any) {
+              .on('entry', function (entry: unzipper.Entry) {
                 const fileName = entry.path
                 const absolutePath = path.resolve('uploads/complaints/' + fileName)
                 challengeUtils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve('ftp/legal.md') })
@@ -80,9 +80,9 @@ function handleXmlUpload ({ file }: Request, res: Response, next: NextFunction) 
         const xmlDoc = vm.runInContext('libxml.parseXml(data, { noblanks: true, noent: true, nocdata: true })', sandbox, { timeout: 2000 })
         const xmlString = xmlDoc.toString(false)
         challengeUtils.solveIf(challenges.xxeFileDisclosureChallenge, () => { return (utils.matchesEtcPasswdFile(xmlString) || utils.matchesSystemIniFile(xmlString)) })
-        res.status(410)
+res.status(410)
         next(new Error('B2B customer complaints via file upload have been deprecated for security reasons: ' + utils.trunc(xmlString, 400) + ' (' + file.originalname + ')'))
-      } catch (err: any) { // TODO: Remove any
+      } catch (err: Error) { // TODO: Remove any
         if (utils.contains(err.message, 'Script execution timed out')) {
           if (challengeUtils.notSolved(challenges.xxeDosChallenge)) {
             challengeUtils.solve(challenges.xxeDosChallenge)

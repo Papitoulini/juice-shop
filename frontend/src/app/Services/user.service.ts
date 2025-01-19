@@ -23,39 +23,39 @@ export class UserService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Users'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: { [key: string]: any }) {
     return this.http.get(this.hostServer + '/rest/user/authentication-details/', { params }).pipe(map((response: any) =>
       response.data), catchError((err) => { throw err }))
   }
 
   get (id: number) {
     return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
+}
 
-  save (params: any) {
+save (params: { [key: string]: unknown }) {
     return this.http.post(this.host + '/', params).pipe(
-      map((response: any) => response.data),
+      map((response: { data: unknown }) => response.data),
       catchError((err) => { throw err })
     )
-  }
+}
 
-  login (params: any) {
+login (params: { [key: string]: any }) {
     this.isLoggedIn.next(true)
-    return this.http.post(this.hostServer + '/rest/user/login', params).pipe(map((response: any) => response.authentication), catchError((err) => { throw err }))
+    return this.http.post(this.hostServer + '/rest/user/login', params).pipe(map((response: { authentication: any }) => response.authentication), catchError((err) => { throw err }))
   }
 
   getLoggedInState () {
     return this.isLoggedIn.asObservable()
   }
 
-  changePassword (passwords: Passwords) {
+changePassword (passwords: Passwords) {
     return this.http.get(this.hostServer + '/rest/user/change-password?current=' + passwords.current + '&new=' +
-    passwords.new + '&repeat=' + passwords.repeat).pipe(map((response: any) => response.user), catchError((err) => { throw err.error }))
+    passwords.new + '&repeat=' + passwords.repeat).pipe(map((response: { user: any }) => response.user), catchError((err) => { throw err.error }))
   }
 
-  resetPassword (params: any) {
+  resetPassword (params: { [key: string]: any }) {
     return this.http.post(this.hostServer + '/rest/user/reset-password', params).pipe(map((response: any) => response.user), catchError((err) => { throw err }))
   }
 
@@ -73,9 +73,9 @@ export class UserService {
 
   deluxeStatus () {
     return this.http.get(this.hostServer + '/rest/deluxe-membership').pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
+}
 
-  upgradeToDeluxe (paymentMode: string, paymentId: any) {
+  upgradeToDeluxe (paymentMode: string, paymentId: string) {
     return this.http.post(this.hostServer + '/rest/deluxe-membership', { paymentMode, paymentId }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

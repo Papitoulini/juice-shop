@@ -32,15 +32,15 @@ class MockSocket {
 }
 
 describe('SidenavComponent', () => {
-  let component: SidenavComponent
-  let fixture: ComponentFixture<SidenavComponent>
-  let challengeService: any
-  let cookieService: any
-  let configurationService: any
-  let userService: any
-  let administractionService: any
-  let mockSocket: any
-  let socketIoService: any
+let component: SidenavComponent
+let fixture: ComponentFixture<SidenavComponent>
+let challengeService: ChallengeService
+let cookieService: CookieService
+let configurationService: ConfigurationService
+let userService: UserService
+  let administractionService: AdministrationService
+  let mockSocket: WebSocket | null = null
+  let socketIoService: SocketIoService
   let loginGuard
   let location: Location
 
