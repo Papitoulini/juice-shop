@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import path from 'path'
+await Promise.all(
+      files.map(async (filename: string) => {
+        await copyFile(filename, path.resolve('i18n/', path.basename(filename)))
+      })
+    )
+  } catch (err) {
 import * as utils from '../utils'
 import logger from '../logger'
 import { copyFile, access } from 'fs/promises'

@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import vm = require('vm')
+const sandbox = { safeEval: vm.runInContext.bind(vm), orderLinesData }
+        vm.createContext(sandbox)
+        vm.runInContext('safeEval(orderLinesData)', sandbox, { timeout: 2000 })
+        res.json({ cid: body.cid, orderNo: uniqueOrderNumber(), paymentDue: dateTwoWeeksFromNow() })
+      } catch (err) {
+        if (utils.getErrorMessage(err).match(/Script execution timed out.*/) != null) {
 import { type Request, type Response, type NextFunction } from 'express'
 import challengeUtils = require('../lib/challengeUtils')
 

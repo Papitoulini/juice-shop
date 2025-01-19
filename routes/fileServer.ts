@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+verifySuccessfulPoisonNullByteExploit(file)
 
-import path = require('path')
+      res.sendFile(path.resolve(__dirname, 'ftp/', path.basename(file)))
+    } else {
+      res.status(403)
+      next(new Error('Only .md and .pdf files are allowed!'))
 import { type Request, type Response, type NextFunction } from 'express'
 import { challenges } from '../data/datacache'
 import challengeUtils = require('../lib/challengeUtils')

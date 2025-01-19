@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+import * as crypto from 'crypto'
 
-import fs from 'fs'
+export const deluxeToken = (email: string) => {
+  const hmac = crypto.createHmac('sha256', process.env.PRIVATE_KEY)
+  return hmac.update(email + roles.deluxe).digest('hex')
+}
 import crypto from 'crypto'
 import { type Request, type Response, type NextFunction } from 'express'
 import { type UserModel } from 'models/user'

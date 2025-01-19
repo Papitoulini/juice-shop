@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-import dataErasure from './routes/dataErasure'
-import fs = require('fs')
+app.use('/ftp/quarantine/:file', quarantineServer()) // vuln-code-snippet neutral-line directoryListingChallenge
+
+  app.use('/.well-known', serveIndexMiddleware, serveStatic('.well-known', { icons: true, view: 'details' }))
+  app.use('/.well-known', express.static('.well-known'))
+
+  /* /encryptionkeys directory browsing */
 import { type Request, type Response, type NextFunction } from 'express'
 import { sequelize } from './models'
 import { UserModel } from './models/user'

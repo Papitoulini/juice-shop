@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import jwtDecode from 'jwt-decode'
+let replacementValue = Object.freeze(Object.assign(Object.create(null), config))
+      for (const property of propertyChain) {
+        replacementValue = replacementValue[property]
+      }
+      value = value.replace(options.replacement[0], replacementValue)
+    }
 
 let config
 const playbackDelays = {

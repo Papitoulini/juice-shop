@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+const doc = new PDFDocument()
+          const date = new Date().toJSON().slice(0, 10)
+          const fileWriter = doc.pipe(fs.createWriteStream(path.join(process.cwd(), 'ftp/', pdfFile)))
 
-import path = require('path')
+          fileWriter.on('finish', async () => {
+            void basket.update({ coupon: null })
 import { type Request, type Response, type NextFunction } from 'express'
 import { BasketModel } from '../models/basket'
 import { ProductModel } from '../models/product'
