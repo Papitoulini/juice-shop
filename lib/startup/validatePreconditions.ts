@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+const fileName = path.basename(pathRelativeToProjectRoot)
 
-import pjson from '../../package.json'
+         return await access(path.resolve(pathRelativeToProjectRoot)).then(() => {
+           logger.info(`Required file ${colors.bold(fileName)} is present (${colors.green('OK')})`)
+           return true
+         }).catch(() => {
 import config from 'config'
 import logger from '../logger'
 import path from 'path'

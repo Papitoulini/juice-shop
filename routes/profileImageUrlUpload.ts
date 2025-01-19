@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import fs = require('fs')
+if (loggedInUser) {
+          const imageRequest = request.get(`${url}`)
+            .on('error', function (err: unknown) {
+              UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url }) }).catch((error: Error) => { next(error) })
+              logger.warn(`Error retrieving user profile image: ${utils.getErrorMessage(err)}; using image link directly`)
+        }
 import { type Request, type Response, type NextFunction } from 'express'
 import logger from '../lib/logger'
 
