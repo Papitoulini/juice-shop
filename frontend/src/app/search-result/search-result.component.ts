@@ -42,13 +42,13 @@ interface TableEntry {
 })
 export class SearchResultComponent implements OnDestroy, AfterViewInit {
   public displayedColumns = ['Image', 'Product', 'Description', 'Price', 'Select']
-  public tableData!: any[]
-  public pageSizeOptions: number[] = []
-  public dataSource!: MatTableDataSource<TableEntry>
-  public gridDataSource!: any
-  public searchValue?: SafeHtml
-  public resultsLength = 0
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | null = null
+  public tableData!: TableEntry[]
+public pageSizeOptions: number[] = []
+         public dataSource!: MatTableDataSource<TableEntry>
+         public gridDataSource!: MatTableDataSource<TableEntry>
+         public searchValue?: SafeHtml | null
+         public resultsLength = 0
+         @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | null = null
   private readonly productSubscription?: Subscription
   private routerSubscription?: Subscription
   public breakpoint: number = 6
@@ -147,12 +147,12 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
       this.ngZone.runOutsideAngular(() => { // vuln-code-snippet hide-start
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       }) // vuln-code-snippet hide-end
-      this.dataSource.filter = queryParam.toLowerCase()
-      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
-      this.gridDataSource.subscribe((result: any) => {
-        if (result.length === 0) {
-          this.emptyState = true
-        } else {
+this.dataSource.filter = queryParam.toLowerCase()
+         this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
+         this.gridDataSource.subscribe((result: any[]) => {
+           if (result.length === 0) {
+             this.emptyState = true
+           } else {
           this.emptyState = false
         }
       })
@@ -181,12 +181,12 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
     })
   }
 
-  addToBasket (id?: number) {
-    this.basketService.find(Number(sessionStorage.getItem('bid'))).subscribe((basket) => {
-      const productsInBasket: any = basket.Products
-      let found = false
-      for (let i = 0; i < productsInBasket.length; i++) {
-        if (productsInBasket[i].id === id) {
+addToBasket (id?: number) {
+           this.basketService.find(Number(sessionStorage.getItem('bid'))).subscribe((basket) => {
+             const productsInBasket: any[] = basket.Products
+             let found = false
+             for (let i = 0; i < productsInBasket.length; i++) {
+               if (productsInBasket[i].id === id) {
           found = true
           this.basketService.get(productsInBasket[i].BasketItem.id).subscribe((existingBasketItem) => {
             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands

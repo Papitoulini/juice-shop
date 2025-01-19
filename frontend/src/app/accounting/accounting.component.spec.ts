@@ -28,11 +28,11 @@ describe('AccountingComponent', () => {
   let component: AccountingComponent
   let fixture: ComponentFixture<AccountingComponent>
   let productService
-  let quantityService
-  let orderHistoryService
-  let snackBar: any
+let quantityService
+let orderHistoryService
+let snackBar: Snackbar
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     quantityService = jasmine.createSpyObj('QuantityService', ['getAll', 'put'])
     quantityService.getAll.and.returnValue(of([]))
     quantityService.put.and.returnValue(of({}))

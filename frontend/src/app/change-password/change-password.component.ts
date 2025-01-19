@@ -21,12 +21,12 @@ library.add(faSave, faEdit)
 })
 export class ChangePasswordComponent {
   public passwordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public newPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)])
-  public repeatNewPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), matchValidator(this.newPasswordControl)])
-  public error: any
-  public confirmation: any
+public newPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)])
+         public repeatNewPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), matchValidator(this.newPasswordControl)])
+         public error: Error | null = null
+         public confirmation: string | null = null
 
-  constructor (private readonly userService: UserService, private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService) { }
+         constructor (private readonly userService: UserService, private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService) { }
 
   ngOnInit () {
     this.formSubmitService.attachEnterKeyHandler('password-form', 'changeButton', () => { this.changePassword() })
@@ -38,12 +38,12 @@ export class ChangePasswordComponent {
     }
     this.userService.changePassword({
       current: this.passwordControl.value,
-      new: this.newPasswordControl.value,
+new: this.newPasswordControl.value,
       repeat: this.repeatNewPasswordControl.value
     }).subscribe((response: any) => {
-      this.error = undefined
+      this.error = undefined;
       this.translate.get('PASSWORD_SUCCESSFULLY_CHANGED').subscribe((passwordSuccessfullyChanged) => {
-        this.confirmation = passwordSuccessfullyChanged
+        this.confirmation = passwordSuccessfullyChanged;
       }, (translationId) => {
         this.confirmation = { error: translationId }
       })

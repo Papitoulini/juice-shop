@@ -8,12 +8,12 @@ import { BasketItemModel } from '../models/basketitem'
 import { QuantityModel } from '../models/quantity'
 import challengeUtils = require('../lib/challengeUtils')
 
-import * as utils from '../lib/utils'
-import { challenges } from '../data/datacache'
-const security = require('../lib/insecurity')
+import * as utils from '../lib/utils';
+import { challenges } from '../data/datacache';
+import security from '../lib/insecurity';
 
 interface RequestWithRawBody extends Request {
-  rawBody: string
+  rawBody: string;
 }
 
 module.exports.addBasketItem = function addBasketItem () {

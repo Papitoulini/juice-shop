@@ -15,15 +15,15 @@ export class RecycleService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Recycles'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
   find (params?: any) {
-    return this.http.get(this.host + '/', {
-      params
-    }).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
-  }
+return this.http.get(this.host + '/', {
+           params: params
+         }).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+}
 
-  save (params: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+       save (params: { [key: string]: string | number }) {
+    return this.http.post(this.host + '/', params).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 }

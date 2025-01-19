@@ -9,12 +9,12 @@ import challengeUtils = require('../lib/challengeUtils')
 import config from 'config'
 import * as utils from '../lib/utils'
 import { AllHtmlEntities as Entities } from 'html-entities'
-import { challenges } from '../data/datacache'
+import { challenges } from '../data/datacache';
+import pug from 'pug';
+import { themes } from '../views/themes/themes';
+import { Entities } from './entities';
 
-const pug = require('pug')
-const themes = require('../views/themes/themes').themes
-const entities = new Entities()
-
+const entities = new Entities();
 exports.getVideo = () => {
   return (req: Request, res: Response) => {
     const path = videoPath()

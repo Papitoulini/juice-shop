@@ -32,12 +32,12 @@ import { throwError } from 'rxjs/internal/observable/throwError'
 
 describe('DeluxeUserComponent', () => {
   let component: DeluxeUserComponent
-  let fixture: ComponentFixture<DeluxeUserComponent>
-  let userService
-  let cookieService: any
-  let configurationService: any
+let fixture: ComponentFixture<DeluxeUserComponent>
+let userService: any;
+let cookieService: CookieService;
+let configurationService: ConfigurationService;
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { } }))
     userService = jasmine.createSpyObj('UserService', ['deluxeStatus', 'upgradeToDeluxe', 'saveLastLoginIp'])

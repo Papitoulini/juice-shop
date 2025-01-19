@@ -34,13 +34,13 @@ describe('ProductReviewService', () => {
     })
   ))
 
-  it('should create product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+it('should create product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+TypeScript
     fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
-      let res: any
-      service.create(42, { message: 'A', author: 'B' }).subscribe((data: any) => (res = data))
+      let res: ProductReview;
+      service.create(42, { message: 'A', author: 'B' }).subscribe((data: ProductReview) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/products/42/reviews')
       req.flush({ data: 'apiResponse' })
-
       tick()
       expect(req.request.method).toBe('PUT')
       expect(req.request.body).toEqual({ message: 'A', author: 'B' })
@@ -49,13 +49,13 @@ describe('ProductReviewService', () => {
     })
   ))
 
-  it('should edit product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
-    fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
-      let res: any
-      service.patch(null as unknown as { id: string, message: string }).subscribe((data: any) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/rest/products/reviews')
-      req.flush({ data: 'apiResponse' })
-
+it('should edit product reviews directly via the rest api', inject([ProductReviewService, HttpTestingController],
+TypeScript
+fakeAsync((service: ProductReviewService, httpMock: HttpTestingController) => {
+  let res: { id: string, message: string };
+  service.patch({} as { id: string, message: string }).subscribe((data: { id: string, message: string }) => (res = data));
+  const req = httpMock.expectOne('http://localhost:3000/rest/products/reviews');
+  req.flush({ data: 'apiResponse' });
       tick()
       expect(req.request.method).toBe('PATCH')
       expect(req.request.body).toBe(null)

@@ -32,12 +32,12 @@ describe('CodeFixesService', () => {
     })
   ))
 
-  it('should submit solution for "Fit It" phase of coding challenge via the rest api', inject([CodeFixesService, HttpTestingController],
-    fakeAsync((service: CodeFixesService, httpMock: HttpTestingController) => {
-      let res: any
-      service.check('testChallenge', 1).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/snippets/fixes')
-      req.flush('apiResponse')
+it('should submit solution for "Fit It" phase of coding challenge via the rest api', inject([CodeFixesService, HttpTestingController],
+           fakeAsync((service: CodeFixesService, httpMock: HttpTestingController) => {
+             let response: any
+             service.check('testChallenge', 1).subscribe((data) => (response = data))
+             const req = httpMock.expectOne('http://localhost:3000/snippets/fixes')
+             req.flush('apiResponse')
 
       tick()
       expect(req.request.method).toBe('POST')

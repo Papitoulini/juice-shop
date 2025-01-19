@@ -25,12 +25,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 
 describe('BasketComponent', () => {
   let component: BasketComponent
-  let fixture: ComponentFixture<BasketComponent>
-  let deluxeGuard
-  let snackBar: any
+let fixture: ComponentFixture<BasketComponent>
+         let deluxeGuard
+         let snackBar: Snackbar
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+         beforeEach(waitForAsync(() => {
+           TestBed.configureTestingModule({
       declarations: [BasketComponent, PurchaseBasketComponent],
       imports: [
         RouterTestingModule,

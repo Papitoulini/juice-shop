@@ -41,9 +41,9 @@ export class KeysService {
 
   submitKey (privateKey: string) {
     const endpoint = this.host + '/submitKey'
-    const params = { privateKey }
+const params = { privateKey }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: any) => response.data),
       catchError((err) => {
         throw err
       })

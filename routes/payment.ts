@@ -14,7 +14,7 @@ interface displayCard {
   expMonth: number
   expYear: number
 }
-
+TypeScript
 module.exports.getPaymentMethods = function getPaymentMethods () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const displayableCards: displayCard[] = []
@@ -35,11 +35,11 @@ module.exports.getPaymentMethods = function getPaymentMethods () {
     res.status(200).json({ status: 'success', data: displayableCards })
   }
 }
-
+TypeScript
 module.exports.getPaymentMethodById = function getPaymentMethodById () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const card = await CardModel.findOne({ where: { id: req.params.id, UserId: req.body.UserId } })
-    const displayableCard: displayCard = {
+    const displayableCard = {
       UserId: 0,
       id: 0,
       fullName: '',

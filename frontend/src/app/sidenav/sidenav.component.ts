@@ -35,9 +35,9 @@ export class SidenavComponent implements OnInit {
   constructor (private readonly administrationService: AdministrationService, private readonly challengeService: ChallengeService,
     private readonly ngZone: NgZone, private readonly io: SocketIoService, private readonly userService: UserService, private readonly cookieService: CookieService,
     private readonly router: Router, private readonly configurationService: ConfigurationService, private readonly loginGuard: LoginGuard) { }
-
+TypeScript
   ngOnInit () {
-    this.administrationService.getApplicationVersion().subscribe((version: any) => {
+    this.administrationService.getApplicationVersion().subscribe((version: string | number) => {
       if (version) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.version = `v${version}`
@@ -71,9 +71,9 @@ export class SidenavComponent implements OnInit {
   isLoggedIn () {
     return localStorage.getItem('token')
   }
-
-  logout () {
-    this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => { console.log(err) })
+TypeScript
+logout () {
+    this.userService.saveLastLoginIp().subscribe((user: object) => { this.noop() }, (err) => { console.log(err) })
     localStorage.removeItem('token')
     this.cookieService.remove('token')
     sessionStorage.removeItem('bid')
@@ -92,17 +92,17 @@ export class SidenavComponent implements OnInit {
 
   // eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
   noop () { }
-
-  getScoreBoardStatus () {
-    this.challengeService.find({ name: 'Score Board' }).subscribe((challenges: any) => {
-      this.ngZone.run(() => {
-        this.scoreBoardVisible = challenges[0].solved
-      })
+getScoreBoardStatus () {
+  this.challengeService.find({ name: 'Score Board' }).subscribe((challenges: any[]) => {
+    this.ngZone.run(() => {
+      this.scoreBoardVisible = challenges[0].solved
+    })
+  })
     }, (err) => { console.log(err) })
   }
-
+TypeScript
   getUserDetails () {
-    this.userService.whoAmI().subscribe((user: any) => {
+    this.userService.whoAmI().subscribe((user: { email: string }) => {
       this.userEmail = user.email
     }, (err) => { console.log(err) })
   }
@@ -110,12 +110,12 @@ export class SidenavComponent implements OnInit {
   onToggleSidenav = () => {
     this.sidenavToggle.emit()
   }
-
-  getApplicationDetails () {
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
-      if (config?.application?.name) {
-        this.applicationName = config.application.name
-      }
+getApplicationDetails () {
+  this.configurationService.getApplicationConfiguration().subscribe((config: { application: { name: string } }) => {
+    if (config?.application?.name) {
+      this.applicationName = config.application.name
+    }
+  }
       if (config?.application) {
         this.showGitHubLink = config.application.showGitHubLinks
       }

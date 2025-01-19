@@ -27,12 +27,12 @@ export enum Status {
 })
 export class TrackResultComponent implements OnInit {
   public displayedColumns = ['product', 'price', 'quantity', 'total price']
-  public dataSource = new MatTableDataSource()
-  public orderId?: string
-  public results: any = {}
-  public status: Status = Status.New
-  public Status = Status
-  constructor (private readonly route: ActivatedRoute, private readonly trackOrderService: TrackOrderService, private readonly sanitizer: DomSanitizer) {}
+public dataSource = new MatTableDataSource()
+         public orderId?: string
+         public results: { [key: string]: any } = {}
+         public status: Status = Status.New
+         public Status = Status
+         constructor (private readonly route: ActivatedRoute, private readonly trackOrderService: TrackOrderService, private readonly sanitizer: DomSanitizer) {}
 
   ngOnInit () {
     this.orderId = this.route.snapshot.queryParams.id

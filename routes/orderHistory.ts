@@ -21,10 +21,10 @@ module.exports.orderHistory = function orderHistory () {
     }
   }
 }
-
+TypeScript
 module.exports.allOrders = function allOrders () {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const order = await ordersCollection.find()
+    const { order } = await ordersCollection.find()
     res.status(200).json({ status: 'success', data: order.reverse() })
   }
 }

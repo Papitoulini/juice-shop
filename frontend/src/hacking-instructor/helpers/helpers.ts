@@ -18,12 +18,12 @@ export async function sleep (timeInMs: number): Promise<void> {
   await new Promise((resolve) => {
     setTimeout(resolve, timeInMs)
   })
+TypeScript
 }
 
-export function waitForInputToHaveValue (inputSelector: string, value: string, options: any = { ignoreCase: true, replacement: [] }) {
+export function waitForInputToHaveValue (inputSelector: string, value: string, options: { ignoreCase: boolean, replacement: string[] } = { ignoreCase: true, replacement: [] }) {
   return async () => {
-    const inputElement: HTMLInputElement = document.querySelector(
-      inputSelector
+    const inputElement: HTMLInputElement = document.querySelector(inputSelector);
     )
 
     if (options.replacement?.length === 2) {
@@ -172,10 +172,10 @@ export function waitForAdminLogIn () {
     while (true) {
       let role: string = ''
       try {
-        const token: string = localStorage.getItem('token')
-        const decodedToken = jwtDecode(token)
-        const payload = decodedToken as any
-        role = payload.data.role
+const token: string = localStorage.getItem('token')
+         const decodedToken = jwtDecode(token)
+         const payload = decodedToken as {data: {role: string}}
+         role = payload.data.role
       } catch {
         console.log('Role from token could not be accessed.')
       }

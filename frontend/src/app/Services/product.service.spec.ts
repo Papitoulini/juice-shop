@@ -20,12 +20,12 @@ describe('ProductService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should search for products directly from the rest api', inject([ProductService, HttpTestingController],
-    fakeAsync((service: ProductService, httpMock: HttpTestingController) => {
-      let res: any
-      service.search('1').subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/rest/products/search?q=1')
-      req.flush({ data: 'apiResponse' })
+it('should search for products directly from the rest api', inject([ProductService, HttpTestingController],
+  fakeAsync((service: ProductService, httpMock: HttpTestingController) => {
+    let res: any;
+    service.search('1').subscribe((data) => (res = data));
+    const req = httpMock.expectOne('http://localhost:3000/rest/products/search?q=1');
+    req.flush({ data: 'apiResponse' });
 
       tick()
       expect(req.request.method).toBe('GET')
@@ -49,12 +49,12 @@ describe('ProductService', () => {
     })
   ))
 
-  it('should get single product directly from the rest api', inject([ProductService, HttpTestingController],
-    fakeAsync((service: ProductService, httpMock: HttpTestingController) => {
-      let res: any
-      service.get(1).subscribe((data) => (res = data))
-      const req = httpMock.expectOne('http://localhost:3000/api/Products/1?d=' + encodeURIComponent(new Date().toDateString()))
-      req.flush({ data: 'apiResponse' })
+it('should get single product directly from the rest api', inject([ProductService, HttpTestingController],
+           fakeAsync((service: ProductService, httpMock: HttpTestingController) => {
+             let res: Product
+             service.get(1).subscribe((data) => (res = data))
+             const req = httpMock.expectOne('http://localhost:3000/api/Products/1?d=' + encodeURIComponent(new Date().toDateString()))
+             req.flush({ data: 'apiResponse' })
 
       tick()
       expect(req.request.method).toBe('GET')

@@ -8,12 +8,12 @@ import fs from 'fs'
 import yaml from 'js-yaml'
 import { getCodeChallenges } from '../lib/codingChallenges'
 import * as accuracy from '../lib/accuracy'
-import * as utils from '../lib/utils'
-
-const challengeUtils = require('../lib/challengeUtils')
+import * as utils from '../lib/utils';
+import challengeUtils from '../lib/challengeUtils';
 
 interface SnippetRequestBody {
-  challenge: string
+  challenge: string;
+}
 }
 
 interface VerdictRequestBody {
@@ -69,11 +69,11 @@ export const getVerdict = (vulnLines: number[], neutralLines: number[], selected
   const okLines = [...vulnLines, ...neutralLines]
   const notOkLines = selectedLines.filter(x => !okLines.includes(x))
   return notOkLines.length === 0
+TypeScript
 }
 
 exports.checkVulnLines = () => async (req: Request<Record<string, unknown>, Record<string, unknown>, VerdictRequestBody>, res: Response, next: NextFunction) => {
   const key = req.body.key
-  let snippetData
   try {
     snippetData = await retrieveCodeSnippet(key)
     if (snippetData == null) {

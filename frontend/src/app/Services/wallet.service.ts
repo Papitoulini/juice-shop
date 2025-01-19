@@ -16,7 +16,7 @@ export class WalletService {
   private readonly host = this.hostServer + '/rest/wallet/balance'
 
   constructor (private readonly http: HttpClient) { }
-
+TypeScript
   get () {
     return this.http.get(this.host).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }

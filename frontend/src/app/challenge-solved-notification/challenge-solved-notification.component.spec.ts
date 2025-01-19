@@ -19,29 +19,29 @@ import { ChallengeSolvedNotificationComponent } from './challenge-solved-notific
 import { of, throwError } from 'rxjs'
 import { EventEmitter } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-
+TypeScript
 class MockSocket {
-  on (str: string, callback: any) {
+  on(str: string, callback: (arg0: unknown) => void) {
     callback()
-  }
-
-  emit (a: any, b: any) {
-    return null
+}
+}
+  emit(a: any) {
+    return null;
   }
 }
 
 describe('ChallengeSolvedNotificationComponent', () => {
-  let component: ChallengeSolvedNotificationComponent
-  let fixture: ComponentFixture<ChallengeSolvedNotificationComponent>
-  let socketIoService: any
-  let translateService: any
-  let cookieService: any
-  let challengeService: any
-  let configurationService: any
-  let mockSocket: any
+let component: ChallengeSolvedNotificationComponent
+let fixture: ComponentFixture<ChallengeSolvedNotificationComponent>
+let socketIoService: SocketIoService
+let translateService: TranslateService
+let cookieService: CookieService;
+let challengeService: ChallengeService;
+let configurationService: ConfigurationService;
+let mockSocket: SocketIO.Server;
 
-  beforeEach(waitForAsync(() => {
-    mockSocket = new MockSocket()
+beforeEach(waitForAsync(() => {
+    mockSocket = new MockSocket();
     socketIoService = jasmine.createSpyObj('SocketIoService', ['socket'])
     socketIoService.socket.and.returnValue(mockSocket)
     translateService = jasmine.createSpyObj('TranslateService', ['get'])

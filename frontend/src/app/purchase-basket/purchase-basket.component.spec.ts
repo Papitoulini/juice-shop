@@ -25,14 +25,14 @@ import { EventEmitter } from '@angular/core'
 describe('PurchaseBasketComponent', () => {
   let component: PurchaseBasketComponent
   let fixture: ComponentFixture<PurchaseBasketComponent>
-  let basketService
-  let userService
-  let translateService: any
-  let deluxeGuard
-  let snackBar: any
-
+TypeScript
+let basketService;
+let userService;
+let translateService: TranslateService;
+let deluxeGuard;
+let snackBar;
   beforeEach(waitForAsync(() => {
-    basketService = jasmine.createSpyObj('BasketService', ['find', 'del', 'get', 'put', 'updateNumberOfCartItems'])
+    basketService = jasmine.createSpyObj('BasketService', ['find', 'del', 'get', 'put', 'updateNumberOfCartItems']);
     basketService.find.and.returnValue(of({ Products: [] }))
     basketService.del.and.returnValue(of({}))
     basketService.get.and.returnValue(of({}))
