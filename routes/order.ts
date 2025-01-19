@@ -19,7 +19,7 @@ import { challenges, products } from '../data/datacache'
 
 const fs = require('fs')
 const PDFDocument = require('pdfkit')
-const security = require('../lib/insecurity')
+import security = require('../lib/insecurity')
 
 interface Product {
   quantity: number
@@ -66,10 +66,10 @@ module.exports = function placeOrder () {
           const basketProducts: Product[] = []
           let totalPoints = 0
           basket.Products?.forEach(({ BasketItem, price, deluxePrice, name, id }) => {
-            if (BasketItem != null) {
+if (BasketItem != null) {
               challengeUtils.solveIf(challenges.christmasSpecialChallenge, () => { return BasketItem.ProductId === products.christmasSpecial.id })
-              QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product: any) => {
-                const newQuantity = product.quantity - BasketItem.quantity
+              QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product: QuantityModel | null) => {
+                const newQuantity = product?.quantity ? product.quantity - BasketItem.quantity : 0
                 QuantityModel.update({ quantity: newQuantity }, { where: { ProductId: BasketItem?.ProductId } }).catch((error: unknown) => {
                   next(error)
                 })

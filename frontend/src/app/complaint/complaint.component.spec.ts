@@ -23,9 +23,9 @@ import { EventEmitter } from '@angular/core'
 
 describe('ComplaintComponent', () => {
   let component: ComplaintComponent
-  let fixture: ComponentFixture<ComplaintComponent>
-  let userService: any
-  let complaintService: any
+let fixture: ComponentFixture<ComplaintComponent>
+  let userService: UserService
+  let complaintService: ComplaintService
   let translateService
 
   beforeEach(waitForAsync(() => {

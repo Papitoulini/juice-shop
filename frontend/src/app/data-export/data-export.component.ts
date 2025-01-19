@@ -15,15 +15,15 @@ import { DomSanitizer } from '@angular/platform-browser'
   styleUrls: ['./data-export.component.scss']
 })
 export class DataExportComponent implements OnInit {
-  public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5)])
-  public formatControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public captcha: any
-  private dataRequest: any = undefined
-  public confirmation: any
-  public error: any
-  public lastSuccessfulTry: any
+public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5)])
+public formatControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+public captcha: string
+private dataRequest: { [key: string]: any } = undefined
+  public confirmation: unknown
+  public error: unknown
+public lastSuccessfulTry: unknown = undefined
   public presenceOfCaptcha: boolean = false
-  public userData: any
+  public userData: Record<string, unknown>
 
   constructor (public sanitizer: DomSanitizer, private readonly imageCaptchaService: ImageCaptchaService, private readonly dataSubjectService: DataSubjectService) { }
   ngOnInit () {
@@ -49,9 +49,9 @@ export class DataExportComponent implements OnInit {
   save () {
     if (this.presenceOfCaptcha) {
       this.dataRequest.answer = this.captchaControl.value
-    }
+}
     this.dataRequest.format = this.formatControl.value
-    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: any) => {
+    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: { confirmation: any, userData: any }) => {
       this.error = null
       this.confirmation = data.confirmation
       this.userData = data.userData

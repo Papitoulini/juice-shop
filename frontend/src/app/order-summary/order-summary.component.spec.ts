@@ -29,14 +29,14 @@ import { DeluxeGuard } from '../app.guard'
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 
 describe('OrderSummaryComponent', () => {
-  let component: OrderSummaryComponent
-  let fixture: ComponentFixture<OrderSummaryComponent>
-  let basketService: any
-  let addressService: any
-  let paymentService: any
-  let deliveryService: any
-  let deluxeGuard
-  let snackBar: any
+let component: OrderSummaryComponent
+let fixture: ComponentFixture<OrderSummaryComponent>
+let basketService: BasketService
+  let addressService: AddressService
+  let paymentService: PaymentService
+let deliveryService: DeliveryService
+  let deluxeGuard: DeluxeGuard
+  let snackBar!: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     addressService = jasmine.createSpyObj('AddressService', ['getById'])

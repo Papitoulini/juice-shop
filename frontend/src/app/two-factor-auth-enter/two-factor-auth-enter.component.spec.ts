@@ -37,10 +37,10 @@ import { TwoFactorAuthService } from '../Services/two-factor-auth-service'
 
 describe('TwoFactorAuthEnterComponent', () => {
   let component: TwoFactorAuthEnterComponent
-  let fixture: ComponentFixture<TwoFactorAuthEnterComponent>
-  let cookieService: any
-  let userService: any
-  let twoFactorAuthService: any
+let fixture: ComponentFixture<TwoFactorAuthEnterComponent>
+let cookieService: CookieService
+  let userService: UserService
+  let twoFactorAuthService: TwoFactorAuthService | null = null
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['login'])

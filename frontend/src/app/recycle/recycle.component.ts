@@ -28,22 +28,22 @@ export class RecycleComponent implements OnInit {
   public recycleQuantityControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(10), Validators.max(1000)])
   public pickUpDateControl: UntypedFormControl = new UntypedFormControl()
   public pickup: UntypedFormControl = new UntypedFormControl(false)
-  public topImage?: string
-  public bottomImage?: string
-  public recycles: any
-  public recycle: any = {}
-  public userEmail: any
-  public confirmation: any
-  public addressId: any = undefined
+public topImage?: string
+public bottomImage?: string
+public recycles: Record<string, unknown>
+public recycle: Record<string, unknown> = {}
+public userEmail: string | null = null
+  public confirmation: boolean | undefined
+  public addressId: string
   constructor (private readonly recycleService: RecycleService, private readonly userService: UserService,
     private readonly configurationService: ConfigurationService, private readonly formSubmitService: FormSubmitService,
     private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
-
-  ngOnInit () {
+ngOnInit () {
     this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
       if (config?.application?.recyclePage) {
+        const recyclePage = config.application.recyclePage;
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        this.topImage = `assets/public/images/products/${config.application.recyclePage.topProductImage}`
+        this.topImage = `assets/public/images/products/${recyclePage.topProductImage}`
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.bottomImage = `assets/public/images/products/${config.application.recyclePage.bottomProductImage}`
       }
@@ -70,9 +70,9 @@ export class RecycleComponent implements OnInit {
     if (this.pickup.value) {
       this.recycle.isPickUp = this.pickup.value
       this.recycle.date = this.pickUpDateControl.value
-    }
+}
 
-    this.recycleService.save(this.recycle).subscribe((savedRecycle: any) => {
+    this.recycleService.save(this.recycle).subscribe((savedRecycle: Recycle) => {
       if (savedRecycle.isPickup) {
         this.translate.get('CONFIRM_RECYCLING_PICKUP', { pickupdate: savedRecycle.pickupDate }).subscribe((confirmRecyclingPickup) => {
           this.snackBarHelperService.open(confirmRecyclingPickup, 'confirmBar')

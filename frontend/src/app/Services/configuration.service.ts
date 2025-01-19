@@ -65,9 +65,9 @@ export interface Config {
       name: string
       overlayMap: string
     }
-    googleOauth: {
+googleOauth: {
       clientId: string
-      authorizedRedirects: any[]
+      authorizedRedirects: string[]
     }
   }
   challenges: {
@@ -82,13 +82,13 @@ export interface Config {
   }
   hackingInstructor: {
     isEnabled: boolean
-    avatarImage: string
-  }
-  products: any[]
-  memories: any[]
+avatarImage: string
+}
+  products: Product[]
+  memories: Memory[]
   ctf: {
     showFlagsInNotifications: boolean
-    showCountryDetailsInNotifications: string
+    showCountryDetailsInNotifications: boolean
     countryMapping: any[]
   }
 }
@@ -97,9 +97,9 @@ export interface Config {
   providedIn: 'root'
 })
 export class ConfigurationService {
-  private readonly hostServer = environment.hostServer
+private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/rest/admin'
-  private configObservable: any
+  private configObservable: Observable<Config>
   constructor (private readonly http: HttpClient) { }
 
   getApplicationConfiguration (): Observable<Config> {

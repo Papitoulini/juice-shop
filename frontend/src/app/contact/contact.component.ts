@@ -25,13 +25,13 @@ export class ContactComponent implements OnInit {
   public authorControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
   public feedbackControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.pattern('-?[\\d]*')])
-  public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
-  public rating: number = 0
-  public feedback: any = undefined
-  public captcha: any
-  public captchaId: any
-  public confirmation: any
-  public error: any
+public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
+public rating: number = 0
+  public feedback: string | undefined = undefined
+public captcha: string
+public captchaId: string
+  public confirmation: boolean
+  public error: Error | undefined
 
   constructor (private readonly userService: UserService, private readonly captchaService: CaptchaService, private readonly feedbackService: FeedbackService,
     private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }

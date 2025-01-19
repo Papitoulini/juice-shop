@@ -15,11 +15,11 @@ export class SecurityAnswerService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/SecurityAnswers'
 
-  constructor (private readonly http: HttpClient) { }
+constructor (private readonly http: HttpClient) { }
 
-  save (params: any) {
+save (params: Record<string, unknown>) {
     return this.http.post(this.host + '/', params).pipe(
-      map((response: any) => response.data),
+      map((response: unknown) => (response as any).data),
       catchError((err) => { throw err })
     )
   }

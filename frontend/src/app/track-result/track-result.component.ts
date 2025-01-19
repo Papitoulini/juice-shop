@@ -27,9 +27,9 @@ export enum Status {
 })
 export class TrackResultComponent implements OnInit {
   public displayedColumns = ['product', 'price', 'quantity', 'total price']
-  public dataSource = new MatTableDataSource()
+public dataSource = new MatTableDataSource()
   public orderId?: string
-  public results: any = {}
+  public results: { [key: string]: any } = {}
   public status: Status = Status.New
   public Status = Status
   constructor (private readonly route: ActivatedRoute, private readonly trackOrderService: TrackOrderService, private readonly sanitizer: DomSanitizer) {}

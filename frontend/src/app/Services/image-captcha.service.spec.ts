@@ -19,9 +19,9 @@ describe('ImageCaptchaService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should get captcha directly from the rest api', inject([ImageCaptchaService, HttpTestingController],
+it('should get captcha directly from the rest api', inject([ImageCaptchaService, HttpTestingController],
     fakeAsync((service: ImageCaptchaService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: string
       service.getCaptcha().subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/rest/image-captcha/')
       req.flush('apiResponse')

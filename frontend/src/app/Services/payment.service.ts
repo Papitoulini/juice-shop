@@ -21,9 +21,9 @@ export class PaymentService {
     return this.http.get(this.host).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
-  getById (id) {
+getById (id) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err: Error) => { throw err }))
+    return this.http.get(`${this.host}/${id}`).pipe(map((response: { data: any }) => response.data), catchError((err: Error) => { throw err }))
   }
 
   save (params) {
