@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+const subs = getSubsFromFile();
 
-import fs = require('fs')
+      challengeUtils.solveIf(challenges.videoXssChallenge, () => { return utils.contains(subs, entities.encode('</script><script>alert(xss)</script>')) });
+
+      const theme = themes[config.get<string>('application.theme')];
+      template = template.replace(/_title_/g, entities.encode(config.get<string>('application.name')));
 import { type Request, type Response } from 'express'
 import challengeUtils = require('../lib/challengeUtils')
 import config from 'config'
