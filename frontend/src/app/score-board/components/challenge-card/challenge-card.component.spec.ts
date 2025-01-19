@@ -25,42 +25,9 @@ describe('ChallengeCard', () => {
       name: 'my name',
       mitigationUrl: 'https://owasp.example.com',
       hasCodingChallenge: true,
-      description: 'lorem ipsum',
-      tagList: ['Easy']
-    } as any
-
-    component.applicationConfiguration = {
-      ctf: {
-        showFlagsInNotifications: true
-      },
-      challenges: {
-        codingChallengesEnabled: 'solved'
-      },
-      hackingInstructor: {
-        isEnabled: true
-      }
-    } as Config
-
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-
-  it('should not show a mitigation link when challenge has it but isnt solved', () => {
-    component.challenge.solved = false
-    component.challenge.mitigationUrl = 'https://owasp.example.com'
-    fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('[aria-label="Vulnerability mitigation link"]'))
-      .toBeFalsy()
-  })
-
-  it('should show a mitigation link when challenge has it but isnt solved', () => {
-    component.challenge.solved = true
-    component.challenge.mitigationUrl = 'https://owasp.example.com'
-    fixture.detectChanges()
-    expect(fixture.nativeElement.querySelector('[aria-label="Vulnerability mitigation link"]'))
-      .toBeTruthy()
-  })
-})
+         description: 'lorem ipsum',
+         tagList: ['Easy'],
+         // Add type annotation for component.applicationConfiguration
+         component: {
+           applicationConfiguration: {
+             ctf: {

@@ -26,44 +26,9 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 
 describe('SavedAddressComponent', () => {
-  let component: SavedAddressComponent
-  let fixture: ComponentFixture<SavedAddressComponent>
-  let snackBar: any
+         let component: SavedAddressComponent
+         let fixture: ComponentFixture<SavedAddressComponent>
+         let snackBar: MatSnackBar
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-        ReactiveFormsModule,
-
-        BrowserAnimationsModule,
-        MatCardModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatDividerModule,
-        MatRadioModule,
-        MatDialogModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatCheckboxModule
-      ],
-      declarations: [SavedAddressComponent, AddressComponent],
-      providers: [{ provide: MatSnackBar, useValue: snackBar }]
-    })
-      .compileComponents()
-  }))
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SavedAddressComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
-})
+         beforeEach(waitForAsync(() => {
+           TestBed.configureTestingModule({

@@ -247,61 +247,9 @@ contract HelloWorld {
         }
       }
     }
+TypeScript
   }
 
-  async handleChainChanged (chainId: string) {
-    await this.handleAuth()
+  async handleChainChanged(chainId: string) {
+    await this.handleAuth();
   }
-
-  async handleAuth () {
-    try {
-      const { isConnected } = getAccount()
-
-      if (isConnected) {
-        await disconnect()
-      }
-      if (!window.ethereum) {
-        this.snackBarHelperService.open('PLEASE_INSTALL_WEB3_WALLET', 'errorBar')
-        return
-      }
-
-      const provider = await connect({ connector: new InjectedConnector() })
-      this.metamaskAddress = provider.account
-      this.userData = {
-        address: provider.account,
-        chain: provider.chain.id,
-        network: 'evm'
-      }
-      await ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: '0xaa36a7',
-            chainName: 'Sepolia Test Network',
-            nativeCurrency: {
-              name: 'SepoliaETH',
-              symbol: 'ETH',
-              decimals: 18
-            },
-            rpcUrls: ['https://ethereum-sepolia.blockpi.network/v1/rpc/public'],
-            blockExplorerUrls: ['https://sepolia.etherscan.io/']
-          }
-        ]
-      })
-      const targetChainId = '11155111'
-      const currentChainId = String(provider.chain?.id)
-
-      if (provider && currentChainId !== targetChainId) {
-        this.session = false
-        this.snackBarHelperService.open('PLEASE_CONNECT_TO_SEPOLIA_NETWORK', 'errorBar')
-      } else {
-        console.log('Should show ethereum chain now')
-        this.session = true
-      }
-      console.log('session', this.session)
-      this.changeDetectorRef.detectChanges()
-    } catch (err) {
-      console.log('An error occured')
-    }
-  }
-}

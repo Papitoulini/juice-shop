@@ -7,13 +7,9 @@ import { Injectable } from '@angular/core'
 
 @Injectable({
   providedIn: 'root'
-})
+TypeScript
 export class WindowRefService {
-  get nativeWindow (): any {
+  get nativeWindow (): Window {
     return getWindow()
   }
-}
-
-function getWindow (): any {
-  return window
 }

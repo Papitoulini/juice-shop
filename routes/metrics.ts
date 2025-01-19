@@ -180,53 +180,7 @@ exports.observeMetrics = function observeMetrics () {
 
         ChallengeModel.count({ where: { codingChallengeStatus: { [Op.ne]: 0 } } }).then((count: number) => {
           codingChallengesProgressMetrics.set({ phase: 'unsolved' }, challenges.length - count)
-        }).catch((_: unknown) => {
-          throw new Error('Unable to retrieve and count such challenges. Please try again')
+        }).catch((error: Error) => {
+          throw error
         })
       })
-
-      cheatScoreMetrics.set(totalCheatScore())
-      accuracyMetrics.set({ phase: 'find it' }, accuracy.totalFindItAccuracy())
-      accuracyMetrics.set({ phase: 'fix it' }, accuracy.totalFixItAccuracy())
-
-      ordersCollection.count({}).then((orderCount: number) => {
-        if (orderCount) orderMetrics.set(orderCount)
-      })
-
-      reviewsCollection.count({}).then((reviewCount: number) => {
-        if (reviewCount) interactionsMetrics.set({ type: 'review' }, reviewCount)
-      })
-
-      void UserModel.count({ where: { role: { [Op.eq]: 'customer' } } }).then((count: number) => {
-        if (count) userMetrics.set({ type: 'standard' }, count)
-      })
-
-      void UserModel.count({ where: { role: { [Op.eq]: 'deluxe' } } }).then((count: number) => {
-        if (count) userMetrics.set({ type: 'deluxe' }, count)
-      })
-
-      void UserModel.count().then((count: number) => {
-        if (count) userTotalMetrics.set(count)
-      })
-
-      void WalletModel.sum('balance').then((totalBalance: number) => {
-        if (totalBalance) walletMetrics.set(totalBalance)
-      })
-
-      void FeedbackModel.count().then((count: number) => {
-        if (count) interactionsMetrics.set({ type: 'feedback' }, count)
-      })
-
-      void ComplaintModel.count().then((count: number) => {
-        if (count) interactionsMetrics.set({ type: 'complaint' }, count)
-      })
-    } catch (e: unknown) {
-      logger.warn('Error during metrics update loop: + ' + utils.getErrorMessage(e))
-    }
-  }, 5000)
-
-  return {
-    register,
-    updateLoop
-  }
-}

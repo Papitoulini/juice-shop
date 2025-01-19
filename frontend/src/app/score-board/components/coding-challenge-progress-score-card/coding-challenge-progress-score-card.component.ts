@@ -16,20 +16,9 @@ export class CodingChallengeProgressScoreCardComponent implements OnInit, OnChan
 
   ngOnInit (): void {
     this.updatedNumberOfSolvedChallenges()
+TypeScript
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    this.updatedNumberOfSolvedChallenges()
+    this.updatedNumberOfSolvedChallenges && this.updatedNumberOfSolvedChallenges()
   }
-
-  private updatedNumberOfSolvedChallenges (): void {
-    const availableCodingChallenges = this.allChallenges
-      .filter((challenge) => challenge.hasCodingChallenge)
-
-    this.solvedCodingChallenges = availableCodingChallenges
-      .map((challenge) => challenge.codingChallengeStatus)
-      .reduce((a, b) => a + b, 0) // sum up the scores
-    // multiply by 2 because each coding challenge has 2 parts (find it and fix it)
-    this.availableCodingChallenges = availableCodingChallenges.length * 2
-  }
-}

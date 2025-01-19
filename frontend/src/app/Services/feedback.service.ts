@@ -15,19 +15,12 @@ export class FeedbackService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Feedbacks'
 
-  constructor (private readonly http: HttpClient) { }
+         constructor(private readonly http: HttpClient) { }
 
-  find (params?: any) {
-    return this.http.get(this.host + '/', {
-      params
-    }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  save (params: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  del (id: number) {
-    return this.http.delete(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-}
+         find(params?: { [key: string]: any }) {
+         return this.http.get(this.host + '/', {
+           params
+         }).pipe(map((response: { data: any }) => response.data), catchError((err) => { throw err }))
+const ages: number[] = [17];
+         const ages: number[] = [17];
+const ages: number[] = [17];

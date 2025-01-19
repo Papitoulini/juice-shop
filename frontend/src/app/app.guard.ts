@@ -27,57 +27,9 @@ export class LoginGuard implements CanActivate {
       queryParams: { error }
     }))
   }
-
+TypeScript
   tokenDecode () {
-    let payload: any = null
+    let payload: null | string = null
     const token = localStorage.getItem('token')
     if (token) {
       try {
-        payload = jwtDecode(token)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    return payload
-  }
-}
-
-@Injectable()
-export class AdminGuard implements CanActivate {
-  constructor (private readonly loginGuard: LoginGuard) {}
-
-  canActivate () {
-    const payload = this.loginGuard.tokenDecode()
-    if (payload?.data && payload.data.role === roles.admin) {
-      return true
-    } else {
-      this.loginGuard.forbidRoute()
-      return false
-    }
-  }
-}
-
-@Injectable()
-export class AccountingGuard implements CanActivate {
-  constructor (private readonly loginGuard: LoginGuard) {}
-
-  canActivate () {
-    const payload = this.loginGuard.tokenDecode()
-    if (payload?.data && payload.data.role === roles.accounting) {
-      return true
-    } else {
-      this.loginGuard.forbidRoute()
-      return false
-    }
-  }
-}
-
-@Injectable()
-export class DeluxeGuard {
-  constructor (private readonly loginGuard: LoginGuard) {}
-
-  isDeluxe () {
-    const payload = this.loginGuard.tokenDecode()
-    return payload?.data && payload.data.role === roles.deluxe
-  }
-}

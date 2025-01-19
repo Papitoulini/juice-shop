@@ -172,90 +172,9 @@ export function waitForAdminLogIn () {
     while (true) {
       let role: string = ''
       try {
-        const token: string = localStorage.getItem('token')
-        const decodedToken = jwtDecode(token)
-        const payload = decodedToken as any
-        role = payload.data.role
-      } catch {
-        console.log('Role from token could not be accessed.')
-      }
-      if (role === 'admin') {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
-
-export function waitForLogOut () {
-  return async () => {
-    while (true) {
-      if (localStorage.getItem('token') === null) {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
-
-/**
- * see https://stackoverflow.com/questions/7798748/find-out-whether-chrome-console-is-open/48287643#48287643
- * does detect when devtools are opened horizontally or vertically but not when undocked or open on page load
- */
-export function waitForDevTools () {
-  const initialInnerHeight = window.innerHeight
-  const initialInnerWidth = window.innerWidth
-  return async () => {
-    while (true) {
-      if (window.innerHeight !== initialInnerHeight || window.innerWidth !== initialInnerWidth) {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
-
-export function waitForSelectToHaveValue (selectSelector: string, value: string) {
-  return async () => {
-    const selectElement: HTMLSelectElement = document.querySelector(
-      selectSelector
-    )
-
-    while (true) {
-      if (selectElement.options[selectElement.selectedIndex].value === value) {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
-
-export function waitForSelectToNotHaveValue (selectSelector: string, value: string) {
-  return async () => {
-    const selectElement: HTMLSelectElement = document.querySelector(
-      selectSelector
-    )
-
-    while (true) {
-      if (selectElement.options[selectElement.selectedIndex].value !== value) {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
-
-export function waitForRightUriQueryParamPair (key: string, value: string) {
-  return async () => {
-    while (true) {
-      const encodedValue: string = encodeURIComponent(value).replace(/%3A/g, ':')
-      const encodedKey: string = encodeURIComponent(key).replace(/%3A/g, ':')
-      const expectedHash: string = `#/track-result/new?${encodedKey}=${encodedValue}`
-
-      if (window.location.hash === expectedHash) {
-        break
-      }
-      await sleep(100)
-    }
-  }
-}
+         const token: string = localStorage.getItem('token')
+         const decodedToken = jwtDecode(token)
+         const payload = decodedToken as {data: {role: string}}
+         role = payload.data.role
+       } catch {
+         console.log('Role from token could not be accessed.')

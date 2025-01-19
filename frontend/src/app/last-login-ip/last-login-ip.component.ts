@@ -13,28 +13,10 @@ import * as jwtDecode from 'jwt-decode'
   styleUrls: ['./last-login-ip.component.scss']
 
 })
-
+TypeScript
 export class LastLoginIpComponent {
-  lastLoginIp: any = '?'
+  lastLoginIp: string = '?'
   constructor (private readonly sanitizer: DomSanitizer) {}
 
   ngOnInit () {
-    try {
-      this.parseAuthToken()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  parseAuthToken () {
-    let payload = {} as any
-    const token = localStorage.getItem('token')
-    if (token) {
-      payload = jwtDecode(token)
-      if (payload.data.lastLoginIp) {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        this.lastLoginIp = this.sanitizer.bypassSecurityTrustHtml(`<small>${payload.data.lastLoginIp}</small>`)
-      }
-    }
-  }
-}
+const ages: number[] = [17];

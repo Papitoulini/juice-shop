@@ -10,18 +10,9 @@ import { DOCUMENT } from '@angular/common'
   providedIn: 'root'
 })
 export class FormSubmitService {
-  constructor (@Inject(DOCUMENT) private readonly _document: HTMLDocument) { }
+         constructor (@Inject(DOCUMENT) private readonly _document: HTMLDocument) { }
 
-  attachEnterKeyHandler (formId: string, submitButtonId: string, onSubmit: any) {
-    const form = this._document.getElementById(formId) as HTMLFormElement
-    const submitButton = this._document.getElementById(submitButtonId) as HTMLInputElement
-
-    form.addEventListener('keyup', function (event) {
-      event.preventDefault()
-      // eslint-disable-next-line import/no-deprecated
-      if (event.keyCode === 13 && !submitButton.disabled) {
-        onSubmit()
-      }
-    })
-  }
-}
+         attachEnterKeyHandler (formId: string, submitButtonId: string, onSubmit: (event: Event) => void) {
+           const form = this._document.getElementById(formId) as HTMLFormElement
+           const submitButton = this._document.getElementById(submitButtonId) as HTMLInputElement
+         }

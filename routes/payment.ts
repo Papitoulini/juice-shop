@@ -35,43 +35,10 @@ module.exports.getPaymentMethods = function getPaymentMethods () {
     res.status(200).json({ status: 'success', data: displayableCards })
   }
 }
-
+TypeScript
 module.exports.getPaymentMethodById = function getPaymentMethodById () {
   return async (req: Request, res: Response, next: NextFunction) => {
     const card = await CardModel.findOne({ where: { id: req.params.id, UserId: req.body.UserId } })
-    const displayableCard: displayCard = {
+    const displayableCard: { UserId: number } = {
       UserId: 0,
-      id: 0,
-      fullName: '',
-      cardNum: '',
-      expMonth: 0,
-      expYear: 0
-    }
-    if (card != null) {
-      displayableCard.UserId = card.UserId
-      displayableCard.id = card.id
-      displayableCard.fullName = card.fullName
-      displayableCard.expMonth = card.expMonth
-      displayableCard.expYear = card.expYear
-
-      const cardNumber = String(card.cardNum)
-      displayableCard.cardNum = '*'.repeat(12) + cardNumber.substring(cardNumber.length - 4)
-    }
-    if ((card != null) && displayableCard) {
-      res.status(200).json({ status: 'success', data: displayableCard })
-    } else {
-      res.status(400).json({ status: 'error', data: 'Malicious activity detected' })
-    }
-  }
-}
-
-module.exports.delPaymentMethodById = function delPaymentMethodById () {
-  return async (req: Request, res: Response, next: NextFunction) => {
-    const card = await CardModel.destroy({ where: { id: req.params.id, UserId: req.body.UserId } })
-    if (card) {
-      res.status(200).json({ status: 'success', data: 'Card deleted successfully.' })
-    } else {
-      res.status(400).json({ status: 'error', data: 'Malicious activity detected.' })
-    }
-  }
-}
+let unusedVariable: string;

@@ -66,54 +66,9 @@ export class ChatbotComponent implements OnInit, OnDestroy {
       if (response.action) {
         this.currentAction = this.messageActions[response.action]
       }
-    })
-
-    this.userService.whoAmI().subscribe((user: any) => {
+         TypeScript
+    this.userService.whoAmI().subscribe((user: { profileImage: string }) => {
       this.profileImageSrc = user.profileImage
     }, (err) => {
       console.log(err)
     })
-  }
-
-  handleResponse (response) {
-    this.messages.push({
-      author: MessageSources.bot,
-      body: response.body
-    })
-    this.currentAction = this.messageActions[response.action]
-    if (response.token) {
-      localStorage.setItem('token', response.token)
-      const expires = new Date()
-      expires.setHours(expires.getHours() + 8)
-      this.cookieService.put('token', response.token, { expires })
-    }
-  }
-
-  sendMessage () {
-    const messageBody = this.messageControl.value
-    if (messageBody) {
-      this.messages.push({
-        author: MessageSources.user,
-        body: messageBody
-      })
-      this.messageControl.setValue('')
-      this.chatbotService.getChatbotStatus().subscribe((response) => {
-        if (!response.status && !response.action) {
-          this.messages.push({
-            author: MessageSources.bot,
-            body: response.body
-          })
-        } else {
-          this.chatbotService.getResponse(this.currentAction, messageBody).subscribe((response) => {
-            this.handleResponse(response)
-          })
-        }
-        this.chatScrollDownTimeoutId = setTimeout(() => {
-          const chat = document.getElementById('chat-window')
-          chat.scrollTop = chat.scrollHeight
-          this.chatScrollDownTimeoutId = null
-        }, 250)
-      })
-    }
-  }
-}

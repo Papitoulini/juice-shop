@@ -17,19 +17,9 @@ module.exports.getWalletBalance = function getWalletBalance () {
     }
   }
 }
-
+TypeScript
 module.exports.addWalletBalance = function addWalletBalance () {
   return async (req: Request, res: Response, next: NextFunction) => {
-    const cardId = req.body.paymentId
-    const card = cardId ? await CardModel.findOne({ where: { id: cardId, UserId: req.body.UserId } }) : null
-    if (card != null) {
-      WalletModel.increment({ balance: req.body.balance }, { where: { UserId: req.body.UserId } }).then(() => {
-        res.status(200).json({ status: 'success', data: req.body.balance })
-      }).catch(() => {
-        res.status(404).json({ status: 'error' })
-      })
-    } else {
-      res.status(402).json({ status: 'error', message: 'Payment not accepted.' })
-    }
-  }
-}
+    const cardId = req.body.paymentId;
+    const card = cardId && (await CardModel.findOne({ where: { id: cardId, UserId: req.body.UserId } }));
+    if (card !== null) {

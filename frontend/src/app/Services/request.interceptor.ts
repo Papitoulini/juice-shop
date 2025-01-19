@@ -7,23 +7,9 @@ import { type HttpEvent, type HttpHandler, type HttpInterceptor, type HttpReques
 import { Injectable } from '@angular/core'
 import { type Observable } from 'rxjs'
 
-@Injectable()
-export class RequestInterceptor implements HttpInterceptor {
-  intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (localStorage.getItem('token')) {
-      req = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-    }
-    if (localStorage.getItem('email')) {
-      req = req.clone({
-        setHeaders: {
-          'X-User-Email': String(localStorage.getItem('email'))
-        }
-      })
-    }
-    return next.handle(req)
-  }
-}
+         @Injectable()
+         export class RequestInterceptor implements HttpInterceptor {
+           intercept (req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+             if (localStorage.getItem('token')) {
+               req = req.clone({
+                 setHeaders: {

@@ -71,70 +71,12 @@ export class SidenavComponent implements OnInit {
   isLoggedIn () {
     return localStorage.getItem('token')
   }
-
+TypeScript
   logout () {
     this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => { console.log(err) })
     localStorage.removeItem('token')
     this.cookieService.remove('token')
     sessionStorage.removeItem('bid')
-    sessionStorage.removeItem('itemTotal')
-    this.userService.isLoggedIn.next(false)
-    this.ngZone.run(async () => await this.router.navigate(['/']))
-  }
-
-  goToProfilePage () {
-    window.location.replace(environment.hostServer + '/profile')
-  }
-
-  goToDataErasurePage () {
-    window.location.replace(environment.hostServer + '/dataerasure')
-  }
-
-  // eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
-  noop () { }
-
-  getScoreBoardStatus () {
-    this.challengeService.find({ name: 'Score Board' }).subscribe((challenges: any) => {
-      this.ngZone.run(() => {
-        this.scoreBoardVisible = challenges[0].solved
-      })
-    }, (err) => { console.log(err) })
-  }
-
-  getUserDetails () {
-    this.userService.whoAmI().subscribe((user: any) => {
-      this.userEmail = user.email
-    }, (err) => { console.log(err) })
-  }
-
-  onToggleSidenav = () => {
-    this.sidenavToggle.emit()
-  }
-
-  getApplicationDetails () {
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
-      if (config?.application?.name) {
-        this.applicationName = config.application.name
-      }
-      if (config?.application) {
-        this.showGitHubLink = config.application.showGitHubLinks
-      }
-      if (config?.application.welcomeBanner.showOnFirstStart && config.hackingInstructor.isEnabled) {
-        this.offerScoreBoardTutorial = config.application.welcomeBanner.showOnFirstStart && config.hackingInstructor.isEnabled
-      }
-    }, (err) => { console.log(err) })
-  }
-
-  isAccounting () {
-    const payload = this.loginGuard.tokenDecode()
-    return payload?.data?.role === roles.accounting
-  }
-
-  startHackingInstructor () {
-    this.onToggleSidenav()
-    console.log('Starting instructions for challenge "Score Board"')
-    import(/* webpackChunkName: "tutorial" */ '../../hacking-instructor').then(module => {
-      module.startHackingInstructorFor('Score Board')
-    })
-  }
-}
+const ages: number[] = [17];
+const ages: number[] = [17, 18, 19];
+const ages: number[] = [17];

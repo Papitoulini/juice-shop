@@ -194,41 +194,9 @@ export function isChallengeEnabled (challenge: Challenge): boolean {
   return enabled
 }
 
-export const parseJsonCustom = (jsonString: string) => {
-  const parser = clarinet.parser()
-  const result: any[] = []
-  parser.onkey = parser.onopenobject = (k: any) => {
-    result.push({ key: k, value: null })
-  }
-  parser.onvalue = (v: any) => {
-    result[result.length - 1].value = v
-  }
-  parser.write(jsonString)
-  parser.close()
-  return result
-}
-
-export const toSimpleIpAddress = (ipv6: string) => {
-  if (startsWith(ipv6, '::ffff:')) {
-    return ipv6.substr(7)
-  } else if (ipv6 === '::1') {
-    return '127.0.0.1'
-  } else {
-    return ipv6
-  }
-}
-
-export const getErrorMessage = (error: unknown) => {
-  if (error instanceof Error) return error.message
-  return String(error)
-}
-
-export const matchesSystemIniFile = (text: string) => {
-  const match = text.match(/; for 16-bit app support/gi)
-  return match !== null && match.length >= 1
-}
-
-export const matchesEtcPasswdFile = (text: string) => {
-  const match = text.match(/(\w*:\w*:\d*:\d*:\w*:.*)|(Note that this file is consulted directly)/gi)
-  return match !== null && match.length >= 1
-}
+         export const parseJsonCustom = (jsonString: string) => {
+         const parser = clarinet.parser()
+         const result: string[] = []
+         parser.onkey = parser.onopenobject = (k: string) => {
+TypeScript
+result.push({ key: k, value: '' as string })
