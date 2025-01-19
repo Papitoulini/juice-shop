@@ -7,7 +7,7 @@ import { type Product } from '../data/types'
 import fuzz from 'fuzzball'
 import { challenges } from '../data/datacache'
 import * as security from './insecurity'
-import * as challengeUtils from './challengeUtils'
+         import * as challengeUtils from './challengeUtils'
 
 export async function productPrice (query: string, user: string) {
   const products = await ProductModel.findAll()

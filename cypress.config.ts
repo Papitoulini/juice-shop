@@ -12,12 +12,12 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     specPattern: 'test/cypress/e2e/**.spec.ts',
     downloadsFolder: 'test/cypress/downloads',
-    fixturesFolder: false,
-    supportFile: 'test/cypress/support/e2e.ts',
-    setupNodeEvents (on: any) {
-      on('before:browser:launch', (browser: any = {}, launchOptions: any) => { // TODO Remove after upgrade to Cypress >=12.5.0 <or> Chrome 119 become available on GitHub Workflows, see https://github.com/cypress-io/cypress-documentation/issues/5479
-        if (browser.name === 'chrome' && browser.isHeadless) {
-          launchOptions.args = launchOptions.args.map((arg: any) => {
+         fixturesFolder: false,
+         supportFile: 'test/cypress/support/e2e.ts',
+         setupNodeEvents (on: Cypress.OnStartOptions) {
+           on('before:browser:launch', (browser: Cypress.Browser, launchOptions: Cypress.LaunchOptions) => {
+             if (browser.name === 'chrome' && browser.isHeadless) {
+               launchOptions.args = launchOptions.args.map((arg: string) => {
             if (arg === '--headless') {
               return '--headless=new'
             }
@@ -46,9 +46,9 @@ export default defineConfig({
           )[0]
         },
         GetCouponIntent () {
-          const trainingData = require(`data/chatbot/${utils.extractFilename(
+          const trainingData = import(`data/chatbot/${utils.extractFilename(
             config.get('application.chatBot.trainingData')
-          )}`)
+          )}`).then((module) => module.default)
           const couponIntent = trainingData.data.filter(
             (data: { intent: string }) => data.intent === 'queries.couponCode'
           )[0]

@@ -38,12 +38,12 @@ import customizeApplication from './lib/startup/customizeApplication'
 import customizeEasterEgg from './lib/startup/customizeEasterEgg' // vuln-code-snippet hide-line
 
 import authenticatedUsers from './routes/authenticatedUsers'
-
+TypeScript
 const startTime = Date.now()
-const finale = require('finale-rest')
-const express = require('express')
-const compression = require('compression')
-const helmet = require('helmet')
+import finale from 'finale-rest';
+import express from 'express';
+import compression from 'compression';
+import helmet from 'helmet';
 const featurePolicy = require('feature-policy')
 const errorhandler = require('errorhandler')
 const cookieParser = require('cookie-parser')
