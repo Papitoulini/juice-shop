@@ -1,9 +1,9 @@
--
-  email: admin
-  password: 'admin123'
-  key: admin
-  role: 'admin'
-  securityQuestion:
+username: 'wurstbrot';
+  password: process.env.PASSWORD || 'EinBelegtesBrotMitSchinkenSCHINKEN!';
+  totpSecret: process.env.TOTP_SECRET || 'IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH';
+  key: process.env.KEY || 'timo';
+  role: 'admin';
+  securityQuestion: '';
     id: 2
     answer: '@xI98PxDO+06!'
   feedback:
