@@ -28,8 +28,8 @@ enum MessageSources {
 describe('ComplaintComponent', () => {
   let component: ChatbotComponent
   let fixture: ComponentFixture<ChatbotComponent>
-  let chatbotService: any
-  let translateService
+  let chatbotService: ChatbotService
+  let translateService: TranslateService
 
   beforeEach(waitForAsync(() => {
     chatbotService = jasmine.createSpyObj('ChatbotService', ['getChatbotStatus', 'getResponse'])

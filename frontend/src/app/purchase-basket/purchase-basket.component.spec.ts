@@ -27,9 +27,9 @@ describe('PurchaseBasketComponent', () => {
   let fixture: ComponentFixture<PurchaseBasketComponent>
   let basketService
   let userService
-  let translateService: any
+  let translateService: TranslateService
   let deluxeGuard
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     basketService = jasmine.createSpyObj('BasketService', ['find', 'del', 'get', 'put', 'updateNumberOfCartItems'])

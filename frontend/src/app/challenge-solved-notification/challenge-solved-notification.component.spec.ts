@@ -131,7 +131,7 @@ describe('ChallengeSolvedNotificationComponent', () => {
     challengeService.continueCode.and.returnValue(of(undefined))
     console.log = jasmine.createSpy('log')
 
-    expect(component.saveProgress).toThrow()
+    expect(() => component.saveProgress()).toThrow()
   })
 
   it('should log error from continue code API call directly to browser console', fakeAsync(() => {

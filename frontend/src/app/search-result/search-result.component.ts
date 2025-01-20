@@ -81,10 +81,9 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         const entry = dataTable.find((dataTableEntry) => {
           return dataTableEntry.id === quantity.ProductId
         })
-        if (entry === undefined) {
-          continue
+        if (entry !== undefined) {
+          entry.quantity = quantity.quantity
         }
-        entry.quantity = quantity.quantity
       }
       this.dataSource = new MatTableDataSource<TableEntry>(dataTable)
       for (let i = 1; i <= Math.ceil(this.dataSource.data.length / 12); i++) {
@@ -122,7 +121,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
 
   trustProductDescription (tableData: any[]) { // vuln-code-snippet neutral-line restfulXssChallenge
     for (let i = 0; i < tableData.length; i++) { // vuln-code-snippet neutral-line restfulXssChallenge
-      tableData[i].description = this.sanitizer.bypassSecurityTrustHtml(tableData[i].description) // vuln-code-snippet vuln-line restfulXssChallenge
+      tableData[i].description = this.sanitizer.bypassSecurityTrustHtml(tableData[i].description) as string // vuln-code-snippet vuln-line restfulXssChallenge
     } // vuln-code-snippet neutral-line restfulXssChallenge
   } // vuln-code-snippet neutral-line restfulXssChallenge
   // vuln-code-snippet end restfulXssChallenge
@@ -148,7 +147,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       }) // vuln-code-snippet hide-end
       this.dataSource.filter = queryParam.toLowerCase()
-      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
+      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) as string // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
       this.gridDataSource.subscribe((result: any) => {
         if (result.length === 0) {
           this.emptyState = true

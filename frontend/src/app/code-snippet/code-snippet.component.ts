@@ -8,12 +8,12 @@ import { CodeFixesService } from '../Services/code-fixes.service'
 import { CookieService } from 'ngx-cookie'
 import { ChallengeService } from '../Services/challenge.service'
 import { VulnLinesService, type result } from '../Services/vuln-lines.service'
-import { Component, Inject, type OnInit } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UntypedFormControl } from '@angular/forms'
 import { ConfigurationService } from '../Services/configuration.service'
-import { type ThemePalette } from '@angular/material/core'
+import { ThemePalette } from '@angular/material/core'
 
 enum ResultState {
   Undecided,

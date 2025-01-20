@@ -20,7 +20,7 @@ export class QrCodeComponent implements OnInit {
   public url!: string
   public address!: string
   public data!: string
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any) { }
+  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: { title: string, url: string, address: string, data: string }) { }
 
   ngOnInit () {
     this.title = this.dialogData.title

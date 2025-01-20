@@ -123,7 +123,7 @@ describe('ProductDetailsComponent', () => {
 
   it('should log errors when posting review directly to browser console', fakeAsync(() => {
     component.data = { productData: { id: 42 } as Product }
-    userService.whoAmI.and.returnValue(of({}))
+    userService.whoAmI.and.returnValue(of({})
     productReviewService.create.and.returnValue(throwError('Error'))
     console.log = jasmine.createSpy('log')
     component.ngOnInit()

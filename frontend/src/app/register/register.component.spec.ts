@@ -112,7 +112,7 @@ describe('RegisterComponent', () => {
   })
 
   it('password should not be more than 20 characters', () => {
-    let password: string = ''
+    let password = ''
     for (let i = 0; i < 41; i++) {
       password += 'a'
     }

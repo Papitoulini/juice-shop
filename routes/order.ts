@@ -68,7 +68,7 @@ module.exports = function placeOrder () {
           basket.Products?.forEach(({ BasketItem, price, deluxePrice, name, id }) => {
             if (BasketItem != null) {
               challengeUtils.solveIf(challenges.christmasSpecialChallenge, () => { return BasketItem.ProductId === products.christmasSpecial.id })
-              QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product: any) => {
+              QuantityModel.findOne({ where: { ProductId: BasketItem.ProductId } }).then((product) => {
                 const newQuantity = product.quantity - BasketItem.quantity
                 QuantityModel.update({ quantity: newQuantity }, { where: { ProductId: BasketItem?.ProductId } }).catch((error: unknown) => {
                   next(error)
@@ -186,7 +186,7 @@ function calculateApplicableDiscount (basket: BasketModel, req: Request) {
     const couponDate = Number(couponData[1])
     const campaign = campaigns[couponCode as keyof typeof campaigns]
 
-    if (campaign && couponDate == campaign.validOn) { // eslint-disable-line eqeqeq
+    if (campaign && couponDate === campaign.validOn) { // eslint-disable-line eqeqeq
       challengeUtils.solveIf(challenges.manipulateClockChallenge, () => { return campaign.validOn < new Date().getTime() })
       return campaign.discount
     }

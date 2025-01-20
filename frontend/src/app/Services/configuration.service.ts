@@ -67,7 +67,7 @@ export interface Config {
     }
     googleOauth: {
       clientId: string
-      authorizedRedirects: any[]
+      authorizedRedirects: string[]
     }
   }
   challenges: {
@@ -99,7 +99,7 @@ export interface Config {
 export class ConfigurationService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/rest/admin'
-  private configObservable: any
+  private configObservable: Observable<Config> | null = null
   constructor (private readonly http: HttpClient) { }
 
   getApplicationConfiguration (): Observable<Config> {

@@ -12,7 +12,7 @@ import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
 
 const security = require('../lib/insecurity')
-const otplib = require('otplib')
+import otplib = require('otplib')
 
 otplib.authenticator.options = {
   // Accepts tokens as valid even when they are 30sec to old or to new
@@ -176,7 +176,7 @@ async function disable (req: Request, res: Response) {
   }
 }
 
-module.exports.disable = () => disable
-module.exports.verify = () => verify
-module.exports.status = () => status
-module.exports.setup = () => setup
+module.exports.disable = disable
+module.exports.verify = verify
+module.exports.status = status
+module.exports.setup = setup

@@ -22,9 +22,9 @@ library.add(faTwitter)
 })
 export class OrderCompletionComponent implements OnInit {
   public tableColumns = ['product', 'price', 'quantity', 'total price']
-  public dataSource
+  public dataSource: MatTableDataSource<Element>
   public orderId: string
-  public orderDetails: any = { totalPrice: 0 }
+  public orderDetails: { totalPrice: number, addressId?: string, paymentId?: string, itemTotal?: number, eta?: string, products?: any[], bonus?: number } = { totalPrice: 0 }
   public deliveryPrice = 0
   public promotionalDiscount = 0
   public address: any

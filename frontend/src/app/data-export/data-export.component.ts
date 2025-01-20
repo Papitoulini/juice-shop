@@ -17,18 +17,17 @@ import { DomSanitizer } from '@angular/platform-browser'
 export class DataExportComponent implements OnInit {
   public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5)])
   public formatControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
-  public captcha: any
-  private dataRequest: any = undefined
-  public confirmation: any
-  public error: any
-  public lastSuccessfulTry: any
+  public captcha: string
+  private dataRequest: Record<string, string> = {}
+  public confirmation: string
+  public error: string
+  public lastSuccessfulTry: Date
   public presenceOfCaptcha: boolean = false
-  public userData: any
+  public userData: string
 
   constructor (public sanitizer: DomSanitizer, private readonly imageCaptchaService: ImageCaptchaService, private readonly dataSubjectService: DataSubjectService) { }
   ngOnInit () {
     this.needCaptcha()
-    this.dataRequest = {}
   }
 
   needCaptcha () {
@@ -41,7 +40,7 @@ export class DataExportComponent implements OnInit {
   }
 
   getNewCaptcha () {
-    this.imageCaptchaService.getCaptcha().subscribe((data: any) => {
+    this.imageCaptchaService.getCaptcha().subscribe((data: { image: string }) => {
       this.captcha = this.sanitizer.bypassSecurityTrustHtml(data.image)
     })
   }
@@ -51,7 +50,7 @@ export class DataExportComponent implements OnInit {
       this.dataRequest.answer = this.captchaControl.value
     }
     this.dataRequest.format = this.formatControl.value
-    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: any) => {
+    this.dataSubjectService.dataExport(this.dataRequest).subscribe((data: { confirmation: string, userData: string }) => {
       this.error = null
       this.confirmation = data.confirmation
       this.userData = data.userData
@@ -60,7 +59,7 @@ export class DataExportComponent implements OnInit {
       localStorage.setItem('lstdtxprt', JSON.stringify(this.lastSuccessfulTry))
       this.ngOnInit()
       this.resetForm()
-    }, (error) => {
+    }, (error: { error: string }) => {
       this.error = error.error
       this.confirmation = null
       this.resetFormError()

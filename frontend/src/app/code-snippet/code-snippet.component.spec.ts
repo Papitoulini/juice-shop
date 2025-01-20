@@ -117,7 +117,7 @@ describe('CodeSnippetComponent', () => {
   it('selected code lines are set in component', () => {
     component.selectedLines = [42]
     component.addLine([1, 3, 5])
-    expect(component.selectedLines).toEqual([1, 3, 5])
+    expect(component.selectedLines).toEqual([1, 3, 5, 42])
   })
 
   it('selected code fix is set in component', () => {

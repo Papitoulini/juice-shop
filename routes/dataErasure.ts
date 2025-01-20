@@ -9,7 +9,7 @@ import { UserModel } from '../models/user'
 import { SecurityQuestionModel } from '../models/securityQuestion'
 import { PrivacyRequestModel } from '../models/privacyRequests'
 import { challenges } from '../data/datacache'
-const insecurity = require('../lib/insecurity')
+import insecurity = require('../lib/insecurity')
 
 const challengeUtils = require('../lib/challengeUtils')
 const router = express.Router()

@@ -19,7 +19,7 @@ interface Passwords {
   providedIn: 'root'
 })
 export class UserService {
-  public isLoggedIn = new Subject<any>()
+  public isLoggedIn = new Subject<boolean>()
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/Users'
 
@@ -75,7 +75,7 @@ export class UserService {
     return this.http.get(this.hostServer + '/rest/deluxe-membership').pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
-  upgradeToDeluxe (paymentMode: string, paymentId: any) {
+  upgradeToDeluxe (paymentMode: string, paymentId: string) {
     return this.http.post(this.hostServer + '/rest/deluxe-membership', { paymentMode, paymentId }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 }

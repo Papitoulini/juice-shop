@@ -15,7 +15,7 @@ import * as jwtDecode from 'jwt-decode'
 })
 
 export class LastLoginIpComponent {
-  lastLoginIp: any = '?'
+  lastLoginIp: string | null = '?'
   constructor (private readonly sanitizer: DomSanitizer) {}
 
   ngOnInit () {
@@ -27,7 +27,7 @@ export class LastLoginIpComponent {
   }
 
   parseAuthToken () {
-    let payload = {} as any
+    let payload: { data: { lastLoginIp?: string } } = {}
     const token = localStorage.getItem('token')
     if (token) {
       payload = jwtDecode(token)
