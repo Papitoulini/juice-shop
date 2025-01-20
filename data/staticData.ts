@@ -2,12 +2,12 @@ import path from 'path'
 import { readFile } from 'fs/promises'
 import { safeLoad } from 'js-yaml'
 import logger from '../lib/logger'
-
 export async function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+  const filePath = path.resolve(path.join(__dirname, 'data/static/', `${file}.yml`))
   return await readFile(filePath, 'utf8')
     .then(safeLoad)
     .catch(() => logger.error('Could not open file: "' + filePath + '"'))
+}
 }
 
 export interface StaticUser {

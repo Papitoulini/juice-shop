@@ -28,9 +28,9 @@ module.exports = function servePublicFiles () {
       file = security.cutOffPoisonNullByte(file)
 
       challengeUtils.solveIf(challenges.directoryListingChallenge, () => { return file.toLowerCase() === 'acquisitions.md' })
-      verifySuccessfulPoisonNullByteExploit(file)
+verifySuccessfulPoisonNullByteExploit(file)
 
-      res.sendFile(path.resolve('ftp/', file))
+      res.sendFile(path.resolve('ftp/', path.normalize(path.basename(file))))
     } else {
       res.status(403)
       next(new Error('Only .md and .pdf files are allowed!'))

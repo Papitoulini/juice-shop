@@ -35,8 +35,8 @@ describe('LoginGuard', () => {
     localStorage.removeItem('token')
     expect(guard.canActivate()).toBeFalse()
   }))
-
-  it('returns payload from decoding a valid JWT', inject([LoginGuard], (guard: LoginGuard) => {
+it('returns payload from decoding a valid JWT', inject([LoginGuard], (guard: LoginGuard) => {
+    const jwtSecret = 'a-super-secret-key';
     localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c')
     expect(guard.tokenDecode()).toEqual({
       sub: '1234567890',

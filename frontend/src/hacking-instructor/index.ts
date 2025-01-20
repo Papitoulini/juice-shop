@@ -106,9 +106,9 @@ function loadHint (hint: ChallengeHint): HTMLElement {
   picture.style.marginRight = '8px'
   picture.src = '/assets/public/images/hackingInstructor.png'
 
-  const textBox = document.createElement('span')
+const textBox = document.createElement('span')
   textBox.style.flexGrow = '2'
-  textBox.innerHTML = snarkdown(hint.text)
+  textBox.textContent = snarkdown(hint.text)
 
   const cancelButton = document.createElement('button')
   cancelButton.id = 'cancelButton'
