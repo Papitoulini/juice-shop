@@ -8,7 +8,6 @@ export async function loadStaticData (file: string) {
     .then(safeLoad)
     .catch(() => logger.error('Could not open file: "' + filePath + '"'))
 }
-}
 
 export interface StaticUser {
   email: string
