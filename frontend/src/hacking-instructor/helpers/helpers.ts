@@ -33,7 +33,7 @@ export function waitForInputToHaveValue (inputSelector: string, value: string, o
         config = json.config
       }
       const propertyChain = options.replacement[1].split('.')
-      let replacementValue = config
+let replacementValue = Object.freeze(Object.assign({}, config))
       for (const property of propertyChain) {
         replacementValue = replacementValue[property]
       }

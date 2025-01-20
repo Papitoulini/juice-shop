@@ -18,10 +18,10 @@ module.exports = function profileImageUrlUpload () {
       const url = req.body.imageUrl
       if (url.match(/(.)*solve\/challenges\/server-side(.)*/) !== null) req.app.locals.abused_ssrf_bug = true
       const loggedInUser = security.authenticatedUsers.get(req.cookies.token)
-      if (loggedInUser) {
-        const imageRequest = request
-          .get(url)
-          .on('error', function (err: unknown) {
+if (loggedInUser) {
+        const imageRequest = utils.validateImageURL(url) ? request.get(url) : undefined;
+        if (imageRequest) {
+          imageRequest.on('error', function (err: unknown) {
             UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url }) }).catch((error: Error) => { next(error) })
             logger.warn(`Error retrieving user profile image: ${utils.getErrorMessage(err)}; using image link directly`)
           })

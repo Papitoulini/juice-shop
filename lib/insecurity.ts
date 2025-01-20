@@ -147,12 +147,12 @@ export const roles = {
   accounting: 'accounting',
   admin: 'admin'
 }
+import * as fs from 'fs'
 
 export const deluxeToken = (email: string) => {
-  const hmac = crypto.createHmac('sha256', privateKey)
+  const hmac = crypto.createHmac('sha256', fs.readFileSync('/path/to/privateKey.txt', 'utf8'))
   return hmac.update(email + roles.deluxe).digest('hex')
 }
-
 export const isAccounting = () => {
   return (req: Request, res: Response, next: NextFunction) => {
     const decodedToken = verify(utils.jwtFrom(req)) && decode(utils.jwtFrom(req))
