@@ -19,7 +19,7 @@ module.exports.getWalletBalance = function getWalletBalance () {
 }
 
 module.exports.addWalletBalance = function addWalletBalance () {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response) => {
     const cardId = req.body.paymentId
     const card = cardId ? await CardModel.findOne({ where: { id: cardId, UserId: req.body.UserId } }) : null
     if (card != null) {

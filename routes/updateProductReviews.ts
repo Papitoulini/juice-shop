@@ -13,15 +13,15 @@ const security = require('../lib/insecurity')
 // vuln-code-snippet start noSqlReviewsChallenge forgedReviewChallenge
 module.exports = function productReviews () {
   return (req: Request, res: Response, next: NextFunction) => {
-    const user = security.authenticatedUsers.from(req) // vuln-code-snippet vuln-line forgedReviewChallenge
-    db.reviewsCollection.update( // vuln-code-snippet neutral-line forgedReviewChallenge
-      { _id: req.body.id }, // vuln-code-snippet vuln-line noSqlReviewsChallenge forgedReviewChallenge
+    const user = security.authenticatedUsers.from(req)
+    db.reviewsCollection.updateMany(
+      { _id: req.body.id },
       { $set: { message: req.body.message } },
-      { multi: true } // vuln-code-snippet vuln-line noSqlReviewsChallenge
+      { multi: true }
     ).then(
-      (result: { modified: number, original: Array<{ author: any }> }) => {
-        challengeUtils.solveIf(challenges.noSqlReviewsChallenge, () => { return result.modified > 1 }) // vuln-code-snippet hide-line
-        challengeUtils.solveIf(challenges.forgedReviewChallenge, () => { return user?.data && result.original[0] && result.original[0].author !== user.data.email && result.modified === 1 }) // vuln-code-snippet hide-line
+      (result: { modifiedCount: number, originalResponse: { value: { author: string } }[] }) => {
+        challengeUtils.solveIf(challenges.noSqlReviewsChallenge, () => { return result.modifiedCount > 1 })
+        challengeUtils.solveIf(challenges.forgedReviewChallenge, () => { return user?.data && result.originalResponse.some(review => review.value.author !== user.data.email) && result.modifiedCount === 1 })
         res.json(result)
       }, (err: unknown) => {
         res.status(500).json(err)

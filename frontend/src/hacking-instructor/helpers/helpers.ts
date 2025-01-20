@@ -5,7 +5,8 @@
 
 import jwtDecode from 'jwt-decode'
 
-let config
+let config: { hackingInstructor: { hintPlaybackSpeed: string } } | undefined
+
 const playbackDelays = {
   faster: 0.5,
   fast: 0.75,
@@ -20,7 +21,7 @@ export async function sleep (timeInMs: number): Promise<void> {
   })
 }
 
-export function waitForInputToHaveValue (inputSelector: string, value: string, options: any = { ignoreCase: true, replacement: [] }) {
+export function waitForInputToHaveValue (inputSelector: string, value: string, options: { ignoreCase?: boolean, replacement?: [string, string] } = { ignoreCase: true, replacement: [] }) {
   return async () => {
     const inputElement: HTMLInputElement = document.querySelector(
       inputSelector
@@ -174,7 +175,7 @@ export function waitForAdminLogIn () {
       try {
         const token: string = localStorage.getItem('token')
         const decodedToken = jwtDecode(token)
-        const payload = decodedToken as any
+        const payload = decodedToken as { data: { role: string } }
         role = payload.data.role
       } catch {
         console.log('Role from token could not be accessed.')

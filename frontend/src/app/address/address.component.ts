@@ -25,10 +25,10 @@ export class AddressComponent implements OnInit {
   @Input('allowEdit') public allowEdit: boolean = false
   @Input('addNewAddressDiv') public addNewAddressDiv: boolean = true
   @Input('showNextButton') public showNextButton: boolean = false
-  public addressId: any = undefined
+  public addressId: number | undefined = undefined
   public displayedColumns = ['Name', 'Address', 'Country']
   selection = new SelectionModel<Element>(false, [])
-  public storedAddresses: any[]
+  public storedAddresses: Array<any> = []
   public dataSource
   public confirmation: any
   public error: any

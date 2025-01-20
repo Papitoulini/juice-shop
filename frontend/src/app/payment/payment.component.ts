@@ -4,7 +4,7 @@
  */
 
 import { UntypedFormControl, Validators } from '@angular/forms'
-import { Component, NgZone, type OnInit } from '@angular/core'
+import { Component, NgZone, OnInit } from '@angular/core'
 import { ConfigurationService } from '../Services/configuration.service'
 import { BasketService } from '../Services/basket.service'
 import { TranslateService } from '@ngx-translate/core'
@@ -24,7 +24,7 @@ import {
 import { faLeanpub, faStripe } from '@fortawesome/free-brands-svg-icons'
 import { QrCodeComponent } from '../qr-code/qr-code.component'
 import { MatDialog } from '@angular/material/dialog'
-import { ActivatedRoute, type ParamMap, Router } from '@angular/router'
+import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 import { WalletService } from '../Services/wallet.service'
 import { DeliveryService } from '../Services/delivery.service'
 import { UserService } from '../Services/user.service'
@@ -40,22 +40,22 @@ library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, f
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  public couponConfirmation: any
+  public couponConfirmation: string
   public couponError: any
   public card: any = {}
-  public twitterUrl = null
-  public facebookUrl = null
+  public twitterUrl: string | null = null
+  public facebookUrl: string | null = null
   public applicationName = 'OWASP Juice Shop'
   private campaignCoupon: string
   public couponControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
   public clientDate: any
-  public paymentId: any = undefined
+  public paymentId: string | undefined = undefined
   public couponPanelExpanded: boolean = false
   public paymentPanelExpanded: boolean = false
-  public mode: any
+  public mode: string | null
   public walletBalance: number = 0
   public walletBalanceStr: string
-  public totalPrice: any = 0
+  public totalPrice: number = 0
   public paymentMode: string = 'card'
   private readonly campaigns = {
     WMNSDY2019: { validOn: 1551999600000, discount: 75 },
@@ -143,7 +143,7 @@ export class PaymentComponent implements OnInit {
         this.resetCouponForm()
       }
     } else {
-      this.basketService.applyCoupon(Number(sessionStorage.getItem('bid')), encodeURIComponent(this.couponControl.value)).subscribe((discount: any) => {
+      this.basketService.applyCoupon(Number(sessionStorage.getItem('bid')), encodeURIComponent(this.couponControl.value)).subscribe((discount: number) => {
         this.showConfirmation(discount)
       }, (err) => {
         this.couponConfirmation = undefined
@@ -153,10 +153,10 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  showConfirmation (discount) {
+  showConfirmation (discount: number) {
     this.resetCouponForm()
     this.couponError = undefined
-    sessionStorage.setItem('couponDiscount', discount)
+    sessionStorage.setItem('couponDiscount', discount.toString())
     this.translate.get('DISCOUNT_APPLIED', { discount }).subscribe((discountApplied) => {
       this.couponConfirmation = discountApplied
     }, (translationId) => {
@@ -165,7 +165,7 @@ export class PaymentComponent implements OnInit {
     this.initTotal()
   }
 
-  getMessage (id) {
+  getMessage (id: string) {
     this.paymentId = id
     this.paymentMode = 'card'
   }

@@ -136,13 +136,13 @@ describe('ServerStartedNotificationComponent', () => {
   it('should translate AUTO_RESTORE_PROGRESS_FAILED message including the returned error', fakeAsync(() => {
     spyOn(mockSocket, 'on')
     challengeService.restoreProgress.and.returnValue(throwError('Error'))
-    translateService.get.and.returnValue(of('Translation of AUTO_RESTORE_PROGRESS_FAILED: error'))
+    translateService.get.and.returnValue(of('Translation of AUTO_RESTORE_PROGRESS_FAILED: Error'))
     cookieService.put('continueCode', 'CODE')
     component.ngOnInit()
     const callback = mockSocket.on.calls.argsFor(0)[1]
     callback()
     expect(mockSocket.on.calls.argsFor(0)[0]).toBe('server started')
-    expect(component.hackingProgress.autoRestoreMessage).toBe('Translation of AUTO_RESTORE_PROGRESS_FAILED: error')
+    expect(component.hackingProgress.autoRestoreMessage).toBe('Translation of AUTO_RESTORE_PROGRESS_FAILED: Error')
   }))
 
   it('do nothing if continueCode cookie is not present', () => {

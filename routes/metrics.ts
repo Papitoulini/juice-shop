@@ -174,14 +174,14 @@ exports.observeMetrics = function observeMetrics () {
 
         ChallengeModel.count({ where: { codingChallengeStatus: { [Op.eq]: 2 } } }).then((count: number) => {
           codingChallengesProgressMetrics.set({ phase: 'fix it' }, count)
-        }).catch((_: unknown) => {
-          throw new Error('Unable to retrieve and count such challenges. Please try again')
+        }).catch((error: unknown) => {
+          logger.warn('Error during coding challenges progress metrics update: ' + utils.getErrorMessage(error))
         })
 
         ChallengeModel.count({ where: { codingChallengeStatus: { [Op.ne]: 0 } } }).then((count: number) => {
           codingChallengesProgressMetrics.set({ phase: 'unsolved' }, challenges.length - count)
-        }).catch((_: unknown) => {
-          throw new Error('Unable to retrieve and count such challenges. Please try again')
+        }).catch((error: unknown) => {
+          logger.warn('Error during coding challenges progress metrics update: ' + utils.getErrorMessage(error))
         })
       })
 

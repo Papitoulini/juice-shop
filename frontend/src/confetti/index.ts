@@ -1,8 +1,8 @@
 import confetti from 'canvas-confetti'
 
 const timeout = (ms: number) => {
-    return new Promise((resolve,reject) => {
-        setTimeout(resolve,ms)
+    return new Promise(resolve => {
+        setTimeout(resolve, ms)
     })
 }
 export const shootConfetti = () => {
@@ -17,21 +17,21 @@ export const shootConfetti = () => {
 
     document.body.appendChild(canvas)
 
-    const shoot = confetti.create(canvas,{
+    const shoot = confetti.create(canvas, {
         resize: true
     })
     shoot({
-        origin:{
-            x:1,
-            y:1
+        origin: {
+            x: 1,
+            y: 1
         },
         particleCount: 225
     })
 
     shoot({
-        origin:{
-            y:1,
-            x:0
+        origin: {
+            y: 1,
+            x: 0
         },
         particleCount: 225
     })

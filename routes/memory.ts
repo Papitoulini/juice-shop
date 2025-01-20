@@ -20,7 +20,7 @@ module.exports.addMemory = function addMemory () {
 }
 
 module.exports.getMemories = function getMemories () {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response) => {
     const memories = await MemoryModel.findAll({ include: [UserModel] })
     res.status(200).json({ status: 'success', data: memories })
   }

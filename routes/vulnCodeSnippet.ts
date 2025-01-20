@@ -73,16 +73,9 @@ export const getVerdict = (vulnLines: number[], neutralLines: number[], selected
 
 exports.checkVulnLines = () => async (req: Request<Record<string, unknown>, Record<string, unknown>, VerdictRequestBody>, res: Response, next: NextFunction) => {
   const key = req.body.key
-  let snippetData
-  try {
-    snippetData = await retrieveCodeSnippet(key)
-    if (snippetData == null) {
-      res.status(404).json({ status: 'error', error: `No code challenge for challenge key: ${key}` })
-      return
-    }
-  } catch (error) {
-    const statusCode = setStatusCode(error)
-    res.status(statusCode).json({ status: 'error', error: utils.getErrorMessage(error) })
+  const snippetData = await retrieveCodeSnippet(key)
+  if (snippetData == null) {
+    res.status(404).json({ status: 'error', error: `No code challenge for challenge key: ${key}` })
     return
   }
   const vulnLines: number[] = snippetData.vulnLines

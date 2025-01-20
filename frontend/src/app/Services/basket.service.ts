@@ -20,37 +20,37 @@ interface OrderDetail {
 })
 export class BasketService {
   public hostServer = environment.hostServer
-  public itemTotal = new Subject<any>()
+  public itemTotal = new Subject<number>()
   private readonly host = this.hostServer + '/api/BasketItems'
 
   constructor (private readonly http: HttpClient) { }
 
   find (id?: number) {
-    return this.http.get(`${this.hostServer}/rest/basket/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.get(`${this.hostServer}/rest/basket/${id}`).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 
   get (id: number) {
-    return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.get(`${this.host}/${id}`).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 
   put (id: number, params: any) {
-    return this.http.put(`${this.host}/${id}`, params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.put(`${this.host}/${id}`, params).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 
   del (id: number) {
-    return this.http.delete(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.delete(`${this.host}/${id}`).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 
   save (params?: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+    return this.http.post(this.host + '/', params).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
 
   checkout (id?: number, couponData?: string, orderDetails?: OrderDetail) {
-    return this.http.post(`${this.hostServer}/rest/basket/${id}/checkout`, { couponData, orderDetails }).pipe(map((response: any) => response.orderConfirmation), catchError((error) => { throw error }))
+    return this.http.post(`${this.hostServer}/rest/basket/${id}/checkout`, { couponData, orderDetails }).pipe(map((response: { orderConfirmation: any }) => response.orderConfirmation), catchError((error) => { throw error }))
   }
 
   applyCoupon (id?: number, coupon?: string) {
-    return this.http.put(`${this.hostServer}/rest/basket/${id}/coupon/${coupon}`, {}).pipe(map((response: any) => response.discount), catchError((error) => { throw error }))
+    return this.http.put(`${this.hostServer}/rest/basket/${id}/coupon/${coupon}`, {}).pipe(map((response: { discount: any }) => response.discount), catchError((error) => { throw error }))
   }
 
   updateNumberOfCartItems () {
@@ -60,7 +60,7 @@ export class BasketService {
     }, (err) => { console.log(err) })
   }
 
-  getItemTotal (): Observable<any> {
+  getItemTotal (): Observable<number> {
     return this.itemTotal.asObservable()
   }
 }

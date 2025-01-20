@@ -13,14 +13,14 @@ export class HackingChallengeProgressScoreCardComponent implements OnInit, OnCha
   public solvedChallenges: number
 
   ngOnInit (): void {
-    this.updatedNumberOfSolvedChallenges()
+    this.updateNumberOfSolvedChallenges()
   }
 
   ngOnChanges (changes: SimpleChanges): void {
-    this.updatedNumberOfSolvedChallenges()
+    this.updateNumberOfSolvedChallenges()
   }
 
-  private updatedNumberOfSolvedChallenges (): void {
+  private updateNumberOfSolvedChallenges (): void {
     this.solvedChallenges = this.allChallenges.filter((challenge) => challenge.solved).length
   }
 }

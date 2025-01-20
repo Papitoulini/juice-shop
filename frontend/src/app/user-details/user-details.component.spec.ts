@@ -57,8 +57,9 @@ describe('UserDetailsComponent', () => {
   })
 
   it('should set the retrieved user', () => {
-    userService.get.and.returnValue(of('User'))
+    const user = { name: 'John Doe' }
+    userService.get.and.returnValue(of(user))
     component.ngOnInit()
-    expect(component.user).toBe('User')
+    expect(component.user).toBe(user)
   })
 })

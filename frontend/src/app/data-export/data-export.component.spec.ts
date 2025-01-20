@@ -65,8 +65,10 @@ describe('DataExportComponent', () => {
   })
 
   it('should reinitizalise form by calling resetForm', () => {
-    component.captchaControl.setValue('captcha')
-    component.formatControl.setValue('1')
+    const captcha: string = 'captcha'
+    const format: string = '1'
+    component.captchaControl.setValue(captcha)
+    component.formatControl.setValue(format)
     component.resetForm()
     expect(component.captchaControl.value).toBe('')
     expect(component.captchaControl.pristine).toBe(true)
