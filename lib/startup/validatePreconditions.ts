@@ -115,9 +115,9 @@ export const checkIfPortIsAvailable = async (port: number | string) => {
 }
 
 export const checkIfRequiredFileExists = async (pathRelativeToProjectRoot: string) => {
-  const fileName = pathRelativeToProjectRoot.substr(pathRelativeToProjectRoot.lastIndexOf('/') + 1)
+const fileName = pathRelativeToProjectRoot.substr(pathRelativeToProjectRoot.lastIndexOf('/') + 1)
 
-  return await access(path.resolve(pathRelativeToProjectRoot)).then(() => {
+  return await access(path.join(__dirname, pathRelativeToProjectRoot)).then(() => {
     logger.info(`Required file ${colors.bold(fileName)} is present (${colors.green('OK')})`)
     return true
   }).catch(() => {

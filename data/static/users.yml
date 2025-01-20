@@ -145,8 +145,8 @@
     answer: 'azjTLprq2im6p86RbFrA41L'
 -
   email: wurstbrot
-  username: wurstbrot
-  password: 'EinBelegtesBrotMitSchinkenSCHINKEN!'
+username: wurstbrot
+  password: process.env.PASSWORD
   totpSecret: IFTXE3SPOEYVURT2MRYGI52TKJ4HC3KH
   key: timo
   role: 'admin'

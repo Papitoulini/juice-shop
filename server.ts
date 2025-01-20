@@ -143,9 +143,9 @@ const collectDurationPromise = (name: string, func: (...args: any) => Promise<an
     try {
       const res = await func(...args)
       end()
-      return res
+return res
     } catch (err) {
-      console.error('Error in timed startup function: ' + name, err)
+      console.error(`Error in timed startup function: ${name}`, err)
       throw err
     }
   }
@@ -259,9 +259,9 @@ restoreOverwrittenFilesWithOriginals().then(() => {
   /* /ftp directory browsing and file download */ // vuln-code-snippet neutral-line directoryListingChallenge
   app.use('/ftp', serveIndexMiddleware, serveIndex('ftp', { icons: true })) // vuln-code-snippet vuln-line directoryListingChallenge
   app.use('/ftp(?!/quarantine)/:file', fileServer()) // vuln-code-snippet vuln-line directoryListingChallenge
-  app.use('/ftp/quarantine/:file', quarantineServer()) // vuln-code-snippet neutral-line directoryListingChallenge
+app.use('/ftp/quarantine/:file', quarantineServer()) // vuln-code-snippet neutral-line directoryListingChallenge
 
-  app.use('/.well-known', serveIndexMiddleware, serveIndex('.well-known', { icons: true, view: 'details' }))
+  app.use('/.well-known', serveIndexMiddleware, serveIndexRemoved('.well-known', { icons: true, view: 'details' }))
   app.use('/.well-known', express.static('.well-known'))
 
   /* /encryptionkeys directory browsing */

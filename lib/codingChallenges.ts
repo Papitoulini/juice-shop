@@ -19,9 +19,9 @@ export const findFilesWithCodeChallenges = async (paths: readonly string[]): Pro
   const matches = []
   for (const currPath of paths) {
     if ((await fs.lstat(currPath)).isDirectory()) {
-      const files = await fs.readdir(currPath)
+const files = await fs.readdir(currPath)
       const moreMatches = await findFilesWithCodeChallenges(
-        files.map(file => path.resolve(currPath, file))
+        files.map(file => path.posix.resolve(path.posix.resolve(currPath), file))
       )
       matches.push(...moreMatches)
     } else {
@@ -71,11 +71,11 @@ function getCodingChallengeFromFileContent (source: string, challengeKey: string
   if (lines.length === 1) lines = snippet.split('\n')
   if (lines.length === 1) lines = snippet.split('\r')
   const vulnLines = []
-  const neutralLines = []
+const neutralLines = []
   for (let i = 0; i < lines.length; i++) {
-    if (new RegExp(`vuln-code-snippet vuln-line.*${challengeKey}`).exec(lines[i]) != null) {
+if (/^vuln-code-snippet vuln-line.*/.test(lines[i] + challengeKey)) {
       vulnLines.push(i + 1)
-    } else if (new RegExp(`vuln-code-snippet neutral-line.*${challengeKey}`).exec(lines[i]) != null) {
+    } else if (/^vuln-code-snippet neutral-line.*/.test(lines[i] + challengeKey)) {
       neutralLines.push(i + 1)
     }
   }
