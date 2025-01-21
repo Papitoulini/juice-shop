@@ -8,6 +8,7 @@ import { AccountingGuard, AdminGuard, DeluxeGuard, LoginGuard } from './app.guar
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ErrorPageComponent } from './error-page/error-page.component'
+import { environment } from 'src/environments/environment'
 
 describe('LoginGuard', () => {
   beforeEach(() => {
@@ -27,7 +28,7 @@ describe('LoginGuard', () => {
   }))
 
   it('should open for authenticated users', inject([LoginGuard], (guard: LoginGuard) => {
-    localStorage.setItem('token', 'TOKEN')
+    localStorage.setItem('token', environment.token)
     expect(guard.canActivate()).toBeTrue()
   }))
 

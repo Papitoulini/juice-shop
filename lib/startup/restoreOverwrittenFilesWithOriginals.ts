@@ -17,7 +17,7 @@ const restoreOverwrittenFilesWithOriginals = async () => {
   if (await exists(path.resolve('frontend/dist'))) {
     await copyFile(
       path.resolve('data/static/owasp_promo.vtt'),
-      path.resolve('frontend/dist/frontend/assets/public/videos/owasp_promo.vtt')
+      path.join(process.cwd(), 'frontend/dist/frontend/assets/public/videos/owasp_promo.vtt')
     )
   }
 
@@ -25,7 +25,7 @@ const restoreOverwrittenFilesWithOriginals = async () => {
     const files = await glob(path.resolve('data/static/i18n/*.json'))
     await Promise.all(
       files.map(async (filename: string) => {
-        await copyFile(filename, path.resolve('i18n/', filename.substring(filename.lastIndexOf('/') + 1)))
+        await copyFile(filename, path.join(process.cwd(), 'i18n/', path.basename(filename)))
       })
     )
   } catch (err) {
