@@ -19,8 +19,8 @@ function captchas () {
     const firstOperator = operators[Math.floor((Math.random() * 3))]
     const secondOperator = operators[Math.floor((Math.random() * 3))]
 
-    const expression = firstTerm.toString() + firstOperator + secondTerm.toString() + secondOperator + thirdTerm.toString()
-    const answer = eval(expression).toString() // eslint-disable-line no-eval
+    const expression = `${firstTerm}${firstOperator}${secondTerm}${secondOperator}${thirdTerm}`
+    const answer = evaluateExpression(expression)
 
     const captcha = {
       captchaId,
@@ -31,6 +31,29 @@ function captchas () {
     await captchaInstance.save()
     res.json(captcha)
   }
+}
+
+function evaluateExpression(expression: string): string {
+  const terms = expression.split(/[\+\-\*]/);
+  const operators = expression.replace(/[0-9]/g, '').split('');
+  let result = parseFloat(terms[0]);
+
+  for (let i = 0; i < operators.length; i++) {
+    const term = parseFloat(terms[i + 1]);
+    switch (operators[i]) {
+      case '+':
+        result += term;
+        break;
+      case '-':
+        result -= term;
+        break;
+      case '*':
+        result *= term;
+        break;
+    }
+  }
+
+  return result.toString();
 }
 
 captchas.verifyCaptcha = () => (req: Request, res: Response, next: NextFunction) => {

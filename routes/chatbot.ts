@@ -19,6 +19,7 @@ import validateChatBot from '../lib/startup/validateChatBot'
 import * as security from '../lib/insecurity'
 import * as botUtils from '../lib/botUtils'
 import { challenges } from '../data/datacache'
+import sanitizeHtml from 'sanitize-html'
 
 let trainingFile = config.get<string>('application.chatBot.trainingData')
 let testCommand: string
@@ -138,7 +139,7 @@ async function setUserName (user: User, req: Request, res: Response) {
       })
       return
     }
-    const updatedUser = await userModel.update({ username: req.body.query })
+    const updatedUser = await userModel.update({ username: sanitizeHtml(req.body.query) }) // Sanitize user input
     const updatedUserResponse = utils.queryResultToJson(updatedUser)
     const updatedToken = security.authorize(updatedUserResponse)
     // @ts-expect-error FIXME some properties missing in updatedUserResponse
