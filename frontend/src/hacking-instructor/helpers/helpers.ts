@@ -6,13 +6,13 @@
 import jwtDecode from 'jwt-decode'
 
 let config
-const playbackDelays = {
+const playbackDelays = Object.freeze({
   faster: 0.5,
   fast: 0.75,
   normal: 1.0,
   slow: 1.25,
   slower: 1.5
-}
+})
 
 export async function sleep (timeInMs: number): Promise<void> {
   await new Promise((resolve) => {

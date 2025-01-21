@@ -36,10 +36,10 @@ function handleZipFileUpload ({ file }: Request, res: Response, next: NextFuncti
               .pipe(unzipper.Parse())
               .on('entry', function (entry: any) {
                 const fileName = entry.path
-                const absolutePath = path.resolve('uploads/complaints/' + fileName)
+                const absolutePath = path.resolve('uploads/complaints/', fileName) // Resolved path traversal vulnerability
                 challengeUtils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve('ftp/legal.md') })
-                if (absolutePath.includes(path.resolve('.'))) {
-                  entry.pipe(fs.createWriteStream('uploads/complaints/' + fileName).on('error', function (err) { next(err) }))
+                if (absolutePath.includes(path.resolve('uploads/complaints'))) { // Check if the resolved path is within the 'uploads/complaints' directory
+                  entry.pipe(fs.createWriteStream(absolutePath).on('error', function (err) { next(err) }))
                 } else {
                   entry.autodrain()
                 }
@@ -77,7 +77,7 @@ function handleXmlUpload ({ file }: Request, res: Response, next: NextFunction) 
       try {
         const sandbox = { libxml, data }
         vm.createContext(sandbox)
-        const xmlDoc = vm.runInContext('libxml.parseXml(data, { noblanks: true, noent: true, nocdata: true })', sandbox, { timeout: 2000 })
+        const xmlDoc = vm.runInContext('libxml.parseXml(data, { noblanks: true, noent: false, nocdata: true })', sandbox, { timeout: 2000 }) // Set 'noent' to false to prevent XXE vulnerability
         const xmlString = xmlDoc.toString(false)
         challengeUtils.solveIf(challenges.xxeFileDisclosureChallenge, () => { return (utils.matchesEtcPasswdFile(xmlString) || utils.matchesSystemIniFile(xmlString)) })
         res.status(410)
