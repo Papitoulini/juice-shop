@@ -1,13 +1,14 @@
-import path from 'path'
-import { readFile } from 'fs/promises'
-import { safeLoad } from 'js-yaml'
-import logger from '../lib/logger'
+import path from 'path';
+import { readFile } from 'fs/promises';
+import { safeLoad } from 'js-yaml';
+import logger from '../lib/logger';
 
-export async function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+export async function loadStaticData(file: string) {
+  const sanitizedFile = file.replace(/[^a-zA-Z0-9_\-\.]/g, ''); // sanitize user input
+  const filePath = path.resolve('./data/static/' + sanitizedFile + '.yml');
   return await readFile(filePath, 'utf8')
     .then(safeLoad)
-    .catch(() => logger.error('Could not open file: "' + filePath + '"'))
+    .catch(() => logger.error('Could not open file: "' + filePath + '"'));
 }
 
 export interface StaticUser {
@@ -51,8 +52,8 @@ export interface StaticUserCard {
   expMonth: number
   expYear: number
 }
-export async function loadStaticUserData (): Promise<StaticUser[]> {
-  return await loadStaticData('users') as StaticUser[]
+export async function loadStaticUserData(): Promise<StaticUser[]> {
+  return await loadStaticData('users') as StaticUser[];
 }
 
 export interface StaticChallenge {
@@ -70,8 +71,8 @@ export interface StaticChallenge {
     order: number
   }
 }
-export async function loadStaticChallengeData (): Promise<StaticChallenge[]> {
-  return await loadStaticData('challenges') as StaticChallenge[]
+export async function loadStaticChallengeData(): Promise<StaticChallenge[]> {
+  return await loadStaticData('challenges') as StaticChallenge[];
 }
 
 export interface StaticDelivery {
@@ -81,13 +82,13 @@ export interface StaticDelivery {
   eta: number
   icon: string
 }
-export async function loadStaticDeliveryData (): Promise<StaticDelivery[]> {
-  return await loadStaticData('deliveries') as StaticDelivery[]
+export async function loadStaticDeliveryData(): Promise<StaticDelivery[]> {
+  return await loadStaticData('deliveries') as StaticDelivery[];
 }
 
 export interface StaticSecurityQuestions {
   question: string
 }
-export async function loadStaticSecurityQuestionsData (): Promise<StaticSecurityQuestions[]> {
-  return await loadStaticData('securityQuestions') as StaticSecurityQuestions[]
+export async function loadStaticSecurityQuestionsData(): Promise<StaticSecurityQuestions[]> {
+  return await loadStaticData('securityQuestions') as StaticSecurityQuestions[];
 }
