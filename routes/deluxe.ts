@@ -7,13 +7,12 @@ import { type Request, type Response, type NextFunction } from 'express'
 import { UserModel } from '../models/user'
 import { WalletModel } from '../models/wallet'
 import { CardModel } from '../models/card'
-import challengeUtils = require('../lib/challengeUtils')
-import * as utils from '../lib/utils'
+import { challengeUtils } from '../lib/challengeUtils'
+import { utils } from '../lib/utils'
 import { challenges } from '../data/datacache'
+import security from '../lib/insecurity'
 
-const security = require('../lib/insecurity')
-
-module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
+const upgradeToDeluxe = function upgradeToDeluxe () {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await UserModel.findOne({ where: { id: req.body.UserId, role: security.roles.customer } })
@@ -56,7 +55,7 @@ module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
   }
 }
 
-module.exports.deluxeMembershipStatus = function deluxeMembershipStatus () {
+const deluxeMembershipStatus = function deluxeMembershipStatus () {
   return (req: Request, res: Response, next: NextFunction) => {
     if (security.isCustomer(req)) {
       res.status(200).json({ status: 'success', data: { membershipCost: 49 } })

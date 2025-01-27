@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-import path = require('path')
-import { type Request, type Response, type NextFunction } from 'express'
+import path from 'path'
+import { Request, Response, NextFunction } from 'express'
 import { challenges } from '../data/datacache'
-import challengeUtils = require('../lib/challengeUtils')
-
-import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
+import challengeUtils from '../lib/challengeUtils'
+import { utils } from '../lib/utils'
+import security from '../lib/insecurity'
 
 module.exports = function servePublicFiles () {
   return ({ params, query }: Request, res: Response, next: NextFunction) => {

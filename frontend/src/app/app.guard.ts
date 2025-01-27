@@ -29,7 +29,7 @@ export class LoginGuard implements CanActivate {
   }
 
   tokenDecode () {
-    let payload: any = null
+    let payload: { [key: string]: any } = null
     const token = localStorage.getItem('token')
     if (token) {
       try {

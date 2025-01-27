@@ -8,8 +8,8 @@ import { type Request, type Response } from 'express'
 import { ChallengeModel } from '../models/challenge'
 import { challenges } from '../data/datacache'
 
-const sequelize = require('sequelize')
-const Op = sequelize.Op
+import sequelize from 'sequelize'
+import { Op } from 'sequelize'
 
 module.exports.continueCode = function continueCode () {
   const hashids = new Hashids('this is my salt', 60, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')

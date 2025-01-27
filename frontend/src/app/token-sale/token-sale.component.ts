@@ -18,11 +18,11 @@ library.add(faBitcoin, faUniversity, faGraduationCap, faCommentAlt, faComments, 
   styleUrls: ['./token-sale.component.scss']
 })
 export class TokenSaleComponent implements OnInit {
-  public altcoinName = 'Juicycoin'
+  public altcoinName: string
   constructor (private readonly configurationService: ConfigurationService) { }
 
   ngOnInit () {
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+    this.configurationService.getApplicationConfiguration().subscribe((config) => {
       if (config?.application?.altcoinName) {
         this.altcoinName = config.application.altcoinName
       }

@@ -37,7 +37,7 @@ describe('ChallengesUnavailableWarningComponent', () => {
         tagList: ['Easy'],
         disabledEnv: null
       }
-    ] as any
+    ] as { [key: string]: any }
 
     component.filterSetting = structuredClone(DEFAULT_FILTER_SETTING)
 

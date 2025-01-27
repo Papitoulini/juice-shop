@@ -4,13 +4,13 @@
  */
 
 import { type Request, type Response } from 'express'
-import challengeUtils = require('../lib/challengeUtils')
+import challengeUtils from '../lib/challengeUtils'
 import { reviewsCollection } from '../data/mongodb'
 
 import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
 
-const security = require('../lib/insecurity')
+import security from '../lib/insecurity'
 
 module.exports = function productReviews () {
   return (req: Request, res: Response) => {

@@ -21,7 +21,7 @@ export class UserDetailsComponent implements OnInit {
   constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any, private readonly userService: UserService) { }
 
   ngOnInit () {
-    this.userService.get(this.dialogData.id).subscribe((user) => {
+    this.userService.get(this.dialogData.id).subscribe((user: any) => {
       this.user = user
     }, (err) => { console.log(err) })
   }

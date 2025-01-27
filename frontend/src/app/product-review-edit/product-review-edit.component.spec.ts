@@ -1,32 +1,12 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import { type ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
-import { ProductReviewEditComponent } from './product-review-edit.component'
-import { ReactiveFormsModule } from '@angular/forms'
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
-import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatButtonModule } from '@angular/material/button'
-import { of, throwError } from 'rxjs'
-import { ProductReviewService } from 'src/app/Services/product-review.service'
-import { MatInputModule } from '@angular/material/input'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatSnackBarModule } from '@angular/material/snack-bar'
-
 describe('ProductReviewEditComponent', () => {
   let component: ProductReviewEditComponent
   let fixture: ComponentFixture<ProductReviewEditComponent>
-  let productReviewService: any
-  let dialogRef: any
+  let productReviewService: ProductReviewService
+  let dialogRef: MatDialogRef<ProductReviewEditComponent>
 
   beforeEach(waitForAsync(() => {
-    productReviewService = jasmine.createSpyObj('ProductReviewService', ['patch'])
-    productReviewService.patch.and.returnValue(of({}))
-    dialogRef = jasmine.createSpyObj('MatDialogRef', ['close'])
-    dialogRef.close.and.returnValue({})
+    productReviewService = TestBed.inject(ProductReviewService)
+    dialogRef = TestBed.inject(MatDialogRef)
 
     TestBed.configureTestingModule({
       imports: [
@@ -71,8 +51,8 @@ describe('ProductReviewEditComponent', () => {
     component.ngOnInit()
     component.editReviewControl.setValue('Another Review')
     component.editReview()
-    expect(productReviewService.patch.calls.count()).toBe(1)
-    expect(productReviewService.patch.calls.argsFor(0)[0]).toEqual({ id: '42', message: 'Another Review' })
+    expect(productReviewService.patch).toHaveBeenCalledTimes(1)
+    expect(productReviewService.patch).toHaveBeenCalledWith({ id: '42', message: 'Another Review' })
   })
 
   it('should close the dialog on submitting the edited review', () => {
@@ -80,7 +60,7 @@ describe('ProductReviewEditComponent', () => {
     component.data = { reviewData: { _id: '42', message: 'Review', author: 'Horst' } }
     component.ngOnInit()
     component.editReview()
-    expect(dialogRef.close).toHaveBeenCalled()
+    expect(dialogRef.close).toHaveBeenCalledTimes(1)
   })
 
   it('should log errors directly to browser console', fakeAsync(() => {
@@ -89,6 +69,7 @@ describe('ProductReviewEditComponent', () => {
     productReviewService.patch.and.returnValue(throwError('Error'))
     component.ngOnInit()
     component.editReview()
+    expect(console.log).toHaveBeenCalledTimes(1)
     expect(console.log).toHaveBeenCalledWith('Error')
     fixture.destroy()
     flush()

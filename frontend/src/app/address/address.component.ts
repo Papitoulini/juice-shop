@@ -25,10 +25,10 @@ export class AddressComponent implements OnInit {
   @Input('allowEdit') public allowEdit: boolean = false
   @Input('addNewAddressDiv') public addNewAddressDiv: boolean = true
   @Input('showNextButton') public showNextButton: boolean = false
-  public addressId: any = undefined
+  public addressId: string = undefined
   public displayedColumns = ['Name', 'Address', 'Country']
   selection = new SelectionModel<Element>(false, [])
-  public storedAddresses: any[]
+  public storedAddresses: Element[]
   public dataSource
   public confirmation: any
   public error: any
@@ -57,7 +57,7 @@ export class AddressComponent implements OnInit {
     })
   }
 
-  emitSelectionToParent (id: number) {
+  emitSelectionToParent (id: string) {
     if (this.selection.hasValue()) {
       this.emitSelection.emit(id)
       this.addressId = id

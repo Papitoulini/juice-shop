@@ -1,6 +1,6 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
-import { VulnLinesService } from './vuln-lines.service'
+import { VulnLinesService } from './vulnLines.service'
 
 describe('VulnLinesService', () => {
   beforeEach(() => {
