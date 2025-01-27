@@ -8,6 +8,17 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { catchError, map } from 'rxjs/operators'
 
+
+
+export interface SecurityAnswerResponse {
+  data: SecurityAnswerData
+}
+
+export interface SecurityAnswerData {
+  confirmation: string
+  // Add other relevant properties if necessary
+}
+
 @Injectable({
   providedIn: 'root'
 })

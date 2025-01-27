@@ -25,7 +25,7 @@ export class AddressCreateComponent implements OnInit {
   public addressControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   public cityControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public stateControl: UntypedFormControl = new UntypedFormControl()
-  public address: any = undefined
+  public address: { country?: string, fullName?: string, mobileNum?: number, zipCode?: string, streetAddress?: string, city?: string, state?: string } = {}
   public mode = 'create'
   private addressId: string = undefined
 
@@ -34,7 +34,6 @@ export class AddressCreateComponent implements OnInit {
     private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {
-    this.address = {}
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('addressId')) {
         this.mode = 'edit'

@@ -6,7 +6,7 @@
 import { environment } from '../../environments/environment'
 import { ComplaintService } from '../Services/complaint.service'
 import { UserService } from '../Services/user.service'
-import { Component, ElementRef, type OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { UntypedFormControl, Validators } from '@angular/forms'
 import { FileUploader } from 'ng2-file-upload'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -25,7 +25,7 @@ export class ComplaintComponent implements OnInit {
   public customerControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
   public messageControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   @ViewChild('fileControl', { static: true }) fileControl!: ElementRef // For controlling the DOM Element for file input.
-  public fileUploadError: any = undefined // For controlling error handling related to file input.
+  public fileUploadError: any | undefined = undefined // For controlling error handling related to file input.
   public uploader: FileUploader = new FileUploader({
     url: environment.hostServer + '/file-upload',
     authToken: `Bearer ${localStorage.getItem('token')}`,
@@ -33,16 +33,16 @@ export class ComplaintComponent implements OnInit {
     maxFileSize: 100000
   })
 
-  public userEmail: any = undefined
-  public complaint: any = undefined
-  public confirmation: any
+  public userEmail: string | undefined
+  public complaint: { UserId: number, message?: string } | undefined
+  public confirmation: string | undefined
 
   constructor (private readonly userService: UserService, private readonly complaintService: ComplaintService, private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService) { }
 
   ngOnInit () {
     this.initComplaint()
     this.uploader.onWhenAddingFileFailed = (item, filter) => {
-      this.fileUploadError = filter
+      this.fileUploadError = filter.name
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       throw new Error(`Error due to : ${filter.name}`)
     }
@@ -57,9 +57,8 @@ export class ComplaintComponent implements OnInit {
   }
 
   initComplaint () {
-    this.userService.whoAmI().subscribe((user: any) => {
-      this.complaint = {}
-      this.complaint.UserId = user.id
+    this.userService.whoAmI().subscribe((user: { id: number, email: string }) => {
+      this.complaint = { UserId: user.id }
       this.userEmail = user.email
       this.customerControl.setValue(this.userEmail)
     }, (err) => {
@@ -78,17 +77,19 @@ export class ComplaintComponent implements OnInit {
   }
 
   saveComplaint () {
-    this.complaint.message = this.messageControl.value
-    this.complaintService.save(this.complaint).subscribe((savedComplaint: any) => {
-      this.translate.get('CUSTOMER_SUPPORT_COMPLAINT_REPLY', { ref: savedComplaint.id }).subscribe((customerSupportReply) => {
-        this.confirmation = customerSupportReply
-      }, (translationId) => {
-        this.confirmation = translationId
-      })
-      this.initComplaint()
-      this.resetForm()
-      this.fileUploadError = undefined
-    }, (error) => error)
+    if (this.complaint) {
+      this.complaint.message = this.messageControl.value
+      this.complaintService.save(this.complaint).subscribe((savedComplaint: { id: number }) => {
+        this.translate.get('CUSTOMER_SUPPORT_COMPLAINT_REPLY', { ref: savedComplaint.id }).subscribe((customerSupportReply) => {
+          this.confirmation = customerSupportReply
+        }, (translationId) => {
+          this.confirmation = translationId
+        })
+        this.initComplaint()
+        this.resetForm()
+        this.fileUploadError = undefined
+      }, (error) => error)
+    }
   }
 
   resetForm () {

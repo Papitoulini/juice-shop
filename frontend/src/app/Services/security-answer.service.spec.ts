@@ -6,7 +6,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing'
 
-import { SecurityAnswerService } from './security-answer.service'
+import { SecurityAnswerService, SecurityAnswerData } from './security-answer.service'
+
 
 describe('SecurityAnswerService', () => {
   beforeEach(() => {
@@ -22,15 +23,17 @@ describe('SecurityAnswerService', () => {
 
   it('should create feedback directly via the rest api', inject([SecurityAnswerService, HttpTestingController],
     fakeAsync((service: SecurityAnswerService, httpMock: HttpTestingController) => {
-      let res: any
-      service.save(null).subscribe((data) => (res = data))
+      let res: SecurityAnswerData
+      const params = { answer: 'Sample Answer' } // Example valid params
+
+      service.save(params).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/api/SecurityAnswers/')
-      req.flush({ data: 'apiResponse' })
+      req.flush({ data: { confirmation: 'apiResponse' } }) // Ensure data is an object
 
       tick()
       expect(req.request.method).toBe('POST')
-      expect(req.request.body).toBeFalsy()
-      expect(res).toBe('apiResponse')
+      expect(req.request.body).toEqual(params) // Expect the body to match the params
+      expect(res).toEqual({ confirmation: 'apiResponse' }) // res should be the data object
       httpMock.verify()
     })
   ))

@@ -46,9 +46,10 @@ export default defineConfig({
           )[0]
         },
         GetCouponIntent () {
-          const trainingData = require(`data/chatbot/${utils.extractFilename(
+          const trainingDataFilename = utils.extractFilename(
             config.get('application.chatBot.trainingData')
-          )}`)
+          )
+          const trainingData = require(`data/chatbot/${trainingDataFilename}`)
           const couponIntent = trainingData.data.filter(
             (data: { intent: string }) => data.intent === 'queries.couponCode'
           )[0]

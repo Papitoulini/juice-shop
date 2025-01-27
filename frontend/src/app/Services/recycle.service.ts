@@ -17,7 +17,7 @@ export class RecycleService {
 
   constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: Record<string, string>) {
     return this.http.get(this.host + '/', {
       params
     }).pipe(map((response: any) => response.data), catchError((error) => { throw error }))

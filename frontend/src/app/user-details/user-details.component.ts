@@ -18,7 +18,7 @@ library.add(faArrowCircleLeft)
 })
 export class UserDetailsComponent implements OnInit {
   public user: any
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any, private readonly userService: UserService) { }
+  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: { id: number }, private readonly userService: UserService) { }
 
   ngOnInit () {
     this.userService.get(this.dialogData.id).subscribe((user) => {

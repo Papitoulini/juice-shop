@@ -11,8 +11,8 @@ export class CodingChallengeProgressScoreCardComponent implements OnInit, OnChan
   @Input()
   public allChallenges: EnrichedChallenge[] = []
 
-  public availableCodingChallenges: number
-  public solvedCodingChallenges: number
+  public availableCodingChallenges: number = 0
+  public solvedCodingChallenges: number = 0
 
   ngOnInit (): void {
     this.updatedNumberOfSolvedChallenges()
