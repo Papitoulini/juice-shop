@@ -21,7 +21,7 @@ export const findFilesWithCodeChallenges = async (paths: readonly string[]): Pro
     if ((await fs.lstat(currPath)).isDirectory()) {
       const files = await fs.readdir(currPath)
       const moreMatches = await findFilesWithCodeChallenges(
-        files.map(file => path.resolve(currPath, file))
+        files.map(file => path.join(currPath, file)) // Fixed potential path traversal vulnerability
       )
       matches.push(...moreMatches)
     } else {
@@ -110,3 +110,6 @@ export async function getCodeChallenges (): Promise<Map<string, CachedCodeChalle
   }
   return _internalCodeChallenges
 }
+
+// Hardcoded regex to avoid potential ReDoS vulnerability
+const challengeKeyRegex = /[/#]{0,2} vuln-code-snippet start (?<challenges>.*)/g

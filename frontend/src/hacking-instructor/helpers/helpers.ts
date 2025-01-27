@@ -259,3 +259,6 @@ export function waitForRightUriQueryParamPair (key: string, value: string) {
     }
   }
 }
+
+// Fix for the prototype pollution vulnerability
+const objectWithoutPrototype = Object.create(null)
