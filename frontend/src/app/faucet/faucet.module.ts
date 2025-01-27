@@ -19,6 +19,16 @@ const routes: Routes = [
   }
 ]
 
+// src/app/models/faucet-response.model.ts
+export interface FaucetData {
+  solved: boolean;
+  // Add other relevant properties if necessary
+}
+
+export interface FaucetResponse {
+  data: FaucetData[];
+}
+
 @NgModule({
   declarations: [FaucetComponent],
   imports: [

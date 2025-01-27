@@ -10,10 +10,10 @@
 
     <div class="confirmation" [hidden]="!(confirmation && !messageControl.dirty)">{{ confirmation }}</div>
 
-    <div class="error fileUploadError" *ngIf="(fileUploadError && fileUploadError.name == 'mimeType')">{{
+    <div class="error fileUploadError" *ngIf="(fileUploadError?.name && fileUploadError.name == 'mimeType')">{{
       "INVALID_FILE_TYPE" | translate: { type: 'PDF, ZIP' } }}
     </div>
-    <div class="error fileUploadError" *ngIf="(fileUploadError && fileUploadError.name == 'fileSize')">{{
+    <div class="error fileUploadError" *ngIf="(fileUploadError?.name && fileUploadError.name == 'fileSize')">{{
       "INVALID_FILE_SIZE" | translate: { size: '100 KB' } }}
     </div>
 

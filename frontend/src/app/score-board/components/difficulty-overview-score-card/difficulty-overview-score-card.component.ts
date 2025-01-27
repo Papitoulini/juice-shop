@@ -30,18 +30,10 @@ export class DifficultyOverviewScoreCardComponent implements OnInit, OnChanges {
   @Input()
   public allChallenges: EnrichedChallenge[] = []
 
-  // includes hacking and coding challenges (both find it and fix it)
   public totalChallenges: number
   public solvedChallenges: number
 
-  public difficultySummaries: DifficultySummary[] = [
-    { difficulty: 1, availableChallenges: 0, solvedChallenges: 0 },
-    { difficulty: 2, availableChallenges: 0, solvedChallenges: 0 },
-    { difficulty: 3, availableChallenges: 0, solvedChallenges: 0 },
-    { difficulty: 4, availableChallenges: 0, solvedChallenges: 0 },
-    { difficulty: 5, availableChallenges: 0, solvedChallenges: 0 },
-    { difficulty: 6, availableChallenges: 0, solvedChallenges: 0 }
-  ]
+  public difficultySummaries: DifficultySummary[]
 
   ngOnInit (): void {
     this.updatedNumberOfSolvedChallenges()
@@ -59,7 +51,7 @@ export class DifficultyOverviewScoreCardComponent implements OnInit, OnChanges {
 
     const codingScore = availableCodingChallenges
       .map((challenge) => challenge.codingChallengeStatus)
-      .reduce((a, b) => a + b, 0) // sum up the scores
+      .reduce((a, b) => a + b, 0)
 
     this.difficultySummaries = DifficultyOverviewScoreCardComponent.calculateDifficultySummaries(this.allChallenges)
 

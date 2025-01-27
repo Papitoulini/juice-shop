@@ -16,7 +16,7 @@ import { of, throwError } from 'rxjs'
 describe('UserDetailsComponent', () => {
   let component: UserDetailsComponent
   let fixture: ComponentFixture<UserDetailsComponent>
-  let userService: any
+  let userService: { get: () => any }
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['get'])
@@ -57,8 +57,9 @@ describe('UserDetailsComponent', () => {
   })
 
   it('should set the retrieved user', () => {
-    userService.get.and.returnValue(of('User'))
+    const userData = { name: 'John', age: 30 }
+    userService.get.and.returnValue(of(userData))
     component.ngOnInit()
-    expect(component.user).toBe('User')
+    expect(component.user).toEqual(userData)
   })
 })

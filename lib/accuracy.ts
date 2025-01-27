@@ -51,7 +51,7 @@ function totalAccuracy (phase: Phase) {
 
 function calculateAccuracy (challengeKey: string, phase: Phase) {
   let accuracy = 0
-  if (solves[challengeKey][phase]) {
+  if (solves[challengeKey] && solves[challengeKey][phase]) {
     accuracy = 1 / solves[challengeKey].attempts[phase]
   }
   logger.info(`Accuracy for '${phase === 'fix it' ? 'Fix It' : 'Find It'}' phase of coding challenge ${colors.cyan(challengeKey)}: ${accuracy > 0.5 ? colors.green(accuracy.toString()) : (accuracy > 0.25 ? colors.yellow(accuracy.toString()) : colors.red(accuracy.toString()))}`)

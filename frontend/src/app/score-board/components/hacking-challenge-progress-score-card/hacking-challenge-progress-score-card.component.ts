@@ -10,7 +10,7 @@ export class HackingChallengeProgressScoreCardComponent implements OnInit, OnCha
   @Input()
   public allChallenges: EnrichedChallenge[] = []
 
-  public solvedChallenges: number
+  public solvedChallenges: number = 0
 
   ngOnInit (): void {
     this.updatedNumberOfSolvedChallenges()

@@ -27,9 +27,9 @@ export class ContactComponent implements OnInit {
   public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.pattern('-?[\\d]*')])
   public userIdControl: UntypedFormControl = new UntypedFormControl('', [])
   public rating: number = 0
-  public feedback: any = undefined
-  public captcha: any
-  public captchaId: any
+  public feedback: { UserId?: string, captchaId?: string, captcha?: string, comment?: string, rating?: number } = {}
+  public captcha: string | undefined
+  public captchaId: string | undefined
   public confirmation: any
   public error: any
 
@@ -37,14 +37,14 @@ export class ContactComponent implements OnInit {
     private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {
-    this.userService.whoAmI().subscribe((data: any) => {
+    this.userService.whoAmI().subscribe((data: { id: string, email: string }) => {
       this.feedback = {}
       this.userIdControl.setValue(data.id)
       this.feedback.UserId = data.id
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       this.authorControl.setValue(data.email ? `***${data.email.slice(3)}` : 'anonymous')
     }, (err) => {
-      this.feedback = undefined
+      this.feedback = {}
       console.log(err)
     })
     this.getNewCaptcha()
@@ -53,7 +53,7 @@ export class ContactComponent implements OnInit {
   }
 
   getNewCaptcha () {
-    this.captchaService.getCaptcha().subscribe((data: any) => {
+    this.captchaService.getCaptcha().subscribe((data: { captcha: string, captchaId: string }) => {
       this.captcha = data.captcha
       this.captchaId = data.captchaId
     }, (err) => err)

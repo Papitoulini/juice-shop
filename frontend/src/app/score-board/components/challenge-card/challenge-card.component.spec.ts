@@ -27,7 +27,7 @@ describe('ChallengeCard', () => {
       hasCodingChallenge: true,
       description: 'lorem ipsum',
       tagList: ['Easy']
-    } as any
+    }
 
     component.applicationConfiguration = {
       ctf: {
@@ -39,7 +39,7 @@ describe('ChallengeCard', () => {
       hackingInstructor: {
         isEnabled: true
       }
-    } as Config
+    }
 
     fixture.detectChanges()
   })

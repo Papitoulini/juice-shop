@@ -21,8 +21,8 @@ export class OrderSummaryComponent implements OnInit {
   public itemTotal = 0
   public deliveryPrice = 0
   public promotionalDiscount = 0
-  public address: any
-  public paymentMethod: any
+  public address: null = null
+  public paymentMethod: string | null = null
   constructor (private readonly router: Router, private readonly addressService: AddressService, private readonly paymentService: PaymentService, private readonly basketService: BasketService, private readonly deliveryService: DeliveryService, private readonly ngZone: NgZone, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {
@@ -44,7 +44,7 @@ export class OrderSummaryComponent implements OnInit {
     }
   }
 
-  getMessage (total) {
+  getMessage (total: [number, number]) {
     this.itemTotal = total[0]
     this.promotionalDiscount = sessionStorage.getItem('couponDiscount') ? (parseFloat(sessionStorage.getItem('couponDiscount')) / 100) * this.itemTotal : 0
     this.bonus = total[1]

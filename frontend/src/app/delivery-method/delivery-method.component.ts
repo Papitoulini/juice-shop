@@ -26,7 +26,7 @@ export class DeliveryMethodComponent implements OnInit {
   public methods: DeliveryMethod[]
   public address: any
   public dataSource
-  public deliveryMethodId: number = undefined
+  public deliveryMethodId: number | undefined = undefined
   selection = new SelectionModel<DeliveryMethod>(false, [])
 
   constructor (private readonly location: Location, private readonly deliverySerivce: DeliveryService,
@@ -44,8 +44,8 @@ export class DeliveryMethodComponent implements OnInit {
     }, (error) => { console.log(error) })
   }
 
-  selectMethod (id) {
-    if (this.selection.hasValue() || id) {
+  selectMethod (id: number | undefined) {
+    if (this.selection.hasValue() || id !== undefined) {
       this.deliveryMethodId = id
     } else {
       this.deliveryMethodId = undefined
@@ -57,7 +57,9 @@ export class DeliveryMethodComponent implements OnInit {
   }
 
   chooseDeliveryMethod () {
-    sessionStorage.setItem('deliveryMethodId', this.deliveryMethodId.toString())
-    this.ngZone.run(async () => await this.router.navigate(['/payment', 'shop']))
+    if (this.deliveryMethodId !== undefined) {
+      sessionStorage.setItem('deliveryMethodId', this.deliveryMethodId.toString())
+      this.ngZone.run(async () => await this.router.navigate(['/payment', 'shop']))
+    }
   }
 }

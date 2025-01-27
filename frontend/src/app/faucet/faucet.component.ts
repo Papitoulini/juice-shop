@@ -277,7 +277,7 @@ export class FaucetComponent {
           this.keysService.verifyNFTWallet(this.metamaskAddress).subscribe(
             (response) => {
               if (response.success) {
-                this.successResponse = response.status
+                this.successResponse = !!response.status
                 this.mintButtonDisabled = true
               }
             },

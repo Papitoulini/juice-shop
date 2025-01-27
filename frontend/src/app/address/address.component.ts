@@ -25,11 +25,11 @@ export class AddressComponent implements OnInit {
   @Input('allowEdit') public allowEdit: boolean = false
   @Input('addNewAddressDiv') public addNewAddressDiv: boolean = true
   @Input('showNextButton') public showNextButton: boolean = false
-  public addressId: any = undefined
+  public addressId: number | undefined = undefined
   public displayedColumns = ['Name', 'Address', 'Country']
   selection = new SelectionModel<Element>(false, [])
-  public storedAddresses: any[]
-  public dataSource
+  public storedAddresses: Array<any> = []
+  public dataSource: any
   public confirmation: any
   public error: any
   public addressExist: boolean = false
@@ -47,10 +47,10 @@ export class AddressComponent implements OnInit {
   }
 
   load () {
-    this.addressService.get().subscribe((addresses) => {
-      this.addressExist = addresses.length
+    this.addressService.get().subscribe((addresses: Array<any>) => {
+      this.addressExist = addresses.length > 0
       this.storedAddresses = addresses
-      this.dataSource = new MatTableDataSource<Element>(this.storedAddresses)
+      this.dataSource = new MatTableDataSource<any>(this.storedAddresses)
     }, (err) => {
       this.snackBarHelperService.open(err.error?.error, 'errorBar')
       console.log(err)
@@ -68,7 +68,7 @@ export class AddressComponent implements OnInit {
   }
 
   chooseAddress () {
-    sessionStorage.setItem('addressId', this.addressId)
+    sessionStorage.setItem('addressId', this.addressId?.toString() || '')
     this.ngZone.run(async () => await this.router.navigate(['/delivery-method']))
   }
 

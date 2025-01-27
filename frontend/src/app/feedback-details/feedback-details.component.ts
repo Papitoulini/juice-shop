@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, type OnInit, Inject } from '@angular/core'
+import { Component, OnInit, Inject } from '@angular/core'
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 @Component({
@@ -13,8 +13,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 })
 export class FeedbackDetailsComponent implements OnInit {
   public feedback: any
-  public id: any
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any) { }
+  public id: number
+  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: { feedback: any, id: number }) { }
 
   ngOnInit () {
     this.feedback = this.dialogData.feedback

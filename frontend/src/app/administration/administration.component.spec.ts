@@ -25,9 +25,9 @@ import { MatIconModule } from '@angular/material/icon'
 describe('AdministrationComponent', () => {
   let component: AdministrationComponent
   let fixture: ComponentFixture<AdministrationComponent>
-  let dialog: any
-  let userService: any
-  let feedbackService: any
+  let dialog: jasmine.SpyObj<MatDialog>
+  let userService: jasmine.SpyObj<UserService>
+  let feedbackService: jasmine.SpyObj<FeedbackService>
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

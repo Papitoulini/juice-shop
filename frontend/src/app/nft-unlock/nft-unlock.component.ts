@@ -21,7 +21,7 @@ export class NFTUnlockComponent {
   checkChallengeStatus () {
     this.keysService.nftUnlocked().subscribe(
       (response) => {
-        this.successResponse = response.status
+        this.successResponse = !!response.status
       },
       (error) => {
         console.error(error)
