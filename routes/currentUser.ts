@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-import challengeUtils = require('../lib/challengeUtils')
-import { type Request, type Response } from 'express'
-
-const security = require('../lib/insecurity')
-const cache = require('../data/datacache')
-const challenges = cache.challenges
+import challengeUtils from '../lib/challengeUtils'
+import { Request, Response } from 'express'
+import security from '../lib/insecurity'
+import { cache } from '../data/datacache'
+import { challenges } from '../data/datacache'
 
 module.exports = function retrieveLoggedInUser () {
   return (req: Request, res: Response) => {

@@ -30,13 +30,13 @@ describe('TutorialModeWarningComponent', () => {
         tutorialOrder: null,
         solved: false
       }
-    ] as any
+    ]
 
     component.applicationConfig = {
       challenges: {
         restrictToTutorialsFirst: true
       }
-    } as any
+    }
 
     fixture.detectChanges()
   })
@@ -51,7 +51,7 @@ describe('TutorialModeWarningComponent', () => {
       challenges: {
         restrictToTutorialsFirst: false
       }
-    } as any
+    }
     component.ngOnChanges()
     expect(component.tutorialModeActive).toBe(false)
   })
@@ -69,9 +69,9 @@ describe('TutorialModeWarningComponent', () => {
         name: 'my name two',
         description: 'lorem ipsum',
         tutorialOrder: null,
-        solved: false
+        solved: true
       }
-    ] as any
+    ]
     component.ngOnChanges()
     expect(component.tutorialModeActive).toBe(false)
   })

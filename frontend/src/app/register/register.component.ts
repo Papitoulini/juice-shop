@@ -28,7 +28,7 @@ library.add(faUserPlus, faExclamationCircle)
 export class RegisterComponent implements OnInit {
   public emailControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.email])
   public passwordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)])
-  public repeatPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, matchValidator(this.passwordControl)])
+  public repeatPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), matchValidator(this.passwordControl)])
   public securityQuestionControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public securityAnswerControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public securityQuestions!: SecurityQuestion[]
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     private readonly ngZone: NgZone) { }
 
   ngOnInit () {
-    this.securityQuestionService.find(null).subscribe((securityQuestions: any) => {
+    this.securityQuestionService.find(null).subscribe((securityQuestions: SecurityQuestion[]) => {
       this.securityQuestions = securityQuestions
     }, (err) => { console.log(err) })
 
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       securityAnswer: this.securityAnswerControl.value
     }
 
-    this.userService.save(user).subscribe((response: any) => {
+    this.userService.save(user).subscribe((response: SecurityQuestion) => {
       this.securityAnswerService.save({
         UserId: response.id,
         answer: this.securityAnswerControl.value,

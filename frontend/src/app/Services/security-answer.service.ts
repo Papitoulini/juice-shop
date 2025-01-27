@@ -17,7 +17,7 @@ export class SecurityAnswerService {
 
   constructor (private readonly http: HttpClient) { }
 
-  save (params: any) {
+  save (params: object) {
     return this.http.post(this.host + '/', params).pipe(
       map((response: any) => response.data),
       catchError((err) => { throw err })

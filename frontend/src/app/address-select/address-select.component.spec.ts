@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { MatCardModule } from '@angular/material/card'
@@ -31,16 +26,16 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 describe('AddressSelectComponent', () => {
   let component: AddressSelectComponent
   let fixture: ComponentFixture<AddressSelectComponent>
-  let snackBar: any
-  let translateService
+  let snackBar: MatSnackBar
+  let translateService: TranslateService
 
   beforeEach(waitForAsync(() => {
-    translateService = jasmine.createSpyObj('TranslateService', ['get'])
+    translateService = TestBed.inject(TranslateService)
     translateService.get.and.returnValue(of({}))
     translateService.onLangChange = new EventEmitter()
     translateService.onTranslationChange = new EventEmitter()
     translateService.onDefaultLangChange = new EventEmitter()
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
+    snackBar = TestBed.inject(MatSnackBar)
     snackBar.open.and.returnValue(null)
 
     TestBed.configureTestingModule({

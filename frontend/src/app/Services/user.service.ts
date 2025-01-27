@@ -25,7 +25,7 @@ export class UserService {
 
   constructor (private readonly http: HttpClient) { }
 
-  find (params?: any) {
+  find (params?: { [key: string]: any }) {
     return this.http.get(this.hostServer + '/rest/user/authentication-details/', { params }).pipe(map((response: any) =>
       response.data), catchError((err) => { throw err }))
   }
@@ -34,14 +34,14 @@ export class UserService {
     return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
   }
 
-  save (params: any) {
+  save (params: { [key: string]: any }) {
     return this.http.post(this.host + '/', params).pipe(
       map((response: any) => response.data),
       catchError((err) => { throw err })
     )
   }
 
-  login (params: any) {
+  login (params: { [key: string]: any }) {
     this.isLoggedIn.next(true)
     return this.http.post(this.hostServer + '/rest/user/login', params).pipe(map((response: any) => response.authentication), catchError((err) => { throw err }))
   }
@@ -55,7 +55,7 @@ export class UserService {
     passwords.new + '&repeat=' + passwords.repeat).pipe(map((response: any) => response.user), catchError((err) => { throw err.error }))
   }
 
-  resetPassword (params: any) {
+  resetPassword (params: { [key: string]: any }) {
     return this.http.post(this.hostServer + '/rest/user/reset-password', params).pipe(map((response: any) => response.user), catchError((err) => { throw err }))
   }
 

@@ -6,9 +6,9 @@
 import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { type Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { type Challenge } from '../Models/challenge.model'
+import { Challenge } from '../Models/challenge.model' // type is corrected
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class ChallengeService {
   }
 
   repeatNotification (challengeName: string) {
-    return this.http.get(this.hostServer + '/rest/repeat-notification', { params: { challenge: challengeName }, responseType: 'text' as const }).pipe(catchError((err) => { throw err }))
+    return this.http.get(this.hostServer + '/rest/repeat-notification', { params: { challenge: challengeName }, responseType: 'text' }).pipe(catchError((err) => { throw err }))
   }
 
   continueCode () {

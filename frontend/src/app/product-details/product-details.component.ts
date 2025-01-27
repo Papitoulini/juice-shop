@@ -35,7 +35,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ngOnInit () {
     this.data.productData.points = Math.round(this.data.productData.price / 10)
     this.reviews$ = this.productReviewService.get(this.data.productData.id)
-    this.userSubscription = this.userService.whoAmI().subscribe((user: any) => {
+    this.userSubscription = this.userService.whoAmI().subscribe((user) => {
       if (user?.email) {
         this.author = user.email
       } else {
@@ -51,7 +51,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   addReview (textPut: HTMLTextAreaElement) {
-    const review = { message: textPut.value, author: this.author }
+    const review: Review = { message: textPut.value, author: this.author, _id: '' }
 
     textPut.value = ''
     this.productReviewService.create(this.data.productData.id, review).subscribe(() => {

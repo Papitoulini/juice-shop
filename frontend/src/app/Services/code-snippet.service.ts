@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { catchError, map } from 'rxjs/operators'
-import { type Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 
 export interface CodeSnippet {
   vulnLines?: number[]
@@ -32,6 +32,6 @@ export class CodeSnippetService {
   }
 
   challenges (): Observable<string[]> {
-    return this.http.get(`${this.host}`).pipe(map((response: any) => response.challenges), catchError((err) => { throw err }))
+    return this.http.get(`${this.host}`).pipe(map((response: { challenges: string[] }) => response.challenges), catchError((err) => { throw err }))
   }
 }

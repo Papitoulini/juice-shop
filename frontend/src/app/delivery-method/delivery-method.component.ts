@@ -24,12 +24,12 @@ library.add(faRocket, faShippingFast, faTruck)
 export class DeliveryMethodComponent implements OnInit {
   public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
   public methods: DeliveryMethod[]
-  public address: any
+  public address: DeliveryMethod
   public dataSource
   public deliveryMethodId: number = undefined
   selection = new SelectionModel<DeliveryMethod>(false, [])
 
-  constructor (private readonly location: Location, private readonly deliverySerivce: DeliveryService,
+  constructor (private readonly location: Location, private readonly deliveryService: DeliveryService,
     private readonly addressService: AddressService, private readonly router: Router, private readonly ngZone: NgZone) { }
 
   ngOnInit () {
@@ -37,7 +37,7 @@ export class DeliveryMethodComponent implements OnInit {
       this.address = address
     }, (error) => { console.log(error) })
 
-    this.deliverySerivce.get().subscribe((methods) => {
+    this.deliveryService.get().subscribe((methods) => {
       console.log(methods)
       this.methods = methods
       this.dataSource = new MatTableDataSource<DeliveryMethod>(this.methods)

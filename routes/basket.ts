@@ -6,11 +6,10 @@
 import { type Request, type Response, type NextFunction } from 'express'
 import { ProductModel } from '../models/product'
 import { BasketModel } from '../models/basket'
-import challengeUtils = require('../lib/challengeUtils')
-
+import { challengeUtils } from '../lib/challengeUtils'
 import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
-const security = require('../lib/insecurity')
+import security from '../lib/insecurity'
 
 module.exports = function retrieveBasket () {
   return (req: Request, res: Response, next: NextFunction) => {

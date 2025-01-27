@@ -9,7 +9,7 @@ import { type Observable } from 'rxjs'
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-  intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept (req: HttpRequest<string | { [key: string]: string }>, next: HttpHandler): Observable<HttpEvent<string | { [key: string]: string }>> {
     if (localStorage.getItem('token')) {
       req = req.clone({
         setHeaders: {

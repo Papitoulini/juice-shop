@@ -5,11 +5,10 @@
 
 import { type Request, type Response, type NextFunction } from 'express'
 import { UserModel } from '../models/user'
-import challengeUtils = require('../lib/challengeUtils')
-
-const security = require('../lib/insecurity')
-const cache = require('../data/datacache')
-const challenges = cache.challenges
+import { challengeUtils } from '../lib/challengeUtils'
+import security = require('../lib/insecurity')
+import { cache } from '../data/datacache'
+import { challenges } from '../data/datacache'
 
 module.exports = function changePassword () {
   return ({ query, headers, connection }: Request, res: Response, next: NextFunction) => {

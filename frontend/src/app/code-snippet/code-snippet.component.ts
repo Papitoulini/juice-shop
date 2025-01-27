@@ -15,6 +15,7 @@ import { UntypedFormControl } from '@angular/forms'
 import { ConfigurationService } from '../Services/configuration.service'
 import { type ThemePalette } from '@angular/material/core'
 
+// Define enums and interfaces
 enum ResultState {
   Undecided,
   Right,
@@ -31,6 +32,17 @@ export interface RandomFixes {
   index: number
 }
 
+// Define specific interfaces for service responses
+interface CodeFixesVerdict {
+  verdict: boolean
+  explanation: string
+}
+
+interface VulnLinesVerdict {
+  verdict: boolean
+  hint: string
+}
+
 @Component({
   selector: 'code-snippet',
   templateUrl: './code-snippet.component.html',
@@ -39,7 +51,7 @@ export interface RandomFixes {
 })
 export class CodeSnippetComponent implements OnInit {
   public snippet: CodeSnippet = null
-  public fixes: string [] = null
+  public fixes: string[] = null
   public selectedLines: number[]
   public selectedFix: number = 0
   public tab: UntypedFormControl = new UntypedFormControl(0)
@@ -51,33 +63,51 @@ export class CodeSnippetComponent implements OnInit {
   public showFeedbackButtons: boolean = true
   public randomFixes: RandomFixes[] = []
 
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any, private readonly configurationService: ConfigurationService, private readonly codeSnippetService: CodeSnippetService, private readonly vulnLinesService: VulnLinesService, private readonly codeFixesService: CodeFixesService, private readonly challengeService: ChallengeService, private readonly cookieService: CookieService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    private readonly configurationService: ConfigurationService,
+    private readonly codeSnippetService: CodeSnippetService,
+    private readonly vulnLinesService: VulnLinesService,
+    private readonly codeFixesService: CodeFixesService,
+    private readonly challengeService: ChallengeService,
+    private readonly cookieService: CookieService
+  ) { }
 
-  ngOnInit () {
-    this.configurationService.getApplicationConfiguration().subscribe((config) => {
-      this.showFeedbackButtons = config.challenges.showFeedbackButtons
-    }, (err) => { console.log(err) })
+  ngOnInit() {
+    this.configurationService.getApplicationConfiguration().subscribe(
+      (config) => {
+        this.showFeedbackButtons = config.challenges.showFeedbackButtons
+      },
+      (err) => { console.log(err) }
+    )
 
-    this.codeSnippetService.get(this.dialogData.key).subscribe((snippet) => {
-      this.snippet = snippet
-      this.solved.findIt = false
-      if (this.dialogData.codingChallengeStatus >= 1) {
-        this.result = ResultState.Right
-        this.lock = ResultState.Right
-        this.solved.findIt = true
+    this.codeSnippetService.get(this.dialogData.key).subscribe(
+      (snippet) => {
+        this.snippet = snippet
+        this.solved.findIt = false
+        if (this.dialogData.codingChallengeStatus >= 1) {
+          this.result = ResultState.Right
+          this.lock = ResultState.Right
+          this.solved.findIt = true
+        }
+      },
+      (err) => {
+        this.snippet = { snippet: err.error }
       }
-    }, (err) => {
-      this.snippet = { snippet: err.error }
-    })
-    this.codeFixesService.get(this.dialogData.key).subscribe((fixes) => {
-      this.fixes = fixes.fixes
-      if (this.fixes) {
-        this.shuffle()
+    )
+
+    this.codeFixesService.get(this.dialogData.key).subscribe(
+      (fixes) => {
+        this.fixes = fixes.fixes
+        if (this.fixes) {
+          this.shuffle()
+        }
+        this.solved.fixIt = this.dialogData.codingChallengeStatus >= 2
+      },
+      () => {
+        this.fixes = null
       }
-      this.solved.fixIt = this.dialogData.codingChallengeStatus >= 2
-    }, () => {
-      this.fixes = null
-    })
+    )
   }
 
   addLine = (lines: number[]) => {
@@ -89,7 +119,7 @@ export class CodeSnippetComponent implements OnInit {
     this.explanation = null
   }
 
-  changeFix (event: Event) {
+  changeFix(event: Event) {
     this.setFix(parseInt((event.target as HTMLSelectElement).value, 10))
   }
 
@@ -105,20 +135,24 @@ export class CodeSnippetComponent implements OnInit {
   }
 
   checkFix = () => {
-    this.codeFixesService.check(this.dialogData.key, this.randomFixes[this.selectedFix].index).subscribe((verdict) => {
-      this.setVerdict(verdict.verdict)
-      this.explanation = verdict.explanation
-    })
+    this.codeFixesService.check(this.dialogData.key, this.randomFixes[this.selectedFix].index).subscribe(
+      (verdict: CodeFixesVerdict) => { // Typed verdict
+        this.setVerdict(verdict.verdict)
+        this.explanation = verdict.explanation
+      }
+    )
   }
 
   checkLines = () => {
-    this.vulnLinesService.check(this.dialogData.key, this.selectedLines).subscribe((verdict: result) => {
-      this.setVerdict(verdict.verdict)
-      this.hint = verdict.hint
-    })
+    this.vulnLinesService.check(this.dialogData.key, this.selectedLines).subscribe(
+      (verdict: VulnLinesVerdict) => { // Typed verdict
+        this.setVerdict(verdict.verdict)
+        this.hint = verdict.hint
+      }
+    )
   }
 
-  lockIcon (): string {
+  lockIcon(): string {
     if (this.fixes === null) {
       return 'lock'
     }
@@ -132,7 +166,7 @@ export class CodeSnippetComponent implements OnInit {
     }
   }
 
-  lockColor (): ThemePalette {
+  lockColor(): ThemePalette {
     switch (this.lockIcon()) {
       case 'lock_open':
         return 'accent'
@@ -141,7 +175,7 @@ export class CodeSnippetComponent implements OnInit {
     }
   }
 
-  shuffle () {
+  shuffle() {
     this.randomFixes = this.fixes
       .map((fix, index) => ({ fix, index, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
@@ -153,24 +187,30 @@ export class CodeSnippetComponent implements OnInit {
     if (verdict) {
       if (this.tab.value === 0) {
         this.solved.findIt = true
-        this.challengeService.continueCodeFindIt().subscribe((continueCode) => {
-          if (!continueCode) {
-            throw (new Error('Received invalid continue code from the server!'))
-          }
-          const expires = new Date()
-          expires.setFullYear(expires.getFullYear() + 1)
-          this.cookieService.put('continueCodeFindIt', continueCode, { expires })
-        }, (err) => { console.log(err) })
+        this.challengeService.continueCodeFindIt().subscribe(
+          (continueCode) => {
+            if (!continueCode) {
+              throw (new Error('Received invalid continue code from the server!'))
+            }
+            const expires = new Date()
+            expires.setFullYear(expires.getFullYear() + 1)
+            this.cookieService.put('continueCodeFindIt', continueCode, { expires })
+          },
+          (err) => { console.log(err) }
+        )
       } else {
         this.solved.fixIt = true
-        this.challengeService.continueCodeFixIt().subscribe((continueCode) => {
-          if (!continueCode) {
-            throw (new Error('Received invalid continue code from the server!'))
-          }
-          const expires = new Date()
-          expires.setFullYear(expires.getFullYear() + 1)
-          this.cookieService.put('continueCodeFixIt', continueCode, { expires })
-        }, (err) => { console.log(err) })
+        this.challengeService.continueCodeFixIt().subscribe(
+          (continueCode) => {
+            if (!continueCode) {
+              throw (new Error('Received invalid continue code from the server!'))
+            }
+            const expires = new Date()
+            expires.setFullYear(expires.getFullYear() + 1)
+            this.cookieService.put('continueCodeFixIt', continueCode, { expires })
+          },
+          (err) => { console.log(err) }
+        )
       }
       this.result = ResultState.Right
       this.lock = ResultState.Right
@@ -185,7 +225,7 @@ export class CodeSnippetComponent implements OnInit {
     }
   }
 
-  resultIcon (): string {
+  resultIcon(): string {
     switch (this.result) {
       case ResultState.Right:
         return 'check'
@@ -196,7 +236,7 @@ export class CodeSnippetComponent implements OnInit {
     }
   }
 
-  resultColor (): ThemePalette {
+  resultColor(): ThemePalette {
     switch (this.resultIcon()) {
       case 'check':
         return 'accent'

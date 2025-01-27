@@ -3,29 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-import utils = require('../lib/utils')
-import challengeUtils = require('../lib/challengeUtils')
-import { type Request, type Response, type NextFunction } from 'express'
-import { type Review } from 'data/types'
-import * as db from '../data/mongodb'
+import utils from '../lib/utils'
+import challengeUtils from '../lib/challengeUtils'
+import { Request, Response, NextFunction } from 'express'
+import { Review } from 'data/types'
+import db from '../data/mongodb'
 import { challenges } from '../data/datacache'
 
-const security = require('../lib/insecurity')
+import security from '../lib/insecurity'
+import { sleep } from '../lib/utils' // Add this line
 
-// Blocking sleep function as in native MongoDB
-// @ts-expect-error FIXME Type safety broken for global object
-global.sleep = (time: number) => {
-  // Ensure that users don't accidentally dos their servers for too long
-  if (time > 2000) {
-    time = 2000
-  }
-  const stop = new Date().getTime()
-  while (new Date().getTime() < stop + time) {
-    ;
-  }
-}
-
-module.exports = function productReviews () {
+const productReviews = () => {
   return (req: Request, res: Response, next: NextFunction) => {
     const id = !utils.isChallengeEnabled(challenges.noSqlCommandChallenge) ? Number(req.params.id) : req.params.id
 
@@ -46,3 +34,5 @@ module.exports = function productReviews () {
     })
   }
 }
+
+module.exports = productReviews

@@ -74,9 +74,9 @@ export class ChangePasswordComponent {
 }
 
 function matchValidator (newPasswordControl: AbstractControl) {
-  return function matchOtherValidate (repeatNewPasswordControl: UntypedFormControl) {
+  return function matchOtherValidate (control: UntypedFormControl) {
     const password = newPasswordControl.value
-    const passwordRepeat = repeatNewPasswordControl.value
+    const passwordRepeat = control.value
     if (password !== passwordRepeat) {
       return { notSame: true }
     }

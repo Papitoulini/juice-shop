@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { catchError, map } from 'rxjs/operators'
-import { type Observable, Subject } from 'rxjs'
+import { Observable, Subject } from 'rxjs'
 
 interface OrderDetail {
   paymentId: string
@@ -20,7 +20,7 @@ interface OrderDetail {
 })
 export class BasketService {
   public hostServer = environment.hostServer
-  public itemTotal = new Subject<any>()
+  public itemTotal = new Subject<number>() // Changed type to number
   private readonly host = this.hostServer + '/api/BasketItems'
 
   constructor (private readonly http: HttpClient) { }
@@ -60,7 +60,7 @@ export class BasketService {
     }, (err) => { console.log(err) })
   }
 
-  getItemTotal (): Observable<any> {
+  getItemTotal (): Observable<number> {
     return this.itemTotal.asObservable()
   }
 }
