@@ -36,10 +36,10 @@ function handleZipFileUpload ({ file }: Request, res: Response, next: NextFuncti
               .pipe(unzipper.Parse())
               .on('entry', function (entry: any) {
                 const fileName = entry.path
-                const absolutePath = path.resolve('uploads/complaints/' + fileName)
-                challengeUtils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve('ftp/legal.md') })
-                if (absolutePath.includes(path.resolve('.'))) {
-                  entry.pipe(fs.createWriteStream('uploads/complaints/' + fileName).on('error', function (err) { next(err) }))
+                const absolutePath = path.resolve(process.env.NODE_PATH, 'uploads/complaints/' + fileName) // Path sanitized
+                challengeUtils.solveIf(challenges.fileWriteChallenge, () => { return absolutePath === path.resolve(process.env.NODE_PATH, 'ftp/legal.md') }) // Path sanitized
+                if (absolutePath.includes(path.resolve(process.env.NODE_PATH))) { // Path sanitized
+                  entry.pipe(fs.createWriteStream(process.env.NODE_PATH + '/uploads/complaints/' + fileName).on('error', function (err) { next(err) })) // Path sanitized
                 } else {
                   entry.autodrain()
                 }
@@ -77,7 +77,7 @@ function handleXmlUpload ({ file }: Request, res: Response, next: NextFunction) 
       try {
         const sandbox = { libxml, data }
         vm.createContext(sandbox)
-        const xmlDoc = vm.runInContext('libxml.parseXml(data, { noblanks: true, noent: true, nocdata: true })', sandbox, { timeout: 2000 })
+        const xmlDoc = vm.runInContext('libxml.parseXml(data, { noblanks: true, noent: false, nocdata: true })', sandbox, { timeout: 2000 }) // noent: false to prevent XXE
         const xmlString = xmlDoc.toString(false)
         challengeUtils.solveIf(challenges.xxeFileDisclosureChallenge, () => { return (utils.matchesEtcPasswdFile(xmlString) || utils.matchesSystemIniFile(xmlString)) })
         res.status(410)
