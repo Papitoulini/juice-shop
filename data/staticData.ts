@@ -4,10 +4,12 @@ import { safeLoad } from 'js-yaml'
 import logger from '../lib/logger'
 
 export async function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+  // Sanitize user input to prevent path traversal
+  const sanitizedFile = file.replace(/[^a-zA-Z0-9-_]/g, '')
+  const filePath = path.resolve('./data/static/', sanitizedFile + '.yml')
   return await readFile(filePath, 'utf8')
     .then(safeLoad)
-    .catch(() => logger.error('Could not open file: "' + filePath + '"'))
+    .catch(() => logger.error('Could not open file: \"' + filePath + '\"'))
 }
 
 export interface StaticUser {

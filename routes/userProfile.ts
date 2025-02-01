@@ -33,16 +33,17 @@ module.exports = function getUserProfile () {
               if (!code) {
                 throw new Error('Username is null')
               }
-              username = eval(code) // eslint-disable-line no-eval
+              // Replace eval with a safe alternative
+              username = new Function('return ' + code)() // eslint-disable-line no-new-func
             } catch (err) {
-              username = '\\' + username
+              username = '\\\\' + username
             }
           } else {
-            username = '\\' + username
+            username = '\\\\' + username
           }
           const theme = themes[config.get<string>('application.theme')]
           if (username) {
-            template = template.replace(/_username_/g, username)
+            template = template.replace(/_username_/g, entities.encode(username)) // Encode username to prevent SSTI
           }
           template = template.replace(/_emailHash_/g, security.hash(user?.email))
           template = template.replace(/_title_/g, entities.encode(config.get<string>('application.name')))

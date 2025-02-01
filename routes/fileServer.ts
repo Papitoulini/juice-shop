@@ -30,7 +30,17 @@ module.exports = function servePublicFiles () {
       challengeUtils.solveIf(challenges.directoryListingChallenge, () => { return file.toLowerCase() === 'acquisitions.md' })
       verifySuccessfulPoisonNullByteExploit(file)
 
-      res.sendFile(path.resolve('ftp/', file))
+      const resolvedPath = path.resolve('ftp/', file)
+      const normalizedPath = path.normalize(resolvedPath)
+
+      // Ensure the resolved path is within the intended directory
+      if (!normalizedPath.startsWith(path.resolve('ftp/'))) {
+        res.status(403)
+        next(new Error('Invalid file path!'))
+        return
+      }
+
+      res.sendFile(normalizedPath)
     } else {
       res.status(403)
       next(new Error('Only .md and .pdf files are allowed!'))
