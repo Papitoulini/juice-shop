@@ -3,7 +3,7 @@ name: CI/CD Pipeline with ZAP Scan
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-scan:
