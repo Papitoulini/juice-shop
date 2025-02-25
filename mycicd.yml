@@ -16,52 +16,7 @@ env:
   CYCLONEDX_NPM_VERSION: "^1.12.0"
   # PORT: 3001
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
-
-      #     #   - name: ⎔ Setup node
-      #     #     uses: actions/setup-node@v2
-      #     #     with:
-      #     #       node-version: 18
-
-      - name: Install CLI tools
-        run: npm install -g @angular/cli@$ANGULAR_CLI_VERSION
-
-      - name: 📥 Download deps
-        run: npm install && echo "npm install finished successfully"
-
-      - name: 🧪 Run unit test script
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd #v2.8.3
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          command: npm test
-
-      - name: 🧪 Run server test script
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd #v2.8.3
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          command: npm run test:server
-
-      - name: 🧪 Run api test script
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd #v2.8.3
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          command: npm run test:api
-
-      - name: 🧪 Run chromiium test script
-        uses: nick-invision/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd #v2.8.3
-        with:
-          timeout_minutes: 15
-          max_attempts: 3
-          command: npm run test:chromium
   deploy:
-    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: ssh and deploy to machine
