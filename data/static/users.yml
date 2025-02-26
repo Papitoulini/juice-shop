@@ -1,6 +1,6 @@
 -
   email: admin
-  password: 'admin123'
+  password: process.env.ADMIN_PASSWORD || 'changeme'
   key: admin
   role: 'admin'
   securityQuestion:
@@ -104,7 +104,7 @@
       expYear: 2092
 -
   email: ciso
-  password: 'mDLx?94T~1CfVfZMzw@sJ9f?s3L6lbMqE70FfI8^54jbNikY5fymx7c!YbJb'
+  password: process.env.CISO_PASSWORD || 'changeme'
   key: ciso
   role: 'deluxe'
   securityQuestion:
@@ -112,7 +112,7 @@
     answer: 'Brd?j8sEMziOvvBf§Be?jFZ77H?hgm'
 -
   email: support
-  password: 'J6aVjTgOpRs@?5l!Zkq2AYnCE@RF$P'
+  password: process.env.SUPPORT_PASSWORD || 'changeme'
   key: support
   role: 'admin'
   securityQuestion:
@@ -137,7 +137,7 @@
     answer: 'I even shared my pizza bagels with you!'
 -
   email: J12934
-  password: '0Y8rMnww$*9VFYE§59-!Fg1L6t&6lB'
+  password: process.env.JANNIK_PASSWORD || 'changeme'
   key: jannik
   role: 'admin'
   securityQuestion:
