@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+const expression = firstTerm.toString() + firstOperator + secondTerm.toString() + secondOperator + thirdTerm.toString();
+        const answer = JSON.parse(`(${expression})`); // eslint-disable-line no-eval
 
-import { type Request, type Response, type NextFunction } from 'express'
+        const captcha = {
+          captchaId,
+        };
 import { type Captcha } from '../data/types'
 import { CaptchaModel } from '../models/captcha'
 

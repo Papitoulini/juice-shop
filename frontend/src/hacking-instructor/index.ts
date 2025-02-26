@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
+const textBox = document.createElement('span')
+         textBox.style.flexGrow = '2'
+         textBox.innerHTML = sanitize(snarkdown(hint.text))
 
-import snarkdown from 'snarkdown'
+         const cancelButton = document.createElement('button')
+         cancelButton.id = 'cancelButton'
 
 import { LoginAdminInstruction } from './challenges/loginAdmin'
 import { DomXssInstruction } from './challenges/domXss'

@@ -1,9 +1,9 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-import fs = require('fs')
+TypeScript
+          template = template.replace(/_primDark_/g, theme.primDark)
+          template = template.replace(/_logo_/g, utils.extractFilename(config.get('application.logo')))
+          const fn = pug.compile(template)
+          const CSP = `img-src 'self' ${user?.profileImage}; script-src 'self' 'nonce-${Date.now()}'; http://ajax.googleapis.com`
+          challengeUtils.solveIf(challenges.usernameXssChallenge, () => { return user?.profileImage.match(/;[ ]*script-src(.)*'nonce-[0-9]+'/g) !== null && utils.contains(username, '<script>alert(`xss`)</script>') })
 import { type Request, type Response, type NextFunction } from 'express'
 import { challenges } from '../data/datacache'
 

@@ -1,9 +1,9 @@
-import fs from 'fs/promises'
-import path from 'path'
-import logger from './logger'
-
-export const SNIPPET_PATHS = Object.freeze(['./server.ts', './routes', './lib', './data', './data/static/web3-snippets', './frontend/src/app', './models'])
-
+const neutralLines = []
+        for (let i = 0; i < lines.length; i++) {
+          if (RegExp(`vuln-code-snippet vuln-line.*${challengeKey}`).test(lines[i])) {
+            vulnLines.push(i + 1)
+          } else if (RegExp(`vuln-code-snippet neutral-line.*${challengeKey}`).test(lines[i])) {
+            neutralLines.push(i + 1)
 interface FileMatch {
   path: string
   content: string

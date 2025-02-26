@@ -1,9 +1,9 @@
-doctype html
-html(lang='en')
-    head
-        title _title_
-        meta(charset='utf-8')
-        meta(name='description', content='')
+if (lines[i].indexOf('-->') >= 0) {
+            var splitted = lines[i].split(/-->\s+/);
+            if (splitted.length != 2) {
+            throw 'Error when splitting "-->": ' + lines[i];
+            }
+            // Already ignoring anything past the "end" timestamp (i.e. cue settings).
         meta(name='keywords', content='')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
         link(rel='icon', type='image/x-icon', href='./assets/public/_favicon_')
