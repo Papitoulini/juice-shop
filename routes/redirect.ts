@@ -25,9 +25,10 @@ module.exports = function performRedirect () {
 }
 
 function isUnintendedRedirect (toUrl: string) {
-  let unintended = true
   for (const allowedUrl of security.redirectAllowlist) {
-    unintended = unintended && !utils.startsWith(toUrl, allowedUrl)
+    if (utils.startsWith(toUrl, allowedUrl)) {
+      return false
+    }
   }
-  return unintended
+  return true
 }
