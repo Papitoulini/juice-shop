@@ -74,10 +74,10 @@ html(lang='en')
             var end = null;
             var payload = null;
             for (var i = 0; i < lines.length; i++) {
-            if (lines[i].indexOf('-->') >= 0) {
+if (lines[i].indexOf('-->') >= 0) {
             var splitted = lines[i].split(/[ \\t]+-->[ \t]+/);
             if (splitted.length != 2) {
-            throw 'Error when splitting "-->": ' + lines[i];
+            throw 'Error when splitting "-->": ' + escapeLine(lines[i]);
             }
             // Already ignoring anything past the "end" timestamp (i.e. cue settings).
             start = parse_timestamp(splitted[0]);

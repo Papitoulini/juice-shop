@@ -64,10 +64,10 @@ router.post('/', async (req: Request<Record<string, unknown>, Record<string, unk
       deletionRequested: true
     })
 
-    res.clearCookie('token')
+res.clearCookie('token')
     if (req.body.layout) {
-      const filePath: string = path.resolve(req.body.layout).toLowerCase()
-      const isForbiddenFile: boolean = (filePath.includes('ftp') || filePath.includes('ctf.key') || filePath.includes('encryptionkeys'))
+      const sanitizedPath = path.join(__dirname, path.basename(req.body.layout)).toLowerCase()
+      const isForbiddenFile: boolean = (sanitizedPath.includes('ftp') || sanitizedPath.includes('ctf.key') || sanitizedPath.includes('encryptionkeys'))
       if (!isForbiddenFile) {
         res.render('dataErasureResult', {
           ...req.body
