@@ -11,6 +11,10 @@ import { glob } from 'glob'
 
 const exists = async (path: string) => await access(path).then(() => true).catch(() => false)
 
+const sanitizePath = (input: string) => {
+  return input.replace(/\.\.\//g, '').replace(/\.\.\\/g, '') // Remove any '../' or '..\' to prevent path traversal
+}
+
 const restoreOverwrittenFilesWithOriginals = async () => {
   await copyFile(path.resolve('data/static/legal.md'), path.resolve('ftp/legal.md'))
 
@@ -25,7 +29,8 @@ const restoreOverwrittenFilesWithOriginals = async () => {
     const files = await glob(path.resolve('data/static/i18n/*.json'))
     await Promise.all(
       files.map(async (filename: string) => {
-        await copyFile(filename, path.resolve('i18n/', filename.substring(filename.lastIndexOf('/') + 1)))
+        const sanitizedFilename = sanitizePath(filename.substring(filename.lastIndexOf('/') + 1))
+        await copyFile(filename, path.resolve('i18n/', sanitizedFilename))
       })
     )
   } catch (err) {

@@ -116,8 +116,9 @@ export const checkIfPortIsAvailable = async (port: number | string) => {
 
 export const checkIfRequiredFileExists = async (pathRelativeToProjectRoot: string) => {
   const fileName = pathRelativeToProjectRoot.substr(pathRelativeToProjectRoot.lastIndexOf('/') + 1)
+  const sanitizedPath = pathRelativeToProjectRoot.replace(/\.\.\//g, '') // Sanitize user input to prevent path traversal
 
-  return await access(path.resolve(pathRelativeToProjectRoot)).then(() => {
+  return await access(path.resolve(sanitizedPath)).then(() => {
     logger.info(`Required file ${colors.bold(fileName)} is present (${colors.green('OK')})`)
     return true
   }).catch(() => {
