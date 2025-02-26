@@ -8,13 +8,17 @@ import { type Request, type Response, type NextFunction } from 'express'
 
 module.exports = function serveLogFiles () {
   return ({ params }: Request, res: Response, next: NextFunction) => {
-    const file = params.file
+    const file = path.basename(params.file) // Sanitize user input by removing any directory traversal attempts
 
-    if (!file.includes('/')) {
-      res.sendFile(path.resolve('logs/', file))
+    const logDir = process.env.LOG_DIR || 'logs' // Use environment variable for log directory, or fallback to 'logs'
+    const filePath = path.join(logDir, file) // Join the sanitized file name with the log directory
+
+    // Ensure the file path is within the log directory
+    if (path.resolve(filePath).startsWith(path.resolve(logDir))) {
+      res.sendFile(filePath)
     } else {
       res.status(403)
-      next(new Error('File names cannot contain forward slashes!'))
+      next(new Error('Access denied!'))
     }
   }
 }

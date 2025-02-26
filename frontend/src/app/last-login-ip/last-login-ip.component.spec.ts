@@ -47,13 +47,17 @@ describe('LastLoginIpComponent', () => {
   })
 
   xit('should set Last-Login IP from JWT as trusted HTML', () => { // FIXME Expected state seems to leak over from previous test case occasionally
-    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Imxhc3RMb2dpbklwIjoiMS4yLjMuNCJ9fQ.RAkmdqwNypuOxv3SDjPO4xMKvd1CddKvDFYDBfUt3bg')
+    const SECRET_KEY = process.env.SECRET_KEY // Replace with your secret key
+    const token = require('jsonwebtoken').sign({ data: { lastLoginIp: '1.2.3.4' } }, SECRET_KEY)
+    localStorage.setItem('token', token)
     component.ngOnInit()
     expect(sanitizer.bypassSecurityTrustHtml).toHaveBeenCalledWith('<small>1.2.3.4</small>')
   })
 
   xit('should not set Last-Login IP if none is present in JWT', () => { // FIXME Expected state seems to leak over from previous test case occasionally
-    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7fX0.bVBhvll6IaeR3aUdoOeyR8YZe2S2DfhGAxTGfd9enLw')
+    const SECRET_KEY = process.env.SECRET_KEY // Replace with your secret key
+    const token = require('jsonwebtoken').sign({ data: {} }, SECRET_KEY)
+    localStorage.setItem('token', token)
     component.ngOnInit()
     expect(sanitizer.bypassSecurityTrustHtml).not.toHaveBeenCalled()
   })
