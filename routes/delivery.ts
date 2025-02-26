@@ -5,8 +5,7 @@
 
 import { type Request, type Response, type NextFunction } from 'express'
 import { DeliveryModel } from '../models/delivery'
-
-const security = require('../lib/insecurity')
+import { security } from '../lib/insecurity'
 
 module.exports.getDeliveryMethods = function getDeliveryMethods () {
   return async (req: Request, res: Response, next: NextFunction) => {

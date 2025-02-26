@@ -4,8 +4,8 @@
  */
 
 import challengeUtils = require('../lib/challengeUtils')
-import { type Request, type Response, type NextFunction } from 'express'
-import { type Review } from '../data/types'
+import { Request, Response, NextFunction } from 'express'
+import { Review } from '../data/types'
 import * as db from '../data/mongodb'
 import { challenges } from '../data/datacache'
 
@@ -42,16 +42,16 @@ module.exports = function productReviews () {
                     { _id: id },
                     { $set: { likedBy } }
                   ).then(
-                    (result: any) => {
+                    (result) => {
                       res.json(result)
-                    }, (err: unknown) => {
+                    }, (err) => {
                       res.status(500).json(err)
                     })
                 }, () => {
                   res.status(400).json({ error: 'Wrong Params' })
                 })
               }, 150)
-            }, (err: unknown) => {
+            }, (err) => {
               res.status(500).json(err)
             })
         } else {

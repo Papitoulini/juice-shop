@@ -5,10 +5,9 @@
 
 import { type Request, type Response, type NextFunction } from 'express'
 import { BasketModel } from '../models/basket'
+import { security } from '../lib/insecurity'
 
-const security = require('../lib/insecurity')
-
-module.exports = function applyCoupon () {
+const applyCoupon = () => {
   return ({ params }: Request, res: Response, next: NextFunction) => {
     const id = params.id
     let coupon: string | undefined | null = params.coupon ? decodeURIComponent(params.coupon) : undefined
@@ -33,3 +32,5 @@ module.exports = function applyCoupon () {
     })
   }
 }
+
+export { applyCoupon }

@@ -34,7 +34,7 @@ describe('CodeFixesService', () => {
 
   it('should submit solution for "Fit It" phase of coding challenge via the rest api', inject([CodeFixesService, HttpTestingController],
     fakeAsync((service: CodeFixesService, httpMock: HttpTestingController) => {
-      let res: any
+      let res: object
       service.check('testChallenge', 1).subscribe((data) => (res = data))
       const req = httpMock.expectOne('http://localhost:3000/snippets/fixes')
       req.flush('apiResponse')

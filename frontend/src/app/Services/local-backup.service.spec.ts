@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
 import { inject, TestBed, waitForAsync } from '@angular/core/testing'
 
 import { LocalBackupService } from './local-backup.service'
@@ -14,14 +9,13 @@ import * as FileSaver from 'file-saver'
 import { ChallengeService } from './challenge.service'
 
 describe('LocalBackupService', () => {
-  let snackBar: any
-  let cookieService: any
-  let challengeService: any
+  let snackBar: MatSnackBar
+  let cookieService: CookieService
+  let challengeService: ChallengeService
 
   beforeEach(() => {
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
-    snackBar.open.and.returnValue(null)
-    challengeService = jasmine.createSpyObj('ChallengeService', ['restoreProgress', 'continueCode', 'continueCodeFindIt', 'continueCodeFixIt'])
+    snackBar = TestBed.inject(MatSnackBar)
+    challengeService = TestBed.inject(ChallengeService)
 
     TestBed.configureTestingModule({
       imports: [

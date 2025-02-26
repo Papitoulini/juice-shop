@@ -8,14 +8,14 @@ import { Observable, type Observer, of } from 'rxjs'
 
 export const mimeType = (
   control: AbstractControl
-): Promise<Record<string, any>> | Observable<Record<string, any>> => {
+): Promise<null | { invalidMimeType: boolean }> | Observable<null | { invalidMimeType: boolean }> => {
   if (typeof (control.value) === 'string') {
     return of(null)
   }
   const file = control.value as File
   const fileReader = new FileReader()
   const frObs = new Observable(
-    (observer: Observer<Record<string, any>>) => {
+    (observer: Observer<null | { invalidMimeType: boolean }>) => {
       fileReader.addEventListener('loadend', () => {
         const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4)
         let header = ''
