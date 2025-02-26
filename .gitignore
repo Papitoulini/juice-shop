@@ -35,6 +35,7 @@ frontend/src/**/*.js
 # IDEs
 .idea/
 .vscode/
+.a-thesis-stats/*
 out/
 *.eml
 *.iml
