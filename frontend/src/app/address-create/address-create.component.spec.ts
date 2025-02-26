@@ -24,9 +24,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'
 describe('AddressCreateComponent', () => {
   let component: AddressCreateComponent
   let fixture: ComponentFixture<AddressCreateComponent>
-  let addressService
+let addressService
   let translateService
-  let snackBar: any
+  let snackBar: MatSnackBar
 
   beforeEach(waitForAsync(() => {
     addressService = jasmine.createSpyObj('AddressService', ['getById', 'put', 'save'])

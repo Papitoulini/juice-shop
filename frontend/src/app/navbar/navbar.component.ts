@@ -52,7 +52,7 @@ library.add(faLanguage, faSearch, faSignInAlt, faSignOutAlt, faComment, faBomb, 
 })
 export class NavbarComponent implements OnInit {
   public userEmail: string = ''
-  public languages: any = []
+  public languages: string[] = []
   public selectedLanguage: string = 'placeholder'
   public version: string = ''
   public applicationName: string = 'OWASP Juice Shop'
@@ -71,16 +71,16 @@ export class NavbarComponent implements OnInit {
     private readonly snackBar: MatSnackBar, private readonly basketService: BasketService) { }
 
   ngOnInit () {
-    this.getLanguages()
+this.getLanguages()
     this.basketService.getItemTotal().subscribe(x => (this.itemTotal = x))
-    this.administrationService.getApplicationVersion().subscribe((version: any) => {
+    this.administrationService.getApplicationVersion().subscribe((version: string) => {
       if (version) {
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         this.version = `v${version}`
       }
-    }, (err) => { console.log(err) })
+}, (err) => { console.log(err) })
 
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
+    this.configurationService.getApplicationConfiguration().subscribe((config: ApplicationConfiguration) => {
       if (config?.application?.name) {
         this.applicationName = config.application.name
       }

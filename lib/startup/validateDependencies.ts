@@ -11,7 +11,7 @@ import dependencyChecker from 'check-dependencies'
 
 const validateDependencies = async ({ packageDir = '.', exitOnFailure = true } = {}) => {
   let success = true
-  let dependencies: any = {}
+  let dependencies: { [key: string]: { [key: string]: string } } = {}
   try {
     dependencies = await dependencyChecker({ packageDir, scopeList: ['dependencies'] })
   } catch (err) {

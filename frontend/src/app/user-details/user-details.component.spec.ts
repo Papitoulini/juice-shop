@@ -14,9 +14,9 @@ import { UserDetailsComponent } from './user-details.component'
 import { of, throwError } from 'rxjs'
 
 describe('UserDetailsComponent', () => {
-  let component: UserDetailsComponent
+let component: UserDetailsComponent
   let fixture: ComponentFixture<UserDetailsComponent>
-  let userService: any
+  let userService: jasmine.SpyObj<UserService>
 
   beforeEach(waitForAsync(() => {
     userService = jasmine.createSpyObj('UserService', ['get'])

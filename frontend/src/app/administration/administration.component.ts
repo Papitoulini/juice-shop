@@ -23,12 +23,12 @@ library.add(faUser, faEye, faHome, faArchive, faTrashAlt)
   styleUrls: ['./administration.component.scss']
 })
 export class AdministrationComponent implements OnInit {
-  public userDataSource: any
-  public userDataSourceHidden: any
+  public userDataSource: Array<any>
+public userDataSourceHidden: Array<any>
   public userColumns = ['user', 'email', 'user_detail']
-  public feedbackDataSource: any
+public feedbackDataSource: Array<{ user: string, comment: string, rating: number, remove?: Function }>
   public feedbackColumns = ['user', 'comment', 'rating', 'remove']
-  public error: any
+  public error: Error
   public resultsLengthUser = 0
   public resultsLengthFeedback = 0
   @ViewChild('paginatorUsers') paginatorUsers: MatPaginator
@@ -87,9 +87,9 @@ export class AdministrationComponent implements OnInit {
         id
       }
     })
-  }
+}
 
-  showFeedbackDetails (feedback: any, id: number) {
+  showFeedbackDetails (feedback: Feedback, id: number) {
     this.dialog.open(FeedbackDetailsComponent, {
       data: {
         feedback,

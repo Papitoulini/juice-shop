@@ -18,10 +18,10 @@ class ErrorWithParent extends Error {
 // vuln-code-snippet start unionSqlInjectionChallenge dbSchemaChallenge
 module.exports = function searchProducts () {
   return (req: Request, res: Response, next: NextFunction) => {
-    let criteria: any = req.query.q === 'undefined' ? '' : req.query.q ?? ''
-    criteria = (criteria.length <= 200) ? criteria : criteria.substring(0, 200)
-    models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE '%${criteria}%') AND deletedAt IS NULL) ORDER BY name`) // vuln-code-snippet vuln-line unionSqlInjectionChallenge dbSchemaChallenge
-      .then(([products]: any) => {
+    let criteria: string = req.query.q === 'undefined' ? '' : req.query.q ?? ''
+criteria = (criteria.length <= 200) ? criteria : criteria.substring(0, 200)
+    models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE '%${models.sequelize.escape(criteria)}%' OR description LIKE '%${models.sequelize.escape(criteria)}%') AND deletedAt IS NULL) ORDER BY name`)
+      .then(([products]: [Product[], unknown]) => {
         const dataString = JSON.stringify(products)
         if (challengeUtils.notSolved(challenges.unionSqlInjectionChallenge)) { // vuln-code-snippet hide-start
           let solved = true
@@ -42,9 +42,9 @@ module.exports = function searchProducts () {
             next(error)
           })
         }
-        if (challengeUtils.notSolved(challenges.dbSchemaChallenge)) {
+if (challengeUtils.notSolved(challenges.dbSchemaChallenge)) {
           let solved = true
-          void models.sequelize.query('SELECT sql FROM sqlite_master').then(([data]: any) => {
+          void models.sequelize.query('SELECT sql FROM sqlite_master').then(([data]: Array<any>) => {
             const tableDefinitions = utils.queryResultToJson(data)
             if (tableDefinitions.data?.length) {
               for (let i = 0; i < tableDefinitions.data.length; i++) {

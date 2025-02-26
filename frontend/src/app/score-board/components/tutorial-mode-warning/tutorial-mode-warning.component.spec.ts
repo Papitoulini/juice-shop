@@ -28,15 +28,15 @@ describe('TutorialModeWarningComponent', () => {
         name: 'my name two',
         description: 'lorem ipsum',
         tutorialOrder: null,
-        solved: false
+solved: false
       }
-    ] as any
+    ] as Array<{ solved: boolean }>
 
     component.applicationConfig = {
       challenges: {
-        restrictToTutorialsFirst: true
-      }
-    } as any
+restrictToTutorialsFirst: true
+      },
+    } as { restrictToTutorialsFirst: boolean }
 
     fixture.detectChanges()
   })
@@ -49,9 +49,9 @@ describe('TutorialModeWarningComponent', () => {
   it('not show if tutorial is not configured', () => {
     component.applicationConfig = {
       challenges: {
-        restrictToTutorialsFirst: false
+restrictToTutorialsFirst: false
       }
-    } as any
+    } as { restrictToTutorialsFirst: boolean }
     component.ngOnChanges()
     expect(component.tutorialModeActive).toBe(false)
   })
@@ -69,9 +69,9 @@ describe('TutorialModeWarningComponent', () => {
         name: 'my name two',
         description: 'lorem ipsum',
         tutorialOrder: null,
-        solved: false
+solved: false
       }
-    ] as any
+    ] as any[] // Replace 'any' with the appropriate type
     component.ngOnChanges()
     expect(component.tutorialModeActive).toBe(false)
   })

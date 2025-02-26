@@ -23,22 +23,22 @@ import { MatIconModule } from '@angular/material/icon'
 class MockSocket {
   on (str: string, callback: any) {
     callback()
-  }
+}
 
-  emit (a: any, b: any) {
-    return null
-  }
+  // emit () {
+  //   return null
+  // }
 }
 
 describe('ChallengeSolvedNotificationComponent', () => {
-  let component: ChallengeSolvedNotificationComponent
-  let fixture: ComponentFixture<ChallengeSolvedNotificationComponent>
-  let socketIoService: any
-  let translateService: any
-  let cookieService: any
-  let challengeService: any
-  let configurationService: any
-  let mockSocket: any
+let component: ChallengeSolvedNotificationComponent
+let fixture: ComponentFixture<ChallengeSolvedNotificationComponent>
+let socketIoService: SocketIoService
+  let translateService: TranslateService
+let cookieService: CookieService
+let challengeService: ChallengeService
+  let configurationService: ConfigurationService | undefined
+  let mockSocket: WebSocket | undefined
 
   beforeEach(waitForAsync(() => {
     mockSocket = new MockSocket()

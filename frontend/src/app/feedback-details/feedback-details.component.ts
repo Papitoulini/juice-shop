@@ -12,9 +12,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
   styleUrls: ['./feedback-details.component.scss']
 })
 export class FeedbackDetailsComponent implements OnInit {
-  public feedback: any
-  public id: any
-  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: any) { }
+public feedback: any // Replace with a specific type or interface
+  public id: string
+  constructor (@Inject(MAT_DIALOG_DATA) public dialogData: { feedback: any }) { } // Replace 'any' with a specific type or interface
 
   ngOnInit () {
     this.feedback = this.dialogData.feedback

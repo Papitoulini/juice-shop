@@ -13,9 +13,9 @@ import { PrivacyPolicyComponent } from './privacy-policy.component'
 import { of } from 'rxjs'
 
 describe('PrivacyPolicyComponent', () => {
-  let component: PrivacyPolicyComponent
+let component: PrivacyPolicyComponent
   let fixture: ComponentFixture<PrivacyPolicyComponent>
-  let configurationService: any
+  let configurationService: ConfigurationService
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])

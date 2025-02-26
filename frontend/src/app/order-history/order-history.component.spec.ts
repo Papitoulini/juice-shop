@@ -29,9 +29,9 @@ import { MatExpansionModule } from '@angular/material/expansion'
 describe('AccountingComponent', () => {
   let component: OrderHistoryComponent
   let fixture: ComponentFixture<OrderHistoryComponent>
-  let productService
+let productService
   let orderHistoryService
-  let dialog: any
+  let dialog: MatDialog
 
   beforeEach(waitForAsync(() => {
     dialog = jasmine.createSpyObj('MatDialog', ['open'])

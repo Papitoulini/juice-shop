@@ -22,12 +22,12 @@ library.add(faTwitter)
 })
 export class OrderCompletionComponent implements OnInit {
   public tableColumns = ['product', 'price', 'quantity', 'total price']
-  public dataSource
+public dataSource
   public orderId: string
-  public orderDetails: any = { totalPrice: 0 }
-  public deliveryPrice = 0
+  public orderDetails: { totalPrice: number }  = { totalPrice: 0 }
+public deliveryPrice = 0
   public promotionalDiscount = 0
-  public address: any
+  public address: Address
   public tweetText: string = 'I just purchased'
 
   constructor (private readonly configurationService: ConfigurationService, private readonly addressService: AddressService, private readonly trackOrderService: TrackOrderService, public activatedRoute: ActivatedRoute, private readonly basketService: BasketService) { }

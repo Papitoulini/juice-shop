@@ -23,10 +23,10 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 describe('ForgotPasswordComponent', () => {
-  let component: ForgotPasswordComponent
-  let fixture: ComponentFixture<ForgotPasswordComponent>
-  let securityQuestionService: any
-  let userService: any
+let component: ForgotPasswordComponent
+let fixture: ComponentFixture<ForgotPasswordComponent>
+  let securityQuestionService: jasmine.SpyObj<SecurityQuestionService>
+  let userService: UserService
 
   beforeEach(waitForAsync(() => {
     securityQuestionService = jasmine.createSpyObj('SecurityQuestionService', ['findBy'])
