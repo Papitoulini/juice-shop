@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     private readonly ngZone: NgZone) { }
 
   ngOnInit () {
-    this.securityQuestionService.find(null).subscribe((securityQuestions: any) => {
+    this.securityQuestionService.find(null).subscribe((securityQuestions: SecurityQuestion[]) => {
       this.securityQuestions = securityQuestions
     }, (err) => { console.log(err) })
 

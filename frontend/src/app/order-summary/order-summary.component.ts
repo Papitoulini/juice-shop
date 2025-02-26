@@ -10,6 +10,8 @@ import { BasketService } from '../Services/basket.service'
 import { Router } from '@angular/router'
 import { DeliveryService } from '../Services/delivery.service'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
+import { Address } from '../Models/address.model'
+import { PaymentMethod } from '../Models/payment-method.model'
 
 @Component({
   selector: 'app-order-summary',
@@ -21,8 +23,8 @@ export class OrderSummaryComponent implements OnInit {
   public itemTotal = 0
   public deliveryPrice = 0
   public promotionalDiscount = 0
-  public address: any
-  public paymentMethod: any
+  public address: Address
+  public paymentMethod: PaymentMethod | 'wallet'
   constructor (private readonly router: Router, private readonly addressService: AddressService, private readonly paymentService: PaymentService, private readonly basketService: BasketService, private readonly deliveryService: DeliveryService, private readonly ngZone: NgZone, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {

@@ -23,10 +23,10 @@ library.add(faUser, faEye, faHome, faArchive, faTrashAlt)
   styleUrls: ['./administration.component.scss']
 })
 export class AdministrationComponent implements OnInit {
-  public userDataSource: any
-  public userDataSourceHidden: any
+  public userDataSource: MatTableDataSource<{ email: string; lastLoginTime: number }>
+  public userDataSourceHidden: { email: string; lastLoginTime: number }[]
   public userColumns = ['user', 'email', 'user_detail']
-  public feedbackDataSource: any
+  public feedbackDataSource: MatTableDataSource<{ comment: string }>
   public feedbackColumns = ['user', 'comment', 'rating', 'remove']
   public error: any
   public resultsLengthUser = 0
@@ -60,7 +60,7 @@ export class AdministrationComponent implements OnInit {
   findAllFeedbacks () {
     this.feedbackService.find().subscribe((feedbacks) => {
       this.feedbackDataSource = feedbacks
-      for (const feedback of this.feedbackDataSource) {
+      for (const feedback of this.feedbackDataSource.data) {
         feedback.comment = this.sanitizer.bypassSecurityTrustHtml(feedback.comment)
       }
       this.feedbackDataSource = new MatTableDataSource(this.feedbackDataSource)

@@ -32,6 +32,6 @@ export class CodeSnippetService {
   }
 
   challenges (): Observable<string[]> {
-    return this.http.get(`${this.host}`).pipe(map((response: any) => response.challenges), catchError((err) => { throw err }))
+    return this.http.get<string[]>(`${this.host}`).pipe(catchError((err) => { throw err }))
   }
 }

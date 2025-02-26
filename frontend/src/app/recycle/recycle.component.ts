@@ -30,11 +30,11 @@ export class RecycleComponent implements OnInit {
   public pickup: UntypedFormControl = new UntypedFormControl(false)
   public topImage?: string
   public bottomImage?: string
-  public recycles: any
-  public recycle: any = {}
-  public userEmail: any
+  public recycles: RecycleData[]
+  public recycle: RecycleData = {}
+  public userEmail: string
   public confirmation: any
-  public addressId: any = undefined
+  public addressId: number | undefined = undefined
   constructor (private readonly recycleService: RecycleService, private readonly userService: UserService,
     private readonly configurationService: ConfigurationService, private readonly formSubmitService: FormSubmitService,
     private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
@@ -72,7 +72,7 @@ export class RecycleComponent implements OnInit {
       this.recycle.date = this.pickUpDateControl.value
     }
 
-    this.recycleService.save(this.recycle).subscribe((savedRecycle: any) => {
+    this.recycleService.save(this.recycle).subscribe((savedRecycle: RecycleData) => {
       if (savedRecycle.isPickup) {
         this.translate.get('CONFIRM_RECYCLING_PICKUP', { pickupdate: savedRecycle.pickupDate }).subscribe((confirmRecyclingPickup) => {
           this.snackBarHelperService.open(confirmRecyclingPickup, 'confirmBar')
@@ -114,7 +114,16 @@ export class RecycleComponent implements OnInit {
     this.pickup.setValue(false)
   }
 
-  getMessage (id) {
+  getMessage (id: number) {
     this.addressId = id
   }
+}
+
+interface RecycleData {
+  UserId?: number
+  AddressId?: number
+  quantity?: number
+  isPickUp?: boolean
+  date?: Date
+  pickupDate?: string
 }
