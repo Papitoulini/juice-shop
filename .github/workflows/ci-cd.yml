@@ -46,9 +46,3 @@ jobs:
         run: |
           docker stop juice-shop-container
           docker rm juice-shop-container
-
-      - name: Upload ZAP report artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: zapscan
-          path: report_html.html
