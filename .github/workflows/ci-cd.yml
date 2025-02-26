@@ -50,5 +50,5 @@ jobs:
       - name: Upload ZAP report artifact
         uses: actions/upload-artifact@v4
         with:
-          name: zap-scan
-          path: zap-report.html
+          name: zapScan
+          path: zapReport.html
