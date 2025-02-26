@@ -9,7 +9,7 @@ import logger from '../logger'
 import { copyFile, access } from 'fs/promises'
 import { glob } from 'glob'
 
-const exists = async (path: string) => await access(path).then(() => true).catch(() => false)
+const exists = async (filePath: string) => await access(filePath).then(() => true).catch(() => false)
 
 const restoreOverwrittenFilesWithOriginals = async () => {
   await copyFile(path.resolve('data/static/legal.md'), path.resolve('ftp/legal.md'))
