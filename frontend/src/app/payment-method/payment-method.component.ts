@@ -55,7 +55,7 @@ export class PaymentMethodComponent implements OnInit {
 
   load () {
     this.paymentService.get().subscribe((cards) => {
-      this.cardsExist = cards.length
+      this.cardsExist = !!cards.length
       this.storedCards = cards
       this.dataSource = new MatTableDataSource<Element>(this.storedCards)
     }, (err) => { console.log(err) })

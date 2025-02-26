@@ -14,7 +14,7 @@ export class KeysService {
 
   nftUnlocked () {
     return this.http.get(this.host + '/nftUnlocked').pipe(
-      map((response: any) => response),
+      map((response: { unlocked: boolean, status: string }) => response),
       catchError((err) => {
         throw err
       })
@@ -23,7 +23,7 @@ export class KeysService {
 
   nftMintListen () {
     return this.http.get(this.host + '/nftMintListen').pipe(
-      map((response: any) => response),
+      map((response: { mintStatus: boolean }) => response),
       catchError((err) => {
         throw err
       })
@@ -32,7 +32,7 @@ export class KeysService {
 
   checkNftMinted () {
     return this.http.get(this.hostServer + '/api/Challenges/?key=nftMintChallenge').pipe(
-      map((response: any) => response),
+      map((response: { minted: boolean, data: object }) => response),
       catchError((err) => {
         throw err
       })
@@ -43,7 +43,7 @@ export class KeysService {
     const endpoint = this.host + '/submitKey'
     const params = { privateKey }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: { success: boolean, message: string }) => response),
       catchError((err) => {
         throw err
       })
@@ -54,7 +54,7 @@ export class KeysService {
     const endpoint = this.host + '/walletNFTVerify'
     const params = { walletAddress }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: { verified: boolean, success: boolean, status: string }) => response),
       catchError((err) => {
         throw err
       })
@@ -65,7 +65,7 @@ export class KeysService {
     const endpoint = this.host + '/walletExploitAddress'
     const params = { walletAddress }
     return this.http.post(endpoint, params).pipe(
-      map((response: any) => response),
+      map((response: { sent: boolean, success: boolean, address: string, status: string }) => response),
       catchError((err) => {
         throw err
       })

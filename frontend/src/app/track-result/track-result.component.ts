@@ -20,6 +20,16 @@ export enum Status {
   Delivered
 }
 
+interface OrderResult {
+  orderNo: string;
+  email: string;
+  totalPrice: number;
+  products: { product: string; price: number; quantity: number; total: number }[];
+  eta: string | number;
+  bonus: number;
+}
+
+
 @Component({
   selector: 'app-track-result',
   templateUrl: './track-result.component.html',
@@ -29,7 +39,7 @@ export class TrackResultComponent implements OnInit {
   public displayedColumns = ['product', 'price', 'quantity', 'total price']
   public dataSource = new MatTableDataSource()
   public orderId?: string
-  public results: any = {}
+  public results: any
   public status: Status = Status.New
   public Status = Status
   constructor (private readonly route: ActivatedRoute, private readonly trackOrderService: TrackOrderService, private readonly sanitizer: DomSanitizer) {}
