@@ -1,12 +1,12 @@
 import { type NextFunction, type Request, type Response } from 'express'
 import * as accuracy from '../lib/accuracy'
+TypeScript
+TypeScript
+const challengeUtils = require('../lib/challengeUtils');
+const fs = require('fs');
+const yaml = require('js-yaml');
 
-const challengeUtils = require('../lib/challengeUtils')
-const fs = require('fs')
-const yaml = require('js-yaml')
-
-const FixesDir = 'data/static/codefixes'
-
+const FixesDir = 'data/static/codefixes';
 interface codeFix {
   fixes: string[]
   correct: number
@@ -64,12 +64,12 @@ export const serveCodeFixes = () => (req: Request<FixesRequestParams, Record<str
   res.status(200).json({
     fixes: fixData.fixes
   })
+TypeScript
 }
 
 export const checkCorrectFix = () => async (req: Request<Record<string, unknown>, Record<string, unknown>, VerdictRequestBody>, res: Response, next: NextFunction) => {
-  const key = req.body.key
-  const selectedFix = req.body.selectedFix
-  const fixData = readFixes(key)
+  const { key, selectedFix } = req.body;
+  const fixData = readFixes(key);
   if (fixData.fixes.length === 0) {
     res.status(404).json({
       error: 'No fixes found for the snippet!'

@@ -20,47 +20,47 @@ interface OrderDetail {
 })
 export class BasketService {
   public hostServer = environment.hostServer
-  public itemTotal = new Subject<any>()
+  public itemTotal = new Subject<string>()
   private readonly host = this.hostServer + '/api/BasketItems'
 
-  constructor (private readonly http: HttpClient) { }
-
-  find (id?: number) {
-    return this.http.get(`${this.hostServer}/rest/basket/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+  constructor(private readonly http: HttpClient) { }
+TypeScript
+  find(id?: number) {
+    return this.http.get(`${this.hostServer}/rest/basket/${id}`).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
-
-  get (id: number) {
+TypeScript
+  get(id: number) {
     return this.http.get(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+TypeScript
   }
 
-  put (id: number, params: any) {
+  put(id: number, params: { [key: string]: string | number }) {
     return this.http.put(`${this.host}/${id}`, params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
   }
-
   del (id: number) {
     return this.http.delete(`${this.host}/${id}`).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+{
   }
 
-  save (params?: any) {
-    return this.http.post(this.host + '/', params).pipe(map((response: any) => response.data), catchError((error) => { throw error }))
+  save (params?: { [key: string]: any }) {
+    return this.http.post(this.host + '/', params).pipe(map((response: { data: any }) => response.data), catchError((error) => { throw error }))
   }
-
   checkout (id?: number, couponData?: string, orderDetails?: OrderDetail) {
     return this.http.post(`${this.hostServer}/rest/basket/${id}/checkout`, { couponData, orderDetails }).pipe(map((response: any) => response.orderConfirmation), catchError((error) => { throw error }))
   }
+TypeScript
+applyCoupon (id?: number, coupon?: string) {
+  return this.http.put(`${this.hostServer}/rest/basket/${id}/coupon/${coupon}`, {}).pipe(map((response: { discount: number }) => response.discount), catchError((error) => { throw error }))
+}
 
-  applyCoupon (id?: number, coupon?: string) {
-    return this.http.put(`${this.hostServer}/rest/basket/${id}/coupon/${coupon}`, {}).pipe(map((response: any) => response.discount), catchError((error) => { throw error }))
-  }
-
-  updateNumberOfCartItems () {
+updateNumberOfCartItems ()
     this.find(parseInt(sessionStorage.getItem('bid'), 10)).subscribe((basket) => {
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       this.itemTotal.next(basket.Products.reduce((itemTotal, product) => itemTotal + product.BasketItem.quantity, 0))
     }, (err) => { console.log(err) })
+TypeScript
   }
 
-  getItemTotal (): Observable<any> {
+  getItemTotal (): Observable<number> {
     return this.itemTotal.asObservable()
   }
-}

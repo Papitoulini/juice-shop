@@ -60,12 +60,12 @@ export class RegisterComponent implements OnInit {
       passwordRepeat: this.repeatPasswordControl.value,
       securityQuestion: this.securityQuestions.find((question) => question.id === this.securityQuestionControl.value),
       securityAnswer: this.securityAnswerControl.value
-    }
-
-    this.userService.save(user).subscribe((response: any) => {
-      this.securityAnswerService.save({
-        UserId: response.id,
-        answer: this.securityAnswerControl.value,
+this.userService.save(user).subscribe((response: { id: number }) => {
+          this.securityAnswerService.save({
+            UserId: response.id,
+            answer: this.securityAnswerControl.value,
+         });
+         });
         SecurityQuestionId: this.securityQuestionControl.value
       }).subscribe(() => {
         this.ngZone.run(async () => await this.router.navigate(['/login']))

@@ -18,12 +18,12 @@ export async function productPrice (query: string, user: string) {
     action: 'response',
     body: queriedProducts.length > 0 ? queriedProducts.join(', ') : 'Sorry I couldn\'t find any products with that name'
   }
-}
-
-export function couponCode (query: string, user: string) {
-  challengeUtils.solveIf(challenges.bullyChatbotChallenge, () => { return true })
+export function couponCode(query: string, user: string) {
+  challengeUtils.solveIf(challenges.bullyChatbotChallenge, () => { return true; });
   return {
     action: 'response',
+  };
+}
     body: `Oooookay, if you promise to stop nagging me here's a 10% coupon code for you: ${security.generateCoupon(10)}`
   }
 }

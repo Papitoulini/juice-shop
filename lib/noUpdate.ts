@@ -8,12 +8,12 @@ interface ExtendedValidationOptions extends ValidationOptions {
   validate: boolean
 }
 
+TypeScript
 interface ExtendedModel extends Model {
-  _changed: Iterable<string> | ArrayLike<string>
-  rawAttributes: Record<string, any>
+  _changed: Iterable<string> | Array<string>
+  rawAttributes: Record<string, string>
   _previousDataValues: Record<string, null>
 }
-
 export const makeKeyNonUpdatable = (model: Model, column: string) => {
   model.addHook('beforeValidate', (instance: ExtendedModel, options: ExtendedValidationOptions) => {
     if (!options.validate) return
@@ -28,9 +28,9 @@ export const makeKeyNonUpdatable = (model: Model, column: string) => {
 
     if (changedKeys.length === 0) return
 
-    const validationErrors: ValidationErrorItemType[] = []
+const validationErrors: ValidationErrorItemType[] = []
 
-    changedKeys.forEach((fieldName: any) => {
+    changedKeys.forEach((fieldName: ValidationErrorItemType) => {
       const fieldDefinition = instance.rawAttributes[fieldName]
 
       if (

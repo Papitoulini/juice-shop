@@ -15,15 +15,15 @@ export class SecurityQuestionService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/api/SecurityQuestions'
 
-  constructor (private readonly http: HttpClient) { }
+TypeScript
+constructor(private readonly http: HttpClient) { }
 
-  find (params: any) {
-    return this.http.get(this.host + '/', { params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
-  }
-
-  findBy (email: string) {
+         find(params: { [key: string]: string }) {
+           return this.http.get(this.host + '/', { params }).pipe(map((response: any) => response.data), catchError((err) => { throw err }))
+         }
+findBy(email: string) {
     return this.http.get(this.hostServer + '/' + 'rest/user/security-question?email=' + email).pipe(
-      map((response: any) => response.question),
+      map((response: { question: string }) => response.question),
       catchError((error) => { throw error })
     )
   }

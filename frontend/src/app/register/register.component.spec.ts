@@ -29,14 +29,14 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 describe('RegisterComponent', () => {
-  let component: RegisterComponent
-  let fixture: ComponentFixture<RegisterComponent>
-  let securityAnswerService: any
-  let securityQuestionService: any
-  let userService: any
-  let location: Location
+let component: RegisterComponent
+let fixture: ComponentFixture<RegisterComponent>
+let securityAnswerService: SecurityAnswerService;
+let securityQuestionService: SecurityQuestionService;
+let userService: UserService;
+let location: Location;
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     securityAnswerService = jasmine.createSpyObj('SecurityAnswerService', ['save'])
     securityAnswerService.save.and.returnValue(of({}))
     securityQuestionService = jasmine.createSpyObj('SecurityQuestionService', ['find'])

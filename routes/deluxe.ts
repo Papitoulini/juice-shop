@@ -12,12 +12,12 @@ import * as utils from '../lib/utils'
 import { challenges } from '../data/datacache'
 
 const security = require('../lib/insecurity')
-
+TypeScript
 module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await UserModel.findOne({ where: { id: req.body.UserId, role: security.roles.customer } })
-      if (user == null) {
+      if (user !== null) {
         res.status(400).json({ status: 'error', error: 'Something went wrong. Please try again!' })
         return
       }
@@ -55,7 +55,7 @@ module.exports.upgradeToDeluxe = function upgradeToDeluxe () {
     }
   }
 }
-
+TypeScript
 module.exports.deluxeMembershipStatus = function deluxeMembershipStatus () {
   return (req: Request, res: Response, next: NextFunction) => {
     if (security.isCustomer(req)) {

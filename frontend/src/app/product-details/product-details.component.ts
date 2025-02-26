@@ -24,12 +24,12 @@ library.add(faPaperPlane, faArrowCircleLeft, faUserEdit, faThumbsUp, faCrown)
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  public author: string = 'Anonymous'
-  public reviews$: any
-  public userSubscription: any
-  public reviewControl: UntypedFormControl = new UntypedFormControl('', [Validators.maxLength(160)])
-  constructor (private readonly dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: { productData: Product }, private readonly productReviewService: ProductReviewService,
+public author: string = 'Anonymous';
+public reviews$: Observable<string[]>;
+public userSubscription: Subscription;
+public reviewControl: FormControl = new FormControl('', [Validators.maxLength(160)]);
+constructor(private readonly dialog: MatDialog,
+  @Inject(MAT_DIALOG_DATA) public data: { productData: Product }, private readonly productReviewService: ProductReviewService,
     private readonly userService: UserService, private readonly snackBar: MatSnackBar, private readonly snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {

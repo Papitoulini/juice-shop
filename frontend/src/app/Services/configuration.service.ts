@@ -65,9 +65,9 @@ export interface Config {
       name: string
       overlayMap: string
     }
-    googleOauth: {
+googleOauth: {
       clientId: string
-      authorizedRedirects: any[]
+      authorizedRedirects: string[]
     }
   }
   challenges: {
@@ -87,22 +87,22 @@ export interface Config {
   products: any[]
   memories: any[]
   ctf: {
+TypeScript
     showFlagsInNotifications: boolean
     showCountryDetailsInNotifications: string
-    countryMapping: any[]
+    countryMapping: string[]  // Changed 'any' to 'string[]'
   }
 }
-
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigurationService {
-  private readonly hostServer = environment.hostServer
-  private readonly host = this.hostServer + '/rest/admin'
-  private configObservable: any
-  constructor (private readonly http: HttpClient) { }
+private readonly hostServer = environment.hostServer
+         private readonly host = this.hostServer + '/rest/admin'
+         private configObservable: Config | undefined
+         constructor (private readonly http: HttpClient) { }
 
-  getApplicationConfiguration (): Observable<Config> {
+         getApplicationConfiguration (): Observable<Config> {
     if (this.configObservable) {
       return this.configObservable
     } else {

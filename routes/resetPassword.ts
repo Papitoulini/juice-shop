@@ -10,11 +10,11 @@ import { SecurityAnswerModel } from '../models/securityAnswer'
 import { UserModel } from '../models/user'
 import { challenges } from '../data/datacache'
 
-import challengeUtils = require('../lib/challengeUtils')
-const users = require('../data/datacache').users
-const security = require('../lib/insecurity')
+import { challengeUtils } from '../lib/challengeUtils';
+import { users } from '../data/datacache';
+import { security } from '../lib/insecurity';
 
-module.exports = function resetPassword () {
+module.exports = function resetPassword() {
   return ({ body, connection }: Request, res: Response, next: NextFunction) => {
     const email = body.email
     const answer = body.answer

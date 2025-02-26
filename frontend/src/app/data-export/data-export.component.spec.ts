@@ -22,12 +22,12 @@ import { MatButtonModule } from '@angular/material/button'
 
 describe('DataExportComponent', () => {
   let component: DataExportComponent
-  let fixture: ComponentFixture<DataExportComponent>
-  let imageCaptchaService: any
-  let dataSubjectService: any
-  let domSanitizer: DomSanitizer
+let fixture: ComponentFixture<DataExportComponent>
+         let imageCaptchaService: ImageCaptchaService
+         let dataSubjectService: DataSubjectService
+         let domSanitizer: DomSanitizer
 
-  beforeEach(waitForAsync(() => {
+         beforeEach(waitForAsync(() => {
     imageCaptchaService = jasmine.createSpyObj('ImageCaptchaService', ['getCaptcha'])
     imageCaptchaService.getCaptcha.and.returnValue(of({}))
     dataSubjectService = jasmine.createSpyObj('DataSubjectService', ['dataExport'])

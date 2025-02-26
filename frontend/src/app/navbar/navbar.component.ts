@@ -52,7 +52,7 @@ library.add(faLanguage, faSearch, faSignInAlt, faSignOutAlt, faComment, faBomb, 
 })
 export class NavbarComponent implements OnInit {
   public userEmail: string = ''
-  public languages: any = []
+  public languages: string[] = []
   public selectedLanguage: string = 'placeholder'
   public version: string = ''
   public applicationName: string = 'OWASP Juice Shop'
@@ -71,19 +71,19 @@ export class NavbarComponent implements OnInit {
     private readonly snackBar: MatSnackBar, private readonly basketService: BasketService) { }
 
   ngOnInit () {
-    this.getLanguages()
-    this.basketService.getItemTotal().subscribe(x => (this.itemTotal = x))
-    this.administrationService.getApplicationVersion().subscribe((version: any) => {
-      if (version) {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        this.version = `v${version}`
+TypeScript
+this.getLanguages()
+this.basketService.getItemTotal().subscribe(x => (this.itemTotal = x))
+this.administrationService.getApplicationVersion().subscribe((version: string) => {
+  if (version) {
+    this.version = `v${version}`
       }
-    }, (err) => { console.log(err) })
-
-    this.configurationService.getApplicationConfiguration().subscribe((config: any) => {
-      if (config?.application?.name) {
-        this.applicationName = config.application.name
-      }
+TypeScript
+this.configurationService.getApplicationConfiguration().subscribe((config: { application: { name: string } }) => {
+  if (config?.application?.name) {
+    this.applicationName = config.application.name
+  }
+}, (err) => { console.log(err) })
       if (config?.application) {
         this.showGitHubLink = config.application.showGitHubLinks
       }
@@ -144,9 +144,9 @@ export class NavbarComponent implements OnInit {
       this.ngZone.run(async () => await this.router.navigate(['/search']))
     }
   }
-
+TypeScript
   getUserDetails () {
-    this.userService.whoAmI().subscribe((user: any) => {
+    this.userService.whoAmI().subscribe((user: { email: string }) => {
       this.userEmail = user.email
     }, (err) => { console.log(err) })
   }
@@ -154,9 +154,9 @@ export class NavbarComponent implements OnInit {
   isLoggedIn () {
     return localStorage.getItem('token')
   }
-
-  logout () {
-    this.userService.saveLastLoginIp().subscribe((user: any) => { this.noop() }, (err) => { console.log(err) })
+TypeScript
+logout () {
+    this.userService.saveLastLoginIp().subscribe((user: {id: number, username: string}) => { this.noop() }, (err) => { console.log(err) })
     localStorage.removeItem('token')
     this.cookieService.remove('token')
     sessionStorage.removeItem('bid')

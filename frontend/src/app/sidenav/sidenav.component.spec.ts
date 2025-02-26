@@ -24,25 +24,25 @@ import { roles } from '../roles'
 import { AdministrationService } from '../Services/administration.service'
 import { UserService } from '../Services/user.service'
 import { Location } from '@angular/common'
-
+TypeScript
 class MockSocket {
-  on (str: string, callback: any) {
+  on (str: string, callback: (str: string) => void) {
     callback(str)
   }
 }
 
 describe('SidenavComponent', () => {
-  let component: SidenavComponent
-  let fixture: ComponentFixture<SidenavComponent>
-  let challengeService: any
-  let cookieService: any
-  let configurationService: any
-  let userService: any
-  let administractionService: any
-  let mockSocket: any
-  let socketIoService: any
-  let loginGuard
-  let location: Location
+let component: SidenavComponent;
+let fixture: ComponentFixture<SidenavComponent>;
+let challengeService: ChallengeService;
+let cookieService: CookieService;
+let configurationService: ConfigurationService;
+let userService: UserService;
+let administrationService: AdministrationService;
+let mockSocket: SocketIOClient.Socket;
+let socketIoService: SocketIoService;
+let loginGuard: LoginGuard;
+let location: Location;
 
   beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])

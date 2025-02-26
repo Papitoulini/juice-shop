@@ -7,14 +7,14 @@ import path from 'path'
 import { SecurityAnswerModel } from '../models/securityAnswer'
 import { UserModel } from '../models/user'
 import { SecurityQuestionModel } from '../models/securityQuestion'
-import { PrivacyRequestModel } from '../models/privacyRequests'
-import { challenges } from '../data/datacache'
-const insecurity = require('../lib/insecurity')
+import { PrivacyRequestModel } from '../models/privacyRequests';
+import { challenges } from '../data/datacache';
+import { insecurity } from '../lib/insecurity';
+import challengeUtils from '../lib/challengeUtils';
 
-const challengeUtils = require('../lib/challengeUtils')
-const router = express.Router()
+const router = express.Router();
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
+import { promise } from 'express';
 router.get('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const loggedInUser = insecurity.authenticatedUsers.get(req.cookies.token)
   if (!loggedInUser) {

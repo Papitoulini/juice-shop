@@ -15,18 +15,18 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { of } from 'rxjs'
 
 describe('TrackResultComponent', () => {
-  let component: TrackResultComponent
-  let fixture: ComponentFixture<TrackResultComponent>
-  let trackOrderService: any
-  let sanitizer: any
+let component: TrackResultComponent
+let fixture: ComponentFixture<TrackResultComponent>;
+let trackOrderService: TrackOrderService;
+let sanitizer: DomSanitizer;
 
-  beforeEach(waitForAsync(() => {
-    trackOrderService = jasmine.createSpyObj('TrackOrderService', ['find'])
-    trackOrderService.find.and.returnValue(of({ data: [{ }] }))
+beforeEach(waitForAsync(() => {
+    trackOrderService = jasmine.createSpyObj('TrackOrderService', ['find']);
+TypeScript
+    trackOrderService.find.and.returnValue(of({ data: [{ id: '1', name: 'Test' }] }))
     sanitizer = jasmine.createSpyObj('DomSanitizer', ['bypassSecurityTrustHtml', 'sanitize'])
-    sanitizer.bypassSecurityTrustHtml.and.callFake((args: any) => args)
+    sanitizer.bypassSecurityTrustHtml.and.callFake((args: string) => args)
     sanitizer.sanitize.and.returnValue({})
-
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot(),

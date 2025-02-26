@@ -29,14 +29,14 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { EventEmitter } from '@angular/core'
 
 describe('PhotoWallComponent', () => {
-  let component: PhotoWallComponent
-  let fixture: ComponentFixture<PhotoWallComponent>
-  let photoWallService: any
-  let configurationService: any
-  let snackBar: any
-  let translateService
+let component: PhotoWallComponent
+         let fixture: ComponentFixture<PhotoWallComponent>
+let photoWallService: PhotoWallService;
+let configurationService: ConfigurationService;
+let snackBar: import('@angular/material/snack-bar').MatSnackBar;
+let translateService: TranslateService;
 
-  beforeEach(waitForAsync(() => {
+beforeEach(waitForAsync(() => {
     configurationService = jasmine.createSpyObj('ConfigurationService', ['getApplicationConfiguration'])
     configurationService.getApplicationConfiguration.and.returnValue(of({}))
     photoWallService = jasmine.createSpyObj('PhotoWallService', ['get', 'addMemory'])

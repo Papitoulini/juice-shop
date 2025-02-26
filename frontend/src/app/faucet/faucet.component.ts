@@ -136,12 +136,12 @@ export class FaucetComponent {
     } catch (error) {
       console.error('Error fetching BEE balance:', error)
     }
+TypeScript
   }
 
-  async handleChainChanged (chainId: string) {
+  async handleChainChanged(chainId: string) {
     await this.handleAuth()
   }
-
   async handleAuth () {
     try {
       const { isConnected } = getAccount()

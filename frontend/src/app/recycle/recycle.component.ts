@@ -28,14 +28,14 @@ export class RecycleComponent implements OnInit {
   public recycleQuantityControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(10), Validators.max(1000)])
   public pickUpDateControl: UntypedFormControl = new UntypedFormControl()
   public pickup: UntypedFormControl = new UntypedFormControl(false)
-  public topImage?: string
-  public bottomImage?: string
-  public recycles: any
-  public recycle: any = {}
-  public userEmail: any
-  public confirmation: any
-  public addressId: any = undefined
-  constructor (private readonly recycleService: RecycleService, private readonly userService: UserService,
+public topImage?: string
+public bottomImage?: string
+public recycles: { [key: string]: string }
+public recycle: { [key: string]: string } = {}
+public userEmail: string;
+public confirmation: boolean;
+public addressId: string | null = null;
+constructor(private readonly recycleService: RecycleService, private readonly userService: UserService,
     private readonly configurationService: ConfigurationService, private readonly formSubmitService: FormSubmitService,
     private readonly translate: TranslateService, private readonly snackBarHelperService: SnackBarHelperService) { }
 
@@ -70,7 +70,7 @@ export class RecycleComponent implements OnInit {
     if (this.pickup.value) {
       this.recycle.isPickUp = this.pickup.value
       this.recycle.date = this.pickUpDateControl.value
-    }
+}
 
     this.recycleService.save(this.recycle).subscribe((savedRecycle: any) => {
       if (savedRecycle.isPickup) {

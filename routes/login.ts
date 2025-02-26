@@ -11,13 +11,13 @@ import { UserModel } from '../models/user'
 import challengeUtils = require('../lib/challengeUtils')
 import config from 'config'
 import { challenges } from '../data/datacache'
+TypeScript
+import * as utils from '../lib/utils';
+import security from '../lib/insecurity';
+import { users } from '../data/datacache';
 
-import * as utils from '../lib/utils'
-const security = require('../lib/insecurity')
-const users = require('../data/datacache').users
-
-// vuln-code-snippet start loginAdminChallenge loginBenderChallenge loginJimChallenge
-module.exports = function login () {
+module.exports = function login() {
+  // vuln-code-snippet start loginAdminChallenge loginBenderChallenge loginJimChallenge
   function afterLogin (user: { data: User, bid: number }, res: Response, next: NextFunction) {
     verifyPostLoginChallenges(user) // vuln-code-snippet hide-line
     BasketModel.findOrCreate({ where: { UserId: user.data.id } })

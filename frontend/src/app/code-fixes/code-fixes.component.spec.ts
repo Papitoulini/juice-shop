@@ -4,12 +4,12 @@ import { CookieModule, CookieService } from 'ngx-cookie'
 import { CodeFixesComponent } from './code-fixes.component'
 
 describe('CodeFixesComponent', () => {
-  let component: CodeFixesComponent
-  let fixture: ComponentFixture<CodeFixesComponent>
-  let cookieService: any
+let component: CodeFixesComponent
+let fixture: ComponentFixture<CodeFixesComponent>
+let cookieService: CookieService
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+beforeEach(async () => {
+  await TestBed.configureTestingModule({
       imports: [CookieModule.forRoot()],
       declarations: [CodeFixesComponent],
       providers: [CookieService]

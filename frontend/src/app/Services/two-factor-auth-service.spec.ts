@@ -19,12 +19,12 @@ describe('TwoFactorAuthServiceService', () => {
   }))
 
   it('should verify TOTP token directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
-    fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
-      localStorage.setItem('totp_tmp_token', '000000')
-      let res: any
-      service.verify('123456').subscribe((data) => (res = data))
+fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
+          localStorage.setItem('totp_tmp_token', '000000')
+          let res: TwoFactorVerifyResponse
+          service.verify('123456').subscribe((data) => (res = data))
 
-      const req = httpMock.expectOne('http://localhost:3000/rest/2fa/verify')
+          const req = httpMock.expectOne('http://localhost:3000/rest/2fa/verify')
       req.flush({ authentication: 'apiResponse' })
       tick()
 
@@ -35,10 +35,10 @@ describe('TwoFactorAuthServiceService', () => {
     })
   ))
 
-  it('should retrieve 2FA status directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
+it('should retrieve 2FA status directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
     fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
-      let res: any
-      service.status().subscribe((data) => (res = data))
+      let res: any;
+      service.status().subscribe((data) => (res = data));
 
       const req = httpMock.expectOne('http://localhost:3000/rest/2fa/status')
       req.flush({ setup: false })
@@ -51,12 +51,12 @@ describe('TwoFactorAuthServiceService', () => {
     })
   ))
 
-  it('should set up 2FA directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
-    fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
-      let res: any
-      service.setup('s3cr3t!', 'initialToken', 'setupToken').subscribe((data) => (res = data))
+it('should set up 2FA directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
+           fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
+             let res: any;
+             service.setup('s3cr3t!', 'initialToken', 'setupToken').subscribe((data) => (res = data));
 
-      const req = httpMock.expectOne('http://localhost:3000/rest/2fa/setup')
+             const req = httpMock.expectOne('http://localhost:3000/rest/2fa/setup');
       req.flush({})
       tick()
 
@@ -67,12 +67,12 @@ describe('TwoFactorAuthServiceService', () => {
     })
   ))
 
-  it('should disable 2FA directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
-    fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
-      let res: any
-      service.disable('s3cr3t!').subscribe((data) => (res = data))
+it('should disable 2FA directly via the rest api', inject([TwoFactorAuthService, HttpTestingController],
+           fakeAsync((service: TwoFactorAuthService, httpMock: HttpTestingController) => {
+             let res: any
+             service.disable('s3cr3t!').subscribe((data) => (res = data))
 
-      const req = httpMock.expectOne('http://localhost:3000/rest/2fa/disable')
+             const req = httpMock.expectOne('http://localhost:3000/rest/2fa/disable')
       req.flush({})
       tick()
 

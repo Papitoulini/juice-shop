@@ -40,25 +40,25 @@ library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, f
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  public couponConfirmation: any
-  public couponError: any
-  public card: any = {}
-  public twitterUrl = null
-  public facebookUrl = null
-  public applicationName = 'OWASP Juice Shop'
-  private campaignCoupon: string
-  public couponControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
-  public clientDate: any
-  public paymentId: any = undefined
-  public couponPanelExpanded: boolean = false
-  public paymentPanelExpanded: boolean = false
-  public mode: any
-  public walletBalance: number = 0
-  public walletBalanceStr: string
-  public totalPrice: any = 0
-  public paymentMode: string = 'card'
-  private readonly campaigns = {
-    WMNSDY2019: { validOn: 1551999600000, discount: 75 },
+public couponConfirmation: string | null
+         public couponError: string | null
+         public card: { [key: string]: string | null } = {}
+         public twitterUrl: string | null = null
+         public facebookUrl: string | null = null
+         public applicationName = 'OWASP Juice Shop'
+private campaignCoupon: string;
+public couponControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]);
+         public clientDate: Date;
+         public paymentId: string | undefined = undefined;
+public couponPanelExpanded: boolean = false;
+         public paymentPanelExpanded: boolean = false;
+         public mode: string;
+public walletBalance: number = 0;
+public walletBalanceStr: string;
+public totalPrice: number = 0;
+public paymentMode: string = 'card';
+private readonly campaigns = {
+  WMNSDY2019: { validOn: 1551999600000, discount: 75 },
     WMNSDY2020: { validOn: 1583622000000, discount: 60 },
     WMNSDY2021: { validOn: 1615158000000, discount: 60 },
     WMNSDY2022: { validOn: 1646694000000, discount: 60 },

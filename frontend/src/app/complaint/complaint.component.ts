@@ -23,9 +23,9 @@ library.add(faBomb)
 })
 export class ComplaintComponent implements OnInit {
   public customerControl: UntypedFormControl = new UntypedFormControl({ value: '', disabled: true }, [])
-  public messageControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
+public messageControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.maxLength(160)])
   @ViewChild('fileControl', { static: true }) fileControl!: ElementRef // For controlling the DOM Element for file input.
-  public fileUploadError: any = undefined // For controlling error handling related to file input.
+  public fileUploadError: Error | undefined = undefined // For controlling error handling related to file input.
   public uploader: FileUploader = new FileUploader({
     url: environment.hostServer + '/file-upload',
     authToken: `Bearer ${localStorage.getItem('token')}`,
@@ -33,12 +33,12 @@ export class ComplaintComponent implements OnInit {
     maxFileSize: 100000
   })
 
-  public userEmail: any = undefined
+TypeScript
+  public userEmail: string | undefined = undefined
   public complaint: any = undefined
   public confirmation: any
 
   constructor (private readonly userService: UserService, private readonly complaintService: ComplaintService, private readonly formSubmitService: FormSubmitService, private readonly translate: TranslateService) { }
-
   ngOnInit () {
     this.initComplaint()
     this.uploader.onWhenAddingFileFailed = (item, filter) => {
@@ -55,12 +55,12 @@ export class ComplaintComponent implements OnInit {
     }
     this.formSubmitService.attachEnterKeyHandler('complaint-form', 'submitButton', () => { this.save() })
   }
-
-  initComplaint () {
-    this.userService.whoAmI().subscribe((user: any) => {
-      this.complaint = {}
-      this.complaint.UserId = user.id
-      this.userEmail = user.email
+initComplaint () {
+           this.userService.whoAmI().subscribe((user: { id: string, email: string }) => {
+             this.complaint = {}
+             this.complaint.UserId = user.id
+             this.userEmail = user.email
+         }
       this.customerControl.setValue(this.userEmail)
     }, (err) => {
       this.complaint = undefined

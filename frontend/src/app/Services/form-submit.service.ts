@@ -10,12 +10,12 @@ import { DOCUMENT } from '@angular/common'
   providedIn: 'root'
 })
 export class FormSubmitService {
+TypeScript
   constructor (@Inject(DOCUMENT) private readonly _document: HTMLDocument) { }
 
-  attachEnterKeyHandler (formId: string, submitButtonId: string, onSubmit: any) {
+  attachEnterKeyHandler (formId: string, submitButtonId: string, onSubmit: (event: KeyboardEvent) => void) {
     const form = this._document.getElementById(formId) as HTMLFormElement
     const submitButton = this._document.getElementById(submitButtonId) as HTMLInputElement
-
     form.addEventListener('keyup', function (event) {
       event.preventDefault()
       // eslint-disable-next-line import/no-deprecated
