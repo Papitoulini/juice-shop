@@ -11,26 +11,37 @@ import { UserModel } from '../models/user'
 import * as utils from '../lib/utils'
 const security = require('../lib/insecurity')
 const request = require('request')
+const URL = require('url').URL
 
 module.exports = function profileImageUrlUpload () {
   return (req: Request, res: Response, next: NextFunction) => {
     if (req.body.imageUrl !== undefined) {
-      const url = req.body.imageUrl
-      if (url.match(/(.)*solve\/challenges\/server-side(.)*/) !== null) req.app.locals.abused_ssrf_bug = true
+      let url: URL;
+      try {
+        url = new URL(req.body.imageUrl);
+      } catch (err) {
+        next(new Error('Invalid URL: ' + req.body.imageUrl));
+        return;
+      }
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+        next(new Error('Invalid URL protocol: ' + url.protocol));
+        return;
+      }
+      if (url.toString().match(/(.)*solve\/challenges\/server-side(.)*/) !== null) req.app.locals.abused_ssrf_bug = true
       const loggedInUser = security.authenticatedUsers.get(req.cookies.token)
       if (loggedInUser) {
         const imageRequest = request
-          .get(url)
+          .get(url.toString())
           .on('error', function (err: unknown) {
-            UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url }) }).catch((error: Error) => { next(error) })
+            UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url.toString() }) }).catch((error: Error) => { next(error) })
             logger.warn(`Error retrieving user profile image: ${utils.getErrorMessage(err)}; using image link directly`)
           })
           .on('response', function (res: Response) {
             if (res.statusCode === 200) {
-              const ext = ['jpg', 'jpeg', 'png', 'svg', 'gif'].includes(url.split('.').slice(-1)[0].toLowerCase()) ? url.split('.').slice(-1)[0].toLowerCase() : 'jpg'
+              const ext = ['jpg', 'jpeg', 'png', 'svg', 'gif'].includes(url.pathname.split('.').slice(-1)[0].toLowerCase()) ? url.pathname.split('.').slice(-1)[0].toLowerCase() : 'jpg'
               imageRequest.pipe(fs.createWriteStream(`frontend/dist/frontend/assets/public/images/uploads/${loggedInUser.data.id}.${ext}`))
               UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: `/assets/public/images/uploads/${loggedInUser.data.id}.${ext}` }) }).catch((error: Error) => { next(error) })
-            } else UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url }) }).catch((error: Error) => { next(error) })
+            } else UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: url.toString() }) }).catch((error: Error) => { next(error) })
           })
       } else {
         next(new Error('Blocked illegal activity by ' + req.socket.remoteAddress))
