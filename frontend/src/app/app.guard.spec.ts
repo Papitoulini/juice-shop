@@ -27,7 +27,7 @@ describe('LoginGuard', () => {
   }))
 
   it('should open for authenticated users', inject([LoginGuard], (guard: LoginGuard) => {
-    localStorage.setItem('token', 'TOKEN')
+    localStorage.setItem('token', process.env.JWT_TOKEN)
     expect(guard.canActivate()).toBeTrue()
   }))
 

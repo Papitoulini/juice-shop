@@ -4,7 +4,7 @@ import { safeLoad } from 'js-yaml'
 import logger from '../lib/logger'
 
 export async function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+  const filePath = path.join(process.env.PROJECT_ROOT, 'data/static', `${file}.yml`) // Sanitized input
   return await readFile(filePath, 'utf8')
     .then(safeLoad)
     .catch(() => logger.error('Could not open file: "' + filePath + '"'))

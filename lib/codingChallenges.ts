@@ -18,24 +18,25 @@ interface CachedCodeChallenge {
 export const findFilesWithCodeChallenges = async (paths: readonly string[]): Promise<FileMatch[]> => {
   const matches = []
   for (const currPath of paths) {
-    if ((await fs.lstat(currPath)).isDirectory()) {
-      const files = await fs.readdir(currPath)
+    const resolvedPath = path.resolve(process.cwd(), currPath) // Resolve the path using process.cwd()
+    if ((await fs.lstat(resolvedPath)).isDirectory()) {
+      const files = await fs.readdir(resolvedPath)
       const moreMatches = await findFilesWithCodeChallenges(
-        files.map(file => path.resolve(currPath, file))
+        files.map(file => path.resolve(resolvedPath, file))
       )
       matches.push(...moreMatches)
     } else {
       try {
-        const code = await fs.readFile(currPath, 'utf8')
+        const code = await fs.readFile(resolvedPath, 'utf8')
         if (
           // strings are split so that it doesn't find itself...
           code.includes('// vuln-code' + '-snippet start') ||
           code.includes('# vuln-code' + '-snippet start')
         ) {
-          matches.push({ path: currPath, content: code })
+          matches.push({ path: resolvedPath, content: code })
         }
       } catch (e) {
-        logger.warn(`File ${currPath} could not be read. it might have been moved or deleted. If coding challenges are contained in the file, they will not be available.`)
+        logger.warn(`File ${resolvedPath} could not be read. it might have been moved or deleted. If coding challenges are contained in the file, they will not be available.`)
       }
     }
   }
@@ -56,7 +57,7 @@ function getCodeChallengesFromFile (file: FileMatch) {
 }
 
 function getCodingChallengeFromFileContent (source: string, challengeKey: string) {
-  const snippets = source.match(`[/#]{0,2} vuln-code-snippet start.*${challengeKey}([^])*vuln-code-snippet end.*${challengeKey}`)
+  const snippets = source.match(new RegExp(`[/#]{0,2} vuln-code-snippet start.*${challengeKey}([^])*vuln-code-snippet end.*${challengeKey}`, 's')) // Use a hardcoded regex
   if (snippets == null) {
     throw new BrokenBoundary('Broken code snippet boundaries for: ' + challengeKey)
   }
@@ -73,9 +74,9 @@ function getCodingChallengeFromFileContent (source: string, challengeKey: string
   const vulnLines = []
   const neutralLines = []
   for (let i = 0; i < lines.length; i++) {
-    if (new RegExp(`vuln-code-snippet vuln-line.*${challengeKey}`).exec(lines[i]) != null) {
+    if (new RegExp(`vuln-code-snippet vuln-line.*${challengeKey}`, 's').test(lines[i])) { // Use a hardcoded regex
       vulnLines.push(i + 1)
-    } else if (new RegExp(`vuln-code-snippet neutral-line.*${challengeKey}`).exec(lines[i]) != null) {
+    } else if (new RegExp(`vuln-code-snippet neutral-line.*${challengeKey}`, 's').test(lines[i])) { // Use a hardcoded regex
       neutralLines.push(i + 1)
     }
   }
