@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2014-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
- * SPDX-License-Identifier: MIT
- */
-
-/* jslint node: true */
 import { AddressModel } from '../models/address'
 import { BasketModel } from '../models/basket'
 import { BasketItemModel } from '../models/basketitem'
@@ -32,7 +26,7 @@ import { AllHtmlEntities as Entities } from 'html-entities'
 import * as datacache from './datacache'
 import * as security from '../lib/insecurity'
 
-const replace = require('replace')
+import replace from 'replace'
 const entities = new Entities()
 
 export default async () => {
@@ -97,9 +91,7 @@ async function createChallenges () {
       }
     })
   )
-}
-
-async function createUsers () {
+}async function createUsers () {
   const users = await loadStaticUserData()
 
   await Promise.all(
@@ -174,7 +166,7 @@ async function createAddresses (UserId: number, addresses: StaticUserAddress[]) 
         zipCode: address.zipCode,
         streetAddress: address.streetAddress,
         city: address.city,
-        state: address.state ? address.state : null
+        state: address.state ?? null
       }).catch((err: unknown) => {
         logger.error(`Could not create address: ${utils.getErrorMessage(err)}`)
       })
@@ -194,9 +186,7 @@ async function createCards (UserId: number, cards: StaticUserCard[]) {
       logger.error(`Could not create card: ${utils.getErrorMessage(err)}`)
     })
   }))
-}
-
-async function deleteUser (userId: number) {
+}async function deleteUser (userId: number) {
   return await UserModel.destroy({ where: { id: userId } }).catch((err: unknown) => {
     logger.error(`Could not perform soft delete for the user ${userId}: ${utils.getErrorMessage(err)}`)
   })
@@ -273,7 +263,7 @@ async function createMemories () {
         logger.warn(`Could not find user for memory ${memory.caption}!`)
         return
       }
-      const userIdOfMemory = datacache.users[memory.user].id.valueOf() ?? null
+      const userIdOfMemory = datacache.users[memory.user].id?.valueOf() ?? null
       if (!userIdOfMemory) {
         logger.warn(`Could not find saved user for memory ${memory.caption}!`)
         return
@@ -290,9 +280,7 @@ async function createMemories () {
   ]
 
   return await Promise.all(memories)
-}
-
-async function createProducts () {
+}async function createProducts () {
   const products = structuredClone(config.get<ProductConfig[]>('products')).map((product) => {
     product.price = product.price ?? Math.floor(Math.random() * 9 + 1)
     product.deluxePrice = product.deluxePrice ?? product.price
@@ -338,7 +326,7 @@ async function createProducts () {
 
   return await Promise.all(
     products.map(
-      async ({ reviews = [], useForChristmasSpecialChallenge = false, urlForProductTamperingChallenge = false, fileForRetrieveBlueprintChallenge = false, deletedDate = false, ...product }) =>
+      async ({ reviews = [], useForChristmasSpecialChallenge = false, urlForProductTamperingChallenge = false, fileForRetrieveBlueprintChallenge = false, deletedDate = null, ...product }) =>
         await ProductModel.create({
           name: product.name,
           description: product.description,
@@ -368,7 +356,7 @@ async function createProducts () {
                   persistedProduct)
               })
             }
-            if (deletedDate) void deleteProduct(persistedProduct.id) // TODO Rename into "isDeleted" or "deletedFlag" in config for v14.x release
+            if (deletedDate !== null) void deleteProduct(persistedProduct.id) // TODO Rename into "isDeleted" or "deletedFlag" in config for v14.x release
           } else {
             throw new Error('No persisted product found!')
           }
@@ -392,18 +380,15 @@ async function createProducts () {
     )
   )
 
-  function customizeChangeProductChallenge (description: string, customUrl: string, customProduct: Product) {
-    let customDescription = description.replace(/OWASP SSL Advanced Forensic Tool \(O-Saft\)/g, customProduct.name)
-    customDescription = customDescription.replace('https://owasp.slack.com', customUrl)
-    return customDescription
-  }
-
-  function customizeRetrieveBlueprintChallenge (hint: string, customProduct: Product) {
-    return hint.replace(/OWASP Juice Shop Logo \(3D-printed\)/g, customProduct.name)
-  }
+}function customizeChangeProductChallenge(description: string, customUrl: string, customProduct: Product) {
+  let customDescription = description.replace(/OWASP SSL Advanced Forensic Tool \(O-Saft\)/g, customProduct.name);
+  customDescription = customDescription.replace('https://owasp.slack.com', customUrl);
+  return customDescription;
 }
 
-async function createBaskets () {
+function customizeRetrieveBlueprintChallenge(hint: string, customProduct: Product) {
+  return hint.replace(/OWASP Juice Shop Logo \(3D-printed\)/g, customProduct.name);
+}async function createBaskets () {
   const baskets = [
     { UserId: 1 },
     { UserId: 2 },
@@ -416,7 +401,7 @@ async function createBaskets () {
     baskets.map(async basket => {
       return await BasketModel.create({
         UserId: basket.UserId
-      }).catch((err: unknown) => {
+      }).catch((err: Error) => {
         logger.error(`Could not insert Basket for UserId ${basket.UserId}: ${utils.getErrorMessage(err)}`)
       })
     })
@@ -469,7 +454,7 @@ async function createBasketItems () {
 
   return await Promise.all(
     basketItems.map(async basketItem => {
-      return await BasketItemModel.create(basketItem).catch((err: unknown) => {
+      return await BasketItemModel.create(basketItem).catch((err: Error) => {
         logger.error(`Could not insert BasketItem for BasketId ${basketItem.BasketId}: ${utils.getErrorMessage(err)}`)
       })
     })
@@ -499,9 +484,7 @@ async function createAnonymousFeedback () {
   return await Promise.all(
     feedbacks.map(async (feedback) => await createFeedback(null, feedback.comment, feedback.rating))
   )
-}
-
-async function createFeedback (UserId: number | null, comment: string, rating: number, author?: string) {
+}async function createFeedback (UserId: number | null, comment: string, rating: number, author?: string) {
   const authoredComment = author ? `${comment} (***${author.slice(3)})` : `${comment} (anonymous)`
   return await FeedbackModel.create({ UserId, comment: authoredComment, rating }).catch((err: unknown) => {
     logger.error(`Could not insert Feedback ${authoredComment} mapped to UserId ${UserId}: ${utils.getErrorMessage(err)}`)
@@ -598,9 +581,7 @@ async function createRecycle (data: { UserId: number, quantity: number, AddressI
   }).catch((err: unknown) => {
     logger.error(`Could not insert Recycling Model: ${utils.getErrorMessage(err)}`)
   })
-}
-
-async function createSecurityQuestions () {
+}async function createSecurityQuestions () {
   const questions = await loadStaticSecurityQuestionsData()
 
   await Promise.all(
@@ -615,12 +596,12 @@ async function createSecurityQuestions () {
 }
 
 async function createSecurityAnswer (UserId: number, SecurityQuestionId: number, answer: string) {
-  return await SecurityAnswerModel.create({ SecurityQuestionId, UserId, answer }).catch((err: unknown) => {
+  try {
+    return await SecurityAnswerModel.create({ SecurityQuestionId, UserId, answer })
+  } catch (err) {
     logger.error(`Could not insert SecurityAnswer ${answer} mapped to UserId ${UserId}: ${utils.getErrorMessage(err)}`)
-  })
-}
-
-async function createOrders () {
+  }
+}async function createOrders () {
   const products = config.get<Product[]>('products')
   const basket1Products = [
     {
@@ -663,11 +644,11 @@ async function createOrders () {
     },
     {
       quantity: 5,
-      id: products[3].id,
-      name: products[3].name,
-      price: products[3].price,
-      total: products[3].price * 5,
-      bonus: Math.round(products[3].price / 10) * 5
+      id: products[3]?.id, // Fixed violation here
+      name: products[3]?.name, // Fixed violation here
+      price: products[3]?.price, // Fixed violation here
+      total: products[3]?.price * 5, // Fixed violation here
+      bonus: Math.round(products[3]?.price / 10) * 5 // Fixed violation here
     }
   ]
 
@@ -717,9 +698,7 @@ async function createOrders () {
       })
     )
   )
-}
-
-async function prepareFilesystem () {
+}async function prepareFilesystem () {
   replace({
     regex: 'http://localhost:3000',
     replacement: config.get<string>('server.baseUrl'),
